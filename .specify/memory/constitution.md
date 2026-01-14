@@ -1,50 +1,37 @@
-# [PROJECT_NAME] Constitution
-<!-- Example: Spec Constitution, TaskFlow Constitution, etc. -->
+<!--
+Sync Impact Report:
+- Version change: N/A → 1.0.0
+- Added sections: All principles and sections for perfume store project
+- Templates requiring updates: N/A
+- Follow-up TODOs: None
+-->
+
+# Gombian Boutique Perfume Store Constitution
 
 ## Core Principles
 
-### [PRINCIPLE_1_NAME]
-<!-- Example: I. Library-First -->
-[PRINCIPLE_1_DESCRIPTION]
-<!-- Example: Every feature starts as a standalone library; Libraries must be self-contained, independently testable, documented; Clear purpose required - no organizational-only libraries -->
+### Elegant User Experience
+The website must provide a luxurious, elegant user experience that reflects the premium nature of perfume products; All interactions should feel refined and intuitive; The design must evoke the sophistication of high-end perfumery.
 
-### [PRINCIPLE_2_NAME]
-<!-- Example: II. CLI Interface -->
-[PRINCIPLE_2_DESCRIPTION]
-<!-- Example: Every library exposes functionality via CLI; Text in/out protocol: stdin/args → stdout, errors → stderr; Support JSON + human-readable formats -->
+### Responsive & Accessible Design
+All pages must be fully responsive across all device sizes and accessible to users with disabilities; The website must meet WCAG 2.1 AA standards; Performance must be optimized for all users regardless of connection speed.
 
-### [PRINCIPLE_3_NAME]
-<!-- Example: III. Test-First (NON-NEGOTIABLE) -->
-[PRINCIPLE_3_DESCRIPTION]
-<!-- Example: TDD mandatory: Tests written → User approved → Tests fail → Then implement; Red-Green-Refactor cycle strictly enforced -->
+### SEO & Performance Optimization (NON-NEGOTIABLE)
+All pages must be optimized for search engines with proper meta tags, structured data, and fast loading times; Core Web Vitals must meet Google's recommended thresholds; Performance budgets must be established and adhered to.
 
-### [PRINCIPLE_4_NAME]
-<!-- Example: IV. Integration Testing -->
-[PRINCIPLE_4_DESCRIPTION]
-<!-- Example: Focus areas requiring integration tests: New library contract tests, Contract changes, Inter-service communication, Shared schemas -->
+### Nuxt 4 Architecture Standards
+The application must follow Nuxt 4 best practices including proper use of pages, components, composables, and modules; All code must be TypeScript compliant; The architecture must leverage Nuxt's built-in features like SSR, static generation, and routing.
 
-### [PRINCIPLE_5_NAME]
-<!-- Example: V. Observability, VI. Versioning & Breaking Changes, VII. Simplicity -->
-[PRINCIPLE_5_DESCRIPTION]
-<!-- Example: Text I/O ensures debuggability; Structured logging required; Or: MAJOR.MINOR.BUILD format; Or: Start simple, YAGNI principles -->
+### Visual Excellence
+The design must incorporate elegant visual elements that reflect the perfume industry's aesthetic; High-quality images must be properly optimized and displayed; Color schemes and typography must convey luxury and sophistication.
 
-## [SECTION_2_NAME]
-<!-- Example: Additional Constraints, Security Requirements, Performance Standards, etc. -->
+## Visual Identity & Branding
+The website must maintain consistent visual identity that aligns with the perfume brand; Color palette should reflect elegance and luxury (using sophisticated greens, golds, and neutral tones); Typography must use serif fonts for headings to convey sophistication, with clean sans-serif for body text.
 
-[SECTION_2_CONTENT]
-<!-- Example: Technology stack requirements, compliance standards, deployment policies, etc. -->
-
-## [SECTION_3_NAME]
-<!-- Example: Development Workflow, Review Process, Quality Gates, etc. -->
-
-[SECTION_3_CONTENT]
-<!-- Example: Code review requirements, testing gates, deployment approval process, etc. -->
+## Development Workflow
+All development must follow an iterative approach with regular design reviews; Components must be reusable and well-documented; Code reviews are mandatory for all pull requests; Testing must include both unit and end-to-end tests for critical user journeys.
 
 ## Governance
-<!-- Example: Constitution supersedes all other practices; Amendments require documentation, approval, migration plan -->
+This constitution governs all development decisions for the Gombian Boutique perfume store website; All features and changes must align with these principles; Amendments require documentation and team approval; The constitution must be referenced during all code reviews and design decisions.
 
-[GOVERNANCE_RULES]
-<!-- Example: All PRs/reviews must verify compliance; Complexity must be justified; Use [GUIDANCE_FILE] for runtime development guidance -->
-
-**Version**: [CONSTITUTION_VERSION] | **Ratified**: [RATIFICATION_DATE] | **Last Amended**: [LAST_AMENDED_DATE]
-<!-- Example: Version: 2.1.1 | Ratified: 2025-06-13 | Last Amended: 2025-07-16 -->
+**Version**: 1.0.0 | **Ratified**: 2026-01-12 | **Last Amended**: 2026-01-12
