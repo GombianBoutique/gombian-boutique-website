@@ -1,6 +1,7 @@
 import { defineNuxtConfig } from 'nuxt/config'
 
 export default defineNuxtConfig({
+  compatibilityDate: '2026-01-14',
   typescript: {
     strict: true,
     shim: false
@@ -8,8 +9,38 @@ export default defineNuxtConfig({
   modules: [
     '@nuxtjs/tailwindcss',
     '@nuxtjs/color-mode',
-    '@nuxtjs/robots'
+    '@nuxtjs/robots',
+    '@nuxt/image',
+    '~/modules/stripe.client.js',
+    '@pinia/nuxt',
+    '@nuxtjs/i18n'
   ],
+  i18n: {
+    defaultLocale: 'en',
+    strategy: 'prefix_except_default',
+    locales: [
+      {
+        code: 'en',
+        name: 'English',
+        iso: 'en-US'
+      },
+      {
+        code: 'fr',
+        name: 'Français',
+        iso: 'fr-FR'
+      }
+    ]
+  },
+  plugins: [
+    '~/plugins/accessibility.client.js',
+    '~/plugins/errorHandler.js'
+  ],
+  runtimeConfig: {
+    sendgridApiKey: process.env.SENDGRID_API_KEY || '',
+    public: {
+      stripePublicKey: process.env.STRIPE_PUBLIC_KEY || ''
+    }
+  },
   colorMode: {
     classSuffix: '',
     preference: 'system',
