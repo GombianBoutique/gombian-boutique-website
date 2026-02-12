@@ -1,0 +1,104 @@
+{
+  "products": [
+    {
+      "id": "30ml-perfume",
+      "name": "30ml Perfume",
+      "description": "Our signature 30ml perfume bottle, perfect for travel or as a gift. Experience our nature-inspired scents that transport and transform any space.",
+      "price": 100,
+      "currency": "ZAR",
+      "formattedPrice": "R 100",
+      "volume": "30ml",
+      "gender": "unisex",
+      "fragranceFamily": "various",
+      "season": "year-round",
+      "longevity": "6-8 hours",
+      "concentration": "EDT",
+      "scentNotes": {
+        "top": ["bergamot", "citrus"],
+        "middle": ["jasmine", "rose"],
+        "base": ["vanilla", "musk"]
+      },
+      "ingredients": ["alcohol denat.", "water", "fragrance", "limonene", "linalool", "citronellol"],
+      "images": ["/images/products/30ml Perfumes.jpeg", "/images/products/Caps.jpeg"],
+      "category": "best-seller",
+      "inStock": true,
+      "createdAt": "2026-01-10T00:00:00.000Z",
+      "updatedAt": "2026-01-10T00:00:00.000Z"
+    },
+    {
+      "id": "60ml-perfume",
+      "name": "60ml Perfume",
+      "description": "Our premium 60ml perfume bottle, offering extended wear and luxury. Experience our nature-inspired scents that connect you with fashion, relaxation, escape, and a touch of luxury.",
+      "price": 150,
+      "currency": "ZAR",
+      "formattedPrice": "R 150",
+      "volume": "60ml",
+      "gender": "unisex",
+      "fragranceFamily": "various",
+      "season": "year-round",
+      "longevity": "8-10 hours",
+      "concentration": "EDP",
+      "scentNotes": {
+        "top": ["bergamot", "citrus"],
+        "middle": ["jasmine", "rose"],
+        "base": ["vanilla", "musk"]
+      },
+      "ingredients": ["alcohol denat.", "water", "fragrance", "limonene", "linalool", "citronellol"],
+      "images": ["/images/products/Ladies 60ml Perfume.jpg", "/images/products/Mens 60ml Perfume.jpg"],
+      "category": "premium",
+      "inStock": true,
+      "createdAt": "2026-01-10T00:00:00.000Z",
+      "updatedAt": "2026-01-10T00:00:00.000Z"
+    },
+    {
+      "id": "body-lotion",
+      "name": "Body Lotion",
+      "description": "Our luxurious body lotion enriched with natural ingredients. Choose from 100ml or 200ml sizes to complement your fragrance routine.",
+      "price": 50,
+      "currency": "ZAR",
+      "formattedPrice": "R 50",
+      "volume": "100ml",
+      "gender": "unisex",
+      "fragranceFamily": "various",
+      "season": "year-round",
+      "longevity": "4-6 hours",
+      "concentration": "Body Lotion",
+      "scentNotes": {
+        "top": ["bergamot", "citrus"],
+        "middle": ["jasmine", "rose"],
+        "base": ["vanilla", "musk"]
+      },
+      "ingredients": ["water", "glycerin", "fragrance", "aloe vera", "vitamin E"],
+      "images": ["/images/products/Ladies Ultimate Combo.jpeg", "/images/products/Ladies Essential Combo.jpeg"],
+      "category": "complementary",
+      "inStock": true,
+      "createdAt": "2026-01-10T00:00:00.000Z",
+      "updatedAt": "2026-01-10T00:00:00.000Z"
+    },
+    {
+      "id": "his-hers-combo",
+      "name": "His & Hers 30ml Perfume Combo",
+      "description": "Perfect gift set featuring both masculine and feminine interpretations of our signature scents in 30ml bottles.",
+      "price": 200,
+      "currency": "ZAR",
+      "formattedPrice": "R 200",
+      "volume": "30ml each",
+      "gender": "couple",
+      "fragranceFamily": "various",
+      "season": "year-round",
+      "longevity": "6-8 hours",
+      "concentration": "EDT",
+      "scentNotes": {
+        "top": ["bergamot", "citrus"],
+        "middle": ["jasmine", "rose"],
+        "base": ["vanilla", "musk"]
+      },
+      "ingredients": ["alcohol denat.", "water", "fragrance", "limonene", "linalool", "citronellol"],
+      "images": ["/images/products/His & Hers Ultimate Combo.jpeg", "/images/products/Roll on.jpg"],
+      "category": "gift-set",
+      "inStock": true,
+      "createdAt": "2026-01-10T00:00:00.000Z",
+      "updatedAt": "2026-01-10T00:00:00.000Z"
+    }
+  ]
+}

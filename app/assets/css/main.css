@@ -1,0 +1,196 @@
+/* Import accessibility styles */
+@import './accessibility.css';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Luxury perfume store custom styles */
+
+:root {
+  --luxury-green: #2D5016;
+  --gold: #D4AF37;
+  --neutral-light: #F5F5F3;
+  --neutral-dark: #333333;
+  --dark-bg: #1a1a1a;
+  --dark-card: #2d2d2d;
+  --dark-text: #e0e0e0;
+}
+
+body {
+  @apply font-sans bg-neutral-light text-neutral-dark transition-colors duration-300;
+}
+
+.dark body {
+  @apply bg-gray-900 text-gray-200;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  @apply font-serif-display;
+}
+
+.luxury-button {
+  @apply bg-luxury-green text-white px-6 py-3 rounded-full transition-all duration-300 hover:bg-gold hover:text-luxury-green border-2 border-luxury-green shadow-md hover:shadow-lg;
+}
+
+.dark .luxury-button {
+  @apply bg-luxury-green text-white border-luxury-green hover:bg-gold hover:text-luxury-green !important;
+}
+
+.luxury-card {
+  @apply bg-white rounded-lg shadow-md overflow-hidden transition-all duration-300 hover:shadow-xl hover:-translate-y-1 border border-gray-200;
+}
+
+.dark .luxury-card {
+  @apply bg-gray-800 border-gray-700 text-white;
+}
+
+.product-grid {
+  @apply grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8;
+}
+
+.scent-note {
+  @apply inline-block bg-neutral-light px-3 py-1 rounded-full text-sm mr-2 mb-2 transition-colors duration-300;
+}
+
+.dark .scent-note {
+  @apply bg-gray-700 text-gray-200 !important;
+}
+
+/* Enhanced typography for elegance */
+.text-serif-display {
+  font-family: 'Playfair Display', serif;
+}
+
+.text-sans {
+  font-family: 'Inter', sans-serif;
+}
+
+/* Header styles */
+.header-bg {
+  @apply bg-white shadow-md transition-colors duration-300;
+}
+
+.dark .header-bg {
+  @apply bg-gray-800 shadow-gray-900 !important;
+}
+
+.nav-link {
+  @apply text-luxury-green hover:text-gold transition-colors duration-300;
+}
+
+.dark .nav-link {
+  @apply text-gray-200 hover:text-gold !important;
+}
+
+/* Footer styles */
+.footer-bg {
+  @apply bg-luxury-green text-white transition-colors duration-300;
+}
+
+.dark .footer-bg {
+  @apply bg-gray-900 text-gray-200 !important;
+}
+
+.footer-link {
+  @apply hover:text-gold transition-colors duration-300;
+}
+
+.dark .footer-link {
+  @apply hover:text-gold !important;
+}
+
+/* Additional dark mode fixes */
+.text-luxury-green {
+  @apply dark:text-gold;
+}
+
+.text-neutral-dark {
+  @apply dark:text-gray-200;
+}
+
+.bg-white {
+  @apply dark:bg-gray-800;
+}
+
+.border-luxury-green {
+  @apply dark:border-gold;
+}
+
+.border-gold {
+  @apply dark:border-luxury-green;
+}
+
+/* Specific overrides for better contrast in dark mode */
+.dark .bg-luxury-green\/10 {
+  background-color: rgba(212, 175, 55, 0.1) !important; /* Gold with low opacity */
+}
+
+.dark .bg-gold\/10 {
+  background-color: rgba(45, 80, 22, 0.1) !important; /* Luxury green with low opacity */
+}
+
+.dark .bg-neutral-light {
+  background-color: #2d2d2d !important;
+}
+
+/* Ensure proper contrast for text in dark mode */
+.prose {
+  color: inherit;
+}
+
+/* Smooth transitions for all elements */
+* {
+  transition-property: background-color, border-color, color, fill, stroke, opacity, box-shadow, transform;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 300ms;
+}
+
+/* Elegance enhancements */
+.elegant-border {
+  border-image: linear-gradient(45deg, var(--luxury-green), var(--gold)) 1;
+  border-width: 2px;
+  border-style: solid;
+}
+
+.hover-lift {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.hover-lift:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+
+/* Dark mode enhancements */
+.dark {
+  --tw-text-opacity: 1;
+  color: rgba(226, 232, 240, var(--tw-text-opacity));
+}
+
+.dark h1, .dark h2, .dark h3, .dark h4, .dark h5, .dark h6 {
+  color: #f0f0f0;
+}
+
+/* Subtle animations for elegance */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fade-in-up {
+  animation: fadeInUp 0.6s ease-out forwards;
+}
+
+/* Enhanced form elements for dark mode */
+.dark input, .dark textarea, .dark select {
+  background-color: #2d3748;
+  border-color: #4a5568;
+  color: #fff;
+}

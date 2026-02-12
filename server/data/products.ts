@@ -1,0 +1,123 @@
+// server/data/products.ts
+export interface Product {
+  id: string;
+  name: string;
+  description: string;
+  price: number;
+  category: string;
+  gender: string;
+  fragranceFamily: string;
+  size: string;
+  inStock: boolean;
+  inventoryCount: number;
+  images: string[];
+  scentNotes: string[];
+  ingredients: string[];
+  rating: number;
+  reviewCount: number;
+}
+
+export const products: Product[] = [
+  {
+    id: '1',
+    name: 'Ocean Breeze',
+    description: 'A refreshing scent reminiscent of ocean waves and sea salt.',
+    price: 89.99,
+    category: 'perfume',
+    gender: 'unisex',
+    fragranceFamily: 'fresh',
+    size: '100ml',
+    inStock: true,
+    inventoryCount: 15,
+    images: ['/images/products/ocean-breeze.jpg'],
+    scentNotes: ['bergamot', 'sea salt', 'white musk'],
+    ingredients: ['alcohol denat.', 'fragrance', 'water'],
+    rating: 4.7,
+    reviewCount: 42
+  },
+  {
+    id: '2',
+    name: 'Royal Musk',
+    description: 'Rich and warm with a luxurious touch of royal elegance.',
+    price: 129.99,
+    category: 'perfume',
+    gender: 'men',
+    fragranceFamily: 'woody',
+    size: '100ml',
+    inStock: true,
+    inventoryCount: 8,
+    images: ['/images/products/royal-musk.jpg'],
+    scentNotes: ['musk', 'amber', 'cedar'],
+    ingredients: ['alcohol denat.', 'fragrance', 'water'],
+    rating: 4.9,
+    reviewCount: 31
+  },
+  {
+    id: '3',
+    name: 'Spring Garden',
+    description: 'A floral bouquet capturing the essence of a blooming spring garden.',
+    price: 79.99,
+    category: 'perfume',
+    gender: 'women',
+    fragranceFamily: 'floral',
+    size: '80ml',
+    inStock: true,
+    inventoryCount: 22,
+    images: ['/images/products/spring-garden.jpg'],
+    scentNotes: ['jasmine', 'rose', 'lily of the valley'],
+    ingredients: ['alcohol denat.', 'fragrance', 'water'],
+    rating: 4.5,
+    reviewCount: 56
+  },
+  {
+    id: '4',
+    name: 'Midnight Noir',
+    description: 'Mysterious and seductive, perfect for evening wear.',
+    price: 119.99,
+    category: 'perfume',
+    gender: 'unisex',
+    fragranceFamily: 'oriental',
+    size: '100ml',
+    inStock: false,
+    inventoryCount: 0,
+    images: ['/images/products/midnight-noir.jpg'],
+    scentNotes: ['vanilla', 'tonka bean', 'oud'],
+    ingredients: ['alcohol denat.', 'fragrance', 'water'],
+    rating: 4.8,
+    reviewCount: 38
+  },
+  {
+    id: '5',
+    name: 'Citrus Zest',
+    description: 'A vibrant and energizing blend of citrus fruits.',
+    price: 69.99,
+    category: 'perfume',
+    gender: 'unisex',
+    fragranceFamily: 'citrus',
+    size: '75ml',
+    inStock: true,
+    inventoryCount: 30,
+    images: ['/images/products/citrus-zest.jpg'],
+    scentNotes: ['lemon', 'orange', 'bergamot'],
+    ingredients: ['alcohol denat.', 'fragrance', 'water'],
+    rating: 4.3,
+    reviewCount: 27
+  },
+  {
+    id: '6',
+    name: 'Velvet Rose',
+    description: 'A romantic and sophisticated rose-centered fragrance.',
+    price: 99.99,
+    category: 'perfume',
+    gender: 'women',
+    fragranceFamily: 'floral',
+    size: '90ml',
+    inStock: true,
+    inventoryCount: 12,
+    images: ['/images/products/velvet-rose.jpg'],
+    scentNotes: ['rose', 'patchouli', 'vanilla'],
+    ingredients: ['alcohol denat.', 'fragrance', 'water'],
+    rating: 4.6,
+    reviewCount: 45
+  }
+];
