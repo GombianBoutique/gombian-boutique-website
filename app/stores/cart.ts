@@ -48,42 +48,56 @@ export const useCartStore = defineStore('cart', () => {
   });
 
   // Actions
-  const addItem = (product: Omit<CartItem, 'totalPrice'>) => {
-    const existingItem = state.value.items.find(item => item.productId === product.productId);
+  const addItem = (item: Omit<CartItem, 'totalPrice'> & { totalPrice?: number }) => {
+    const existingItem = state.value.items.find(i => i.productId === item.productId);
 
     if (existingItem) {
       // If item exists, update quantity
-      const newQuantity = Math.min(existingItem.quantity + product.quantity, existingItem.inventoryCount);
+      const newQuantity = Math.min(existingItem.quantity + item.quantity, existingItem.inventoryCount);
       existingItem.quantity = newQuantity;
-      existingItem.totalPrice = existingItem.unitPrice * existingItem.quantity;
+      existingItem.totalPrice = existingItem.unitPrice * newQuantity;
     } else {
       // If item doesn't exist, add new item
       const newItem: CartItem = {
-        ...product,
-        totalPrice: product.unitPrice * product.quantity
+        ...item,
+        totalPrice: item.totalPrice || item.unitPrice * item.quantity
       };
       state.value.items.push(newItem);
     }
+
+    // Save to localStorage
+    saveCartToLocalStorage();
   };
 
   const removeItem = (productId: string) => {
     state.value.items = state.value.items.filter(item => item.productId !== productId);
+    saveCartToLocalStorage();
   };
 
   const updateItemQuantity = (productId: string, quantity: number) => {
     const item = state.value.items.find(item => item.productId === productId);
     if (item) {
-      item.quantity = Math.max(1, Math.min(quantity, item.inventoryCount)); // Ensure quantity is between 1 and inventory count
+      item.quantity = Math.max(1, Math.min(quantity, item.inventoryCount));
       item.totalPrice = item.unitPrice * item.quantity;
+      saveCartToLocalStorage();
     }
   };
 
   const clearCart = () => {
     state.value.items = [];
+    saveCartToLocalStorage();
   };
 
   const setCurrency = (currency: string) => {
     state.value.currency = currency;
+    saveCartToLocalStorage();
+  };
+
+  // Save cart to localStorage
+  const saveCartToLocalStorage = () => {
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('cart', JSON.stringify(state.value));
+    }
   };
 
   // Initialize from localStorage if available
@@ -97,12 +111,6 @@ export const useCartStore = defineStore('cart', () => {
         console.error('Failed to parse cart from localStorage:', error);
       }
     }
-  }
-
-  // Watch for changes and save to localStorage
-  if (typeof window !== 'undefined') {
-    // Using a watcher to save cart to localStorage whenever it changes
-    // Note: In a real implementation, you'd use Vue's watch function here
   }
 
   return {

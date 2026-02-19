@@ -36,7 +36,12 @@
           <NuxtLink to="/policies" class="text-luxury-green hover:text-gold transition-colors duration-300 dark:text-gray-200 dark:hover:text-gold">Policies</NuxtLink>
           <NuxtLink to="/cart" class="text-luxury-green hover:text-gold transition-colors duration-300 dark:text-gray-200 dark:hover:text-gold relative">
             Cart
-            <span v-if="cart.itemCount > 0" class="absolute -top-2 -right-3 bg-gold text-luxury-green rounded-full w-6 h-6 flex items-center justify-center text-xs font-bold animate-pop-in dark:bg-luxury-green dark:text-white">{{ cart.itemCount }}</span>
+            <span
+              v-if="cartStore.itemCount > 0"
+              class="absolute -top-2 -right-3 bg-gold text-luxury-green rounded-full w-6 h-6 flex items-center justify-center text-xs font-bold animate-pop-in dark:bg-luxury-green dark:text-white"
+            >
+              {{ cartStore.itemCount }}
+            </span>
           </NuxtLink>
           <div class="flex space-x-4 items-center">
             <NuxtLink to="/login" class="text-luxury-green hover:text-gold transition-colors duration-300 dark:text-gray-200 dark:hover:text-gold">Login</NuxtLink>
@@ -102,12 +107,7 @@
 <script setup>
 const mobileMenuOpen = ref(false)
 const mobileCollectionOpen = ref(false)
-const { cart, syncCartFromStorage } = useCart()
-
-// On component mount, sync cart from localStorage to ensure we have the latest state
-onMounted(() => {
-  syncCartFromStorage()
-})
+const cartStore = useCartStore()
 
 const toggleMenu = () => {
   mobileMenuOpen.value = !mobileMenuOpen.value

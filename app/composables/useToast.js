@@ -1,5 +1,5 @@
 // composables/useToast.js
-import { reactive, computed, readonly } from 'vue'
+import { reactive, computed } from 'vue'
 
 // Global state for toasts
 const state = reactive({
@@ -30,10 +30,31 @@ const removeToast = (id) => {
   }
 }
 
+// Convenience methods
+const success = (message, title = 'Success') => {
+  addToast(title, message, 'success')
+}
+
+const error = (message, title = 'Error') => {
+  addToast(title, message, 'error')
+}
+
+const warning = (message, title = 'Warning') => {
+  addToast(title, message, 'warning')
+}
+
+const info = (message, title = 'Info') => {
+  addToast(title, message, 'info')
+}
+
 export default function useToast() {
   return {
-    toasts: computed(() => [...state.toasts]), // Create a new array to ensure reactivity
+    toasts: computed(() => [...state.toasts]),
     addToast,
-    removeToast
+    removeToast,
+    success,
+    error,
+    warning,
+    info
   }
 }
