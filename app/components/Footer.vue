@@ -4,8 +4,7 @@
       <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
         <div class="md:col-span-2">
           <div class="flex items-center mb-4">
-            <img src="/images/logos/Logo 01.png" alt="Gombian Boutique Logo" class="w-16 h-16 mr-4">
-            <h3 class="text-xl font-serif-display text-white dark:text-gray-200">Gombian Boutique</h3>
+            <img src="/images/logos/logo.png" alt="Gombian Boutique Logo" class="h-16 w-auto mr-4">
           </div>
           <p class="mb-4 text-white dark:text-gray-300">Experience our curated collection of luxury perfumes crafted with the finest ingredients. Discover exquisite fragrances that are an intimate expression of identity and an art form that engages the senses.</p>
           <div class="flex space-x-4">

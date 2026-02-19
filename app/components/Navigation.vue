@@ -3,9 +3,8 @@
     <div class="container mx-auto px-4">
       <div class="flex justify-between items-center py-4">
         <div class="flex items-center">
-          <img src="/images/logos/Logo 01.png" alt="Gombian Boutique Logo" class="w-10 h-10 mr-2">
-          <NuxtLink to="/" class="text-2xl font-serif-display font-bold text-luxury-green transition-colors duration-300 dark:text-gold">
-            Gombian Boutique
+          <NuxtLink to="/" class="flex items-center">
+            <img src="/images/logos/logo.png" alt="Gombian Boutique Logo" class="h-12 w-auto mr-2">
           </NuxtLink>
         </div>
 

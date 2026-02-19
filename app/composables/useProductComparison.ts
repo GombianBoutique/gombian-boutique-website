@@ -1,9 +1,16 @@
-<!-- composables/useProductComparison.js -->
+// composables/useProductComparison.ts
+import type { Ref } from 'vue'
+
+interface Product {
+  id: string | number
+  [key: string]: any
+}
+
 export const useProductComparison = () => {
   const MAX_COMPARISON_ITEMS = 4
-  const comparisonList = useState('productComparison', () => [])
+  const comparisonList = useState<Product[]>('productComparison', () => [])
 
-  const addToComparison = (product) => {
+  const addToComparison = (product: Product) => {
     // Check if product is already in comparison list
     const existingIndex = comparisonList.value.findIndex(p => p.id === product.id)
     if (existingIndex !== -1) {
@@ -22,7 +29,7 @@ export const useProductComparison = () => {
     return true
   }
 
-  const removeFromComparison = (productId) => {
+  const removeFromComparison = (productId: string | number) => {
     const index = comparisonList.value.findIndex(p => p.id === productId)
     if (index !== -1) {
       comparisonList.value.splice(index, 1)
@@ -35,7 +42,7 @@ export const useProductComparison = () => {
     comparisonList.value = []
   }
 
-  const isInComparison = (productId) => {
+  const isInComparison = (productId: string | number) => {
     return comparisonList.value.some(p => p.id === productId)
   }
 

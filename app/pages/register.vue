@@ -3,10 +3,10 @@
     <div class="w-full max-w-md">
       <div class="text-center mb-10">
         <NuxtLink to="/" class="inline-block">
-          <img 
-            src="/images/logos/Logo 01.png" 
-            alt="Gombian Boutique Logo" 
-            class="w-16 h-16 mx-auto mb-4"
+          <img
+            src="/images/logos/logo.png"
+            alt="Gombian Boutique Logo"
+            class="w-20 h-auto mx-auto mb-4"
           >
         </NuxtLink>
         <h1 class="text-3xl font-serif-display font-bold text-luxury-green dark:text-gold">Create Account</h1>

@@ -2,17 +2,14 @@
 <template>
   <header class="sticky top-0 z-50 w-full border-b bg-white/90 backdrop-blur-sm dark:bg-gray-900/90">
     <div class="container flex h-16 items-center justify-between px-4">
-      <!-- Logo and Site Name -->
-      <div class="flex items-center space-x-2">
-        <NuxtLink to="/" class="flex items-center space-x-2">
-          <img 
-            src="/images/logos/Logo 01.png" 
-            alt="Gombian Boutique Logo" 
-            class="h-10 w-10"
+      <!-- Logo -->
+      <div class="flex items-center">
+        <NuxtLink to="/" class="flex items-center">
+          <img
+            src="/images/logos/logo.png"
+            alt="Gombian Boutique Logo"
+            class="h-12 w-auto"
           >
-          <span class="text-2xl font-serif-display font-bold text-luxury-green transition-colors duration-300 dark:text-gold">
-            Gombian Boutique
-          </span>
         </NuxtLink>
       </div>
 

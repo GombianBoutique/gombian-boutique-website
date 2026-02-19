@@ -1,5 +1,5 @@
 // utils/index.js
-export * from './formatting.js';
+export * from './formatting';
 
 /**
  * Debounce function to limit the rate at which a function can fire

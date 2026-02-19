@@ -5,13 +5,12 @@
       <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
         <!-- Brand Info -->
         <div class="md:col-span-1">
-          <div class="flex items-center space-x-2 mb-4">
-            <img 
-              src="/images/logos/Logo 01.png" 
-              alt="Gombian Boutique Logo" 
-              class="h-10 w-10"
+          <div class="flex items-center mb-4">
+            <img
+              src="/images/logos/logo.png"
+              alt="Gombian Boutique Logo"
+              class="h-12 w-auto"
             >
-            <span class="text-xl font-serif-display font-bold">Gombian Boutique</span>
           </div>
           <p class="text-neutral-light mb-4">
             Where the art of fragrance meets the luxury of villa-inspired perfumes. 
