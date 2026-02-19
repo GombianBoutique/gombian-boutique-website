@@ -107,7 +107,7 @@
 </template>
 
 <script setup>
-import { formatCurrency } from '~/utils/formatting'
+import { formatCurrency, capitalize } from '~/utils'
 
 const props = defineProps({
   product: {
@@ -116,7 +116,10 @@ const props = defineProps({
   }
 })
 
-const isFavorite = ref(false)
+// Initialize favorite state from wishlist
+const wishlist = useWishlist()
+const isFavorite = computed(() => wishlist.isInWishlist(props.product.id))
+
 const {
   comparisonList,
   addToComparison: addToComparisonList,
@@ -129,8 +132,12 @@ const isInComparison = computed(() => {
 })
 
 const toggleFavorite = () => {
-  isFavorite.value = !isFavorite.value
-  // In a real app, you would add/remove from favorites list
+  wishlist.toggleItem({
+    productId: props.product.id,
+    productName: props.product.name,
+    productImage: props.product.images[0],
+    price: props.product.price
+  })
 }
 
 const addToComparison = () => {
@@ -141,22 +148,21 @@ const addToComparison = () => {
   }
 }
 
-const quickView = () => {
-  // In a real app, you would open a quick view modal
-  console.log('Quick view for', props.product.name)
+const quickView = async () => {
+  // Navigate to product detail page
+  await navigateTo(`/products/${props.product.id}`)
 }
 
 const addToCart = () => {
-  // In a real app, you would add the product to the cart
   const cartStore = useCartStore()
   cartStore.addItem({
     productId: props.product.id,
     productName: props.product.name,
-    quantity: 1,
-    unitPrice: props.product.price,
     productImage: props.product.images[0],
-    inStock: props.product.inStock,
-    inventoryCount: props.product.inventoryCount
+    unitPrice: props.product.price,
+    quantity: 1,
+    inventoryCount: props.product.inventoryCount,
+    totalPrice: props.product.price
   })
 }
 </script>
