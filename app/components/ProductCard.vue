@@ -131,7 +131,9 @@ const isInComparison = computed(() => {
   return checkInComparison(props.product.id)
 })
 
-const toggleFavorite = () => {
+const toggleFavorite = (event) => {
+  event.preventDefault()
+  event.stopPropagation()
   wishlist.toggleItem({
     productId: props.product.id,
     productName: props.product.name,
@@ -140,7 +142,9 @@ const toggleFavorite = () => {
   })
 }
 
-const addToComparison = () => {
+const addToComparison = (event) => {
+  event.preventDefault()
+  event.stopPropagation()
   if (isInComparison.value) {
     removeFromComparison(props.product.id)
   } else {
@@ -148,12 +152,16 @@ const addToComparison = () => {
   }
 }
 
-const quickView = async () => {
-  // Navigate to product detail page
-  await navigateTo(`/products/${props.product.id}`)
+const quickView = async (event) => {
+  event.preventDefault()
+  event.stopPropagation()
+  // Use window.location for reliable navigation
+  window.location.href = `/products/${props.product.id}`
 }
 
-const addToCart = () => {
+const addToCart = (event) => {
+  event.preventDefault()
+  event.stopPropagation()
   const cartStore = useCartStore()
   cartStore.addItem({
     productId: props.product.id,
