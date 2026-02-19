@@ -34,20 +34,28 @@
           <NuxtLink to="/about" class="text-luxury-green hover:text-gold transition-colors duration-300 dark:text-gray-200 dark:hover:text-gold">About</NuxtLink>
           <NuxtLink to="/contact" class="text-luxury-green hover:text-gold transition-colors duration-300 dark:text-gray-200 dark:hover:text-gold">Contact</NuxtLink>
           <NuxtLink to="/policies" class="text-luxury-green hover:text-gold transition-colors duration-300 dark:text-gray-200 dark:hover:text-gold">Policies</NuxtLink>
-          <NuxtLink to="/cart" class="text-luxury-green hover:text-gold transition-colors duration-300 dark:text-gray-200 dark:hover:text-gold relative">
-            Cart
+          
+          <!-- Wishlist Icon -->
+          <NuxtLink to="/wishlist" class="relative text-luxury-green hover:text-gold transition-colors duration-300 dark:text-gray-200 dark:hover:text-gold">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+            </svg>
+          </NuxtLink>
+          
+          <!-- Cart Icon -->
+          <NuxtLink to="/cart" class="relative text-luxury-green hover:text-gold transition-colors duration-300 dark:text-gray-200 dark:hover:text-gold">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
+            </svg>
             <span
               v-if="cartStore.itemCount > 0"
-              class="absolute -top-2 -right-3 bg-gold text-luxury-green rounded-full w-6 h-6 flex items-center justify-center text-xs font-bold animate-pop-in dark:bg-luxury-green dark:text-white"
+              class="absolute -top-2 -right-2 bg-gold text-luxury-green rounded-full w-5 h-5 flex items-center justify-center text-xs font-bold animate-pop-in dark:bg-luxury-green dark:text-white"
             >
               {{ cartStore.itemCount }}
             </span>
           </NuxtLink>
-          <div class="flex space-x-4 items-center">
-            <NuxtLink to="/login" class="text-luxury-green hover:text-gold transition-colors duration-300 dark:text-gray-200 dark:hover:text-gold">Login</NuxtLink>
-            <NuxtLink to="/register" class="bg-luxury-green text-white px-4 py-2 rounded-full hover:bg-gold hover:text-luxury-green transition-colors duration-300 dark:bg-gold dark:text-luxury-green dark:hover:bg-luxury-green dark:hover:text-white">Sign Up</NuxtLink>
-          </div>
-          <ColorModeToggle class="ml-4" />
+          
+          <ColorModeToggle class="ml-2" />
         </nav>
 
         <!-- Mobile menu button -->
@@ -90,14 +98,23 @@
           <NuxtLink to="/about" class="text-luxury-green hover:text-gold transition-colors duration-300 py-2 dark:text-gray-200 dark:hover:text-gold">About</NuxtLink>
           <NuxtLink to="/contact" class="text-luxury-green hover:text-gold transition-colors duration-300 py-2 dark:text-gray-200 dark:hover:text-gold">Contact</NuxtLink>
           <NuxtLink to="/policies" class="text-luxury-green hover:text-gold transition-colors duration-300 py-2 dark:text-gray-200 dark:hover:text-gold">Policies</NuxtLink>
-          <NuxtLink to="/cart" class="text-luxury-green hover:text-gold transition-colors duration-300 py-2 dark:text-gray-200 dark:hover:text-gold relative">
-            Cart
-            <span v-if="cart.itemCount > 0" class="absolute -top-2 -right-3 bg-gold text-luxury-green rounded-full w-6 h-6 flex items-center justify-center text-xs font-bold animate-pop-in dark:bg-luxury-green dark:text-white">{{ cart.itemCount }}</span>
+          
+          <!-- Wishlist -->
+          <NuxtLink to="/wishlist" class="flex items-center text-luxury-green hover:text-gold transition-colors duration-300 py-2 dark:text-gray-200 dark:hover:text-gold">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+            </svg>
+            Wishlist
           </NuxtLink>
-          <div class="pt-2 border-t border-gray-200 dark:border-gray-700 flex flex-col space-y-3">
-            <NuxtLink to="/login" class="text-luxury-green hover:text-gold transition-colors duration-300 py-1 dark:text-gray-200 dark:hover:text-gold">Login</NuxtLink>
-            <NuxtLink to="/register" class="bg-luxury-green text-white px-4 py-2 rounded-full hover:bg-gold hover:text-luxury-green transition-colors duration-300 text-center dark:bg-gold dark:text-luxury-green dark:hover:bg-luxury-green dark:hover:text-white">Sign Up</NuxtLink>
-          </div>
+          
+          <!-- Cart -->
+          <NuxtLink to="/cart" class="flex items-center text-luxury-green hover:text-gold transition-colors duration-300 py-2 dark:text-gray-200 dark:hover:text-gold relative">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
+            </svg>
+            Cart
+            <span v-if="cartStore.itemCount > 0" class="absolute -top-2 -right-2 bg-gold text-luxury-green rounded-full w-5 h-5 flex items-center justify-center text-xs font-bold animate-pop-in dark:bg-luxury-green dark:text-white">{{ cartStore.itemCount }}</span>
+          </NuxtLink>
         </nav>
       </div>
     </div>
