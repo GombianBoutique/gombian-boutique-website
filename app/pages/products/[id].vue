@@ -294,21 +294,14 @@ definePageMeta({
 })
 
 const route = useRoute()
-const { products } = useProductsStore()
+const { products } = useProducts()
 const cartStore = useCartStore()
 
-// Product data - in a real app this would come from an API
-const { data: product } = await useAsyncData(`product-${route.params.id}`, async () => {
-  // Simulating API call - in a real app you would fetch from an API
-  const allProducts = await $fetch('/api/products')
-  return allProducts.data.find(p => p.id === route.params.id)
+// Product data - get from composable
+const product = computed(() => {
+  if (!products.value) return null
+  return products.value.find(p => p.id === route.params.id)
 })
-
-// If product is not found in the simulated API, use the static data
-if (!product.value) {
-  const staticProducts = await $fetch('/data/products.json')
-  product.value = staticProducts.products.find(p => p.id === route.params.id)
-}
 
 // State
 const selectedImage = ref('')
@@ -320,8 +313,8 @@ const activeTab = ref('scent-notes')
 // Initialize state
 onMounted(() => {
   if (product.value) {
-    selectedImage = product.value.images[0]
-    selectedVolume = product.value.volume
+    selectedImage.value = product.value.images[0]
+    selectedVolume.value = product.value.volume
   }
 })
 
@@ -362,18 +355,18 @@ const decreaseQuantity = () => {
 }
 
 const addToCart = () => {
-  if (!product.value.inStock) return
-  
+  if (!product.value || !product.value.inStock) return
+
   cartStore.addItem({
     productId: product.value.id,
     productName: product.value.name,
-    quantity: quantity.value,
-    unitPrice: product.value.price,
     productImage: selectedImage.value,
-    inStock: product.value.inStock,
-    inventoryCount: product.value.inventoryCount
+    unitPrice: product.value.price,
+    quantity: quantity.value,
+    inventoryCount: product.value.inventoryCount,
+    totalPrice: product.value.price * quantity.value
   })
-  
+
   // Show success message
   const toast = useToast()
   toast.success(`${product.value.name} added to cart!`)
