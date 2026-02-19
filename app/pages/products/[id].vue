@@ -201,27 +201,27 @@
             <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-sm">
               <h4 class="font-bold text-luxury-green dark:text-gold mb-4">Top Notes</h4>
               <ul class="space-y-2">
-                <li v-for="note in product.scentNotes.top" :key="note" class="flex items-center">
+                <li v-for="note in product?.scentNotes?.top || []" :key="note" class="flex items-center">
                   <span class="w-2 h-2 bg-luxury-green rounded-full mr-3"></span>
                   {{ capitalize(note) }}
                 </li>
               </ul>
             </div>
-            
+
             <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-sm">
               <h4 class="font-bold text-luxury-green dark:text-gold mb-4">Middle Notes</h4>
               <ul class="space-y-2">
-                <li v-for="note in product.scentNotes.middle" :key="note" class="flex items-center">
+                <li v-for="note in product?.scentNotes?.middle || []" :key="note" class="flex items-center">
                   <span class="w-2 h-2 bg-luxury-green rounded-full mr-3"></span>
                   {{ capitalize(note) }}
                 </li>
               </ul>
             </div>
-            
+
             <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-sm">
               <h4 class="font-bold text-luxury-green dark:text-gold mb-4">Base Notes</h4>
               <ul class="space-y-2">
-                <li v-for="note in product.scentNotes.base" :key="note" class="flex items-center">
+                <li v-for="note in product?.scentNotes?.base || []" :key="note" class="flex items-center">
                   <span class="w-2 h-2 bg-luxury-green rounded-full mr-3"></span>
                   {{ capitalize(note) }}
                 </li>

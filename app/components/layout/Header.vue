@@ -41,28 +41,18 @@
           </svg>
         </button>
 
-        <!-- Cart with badge -->
+        <!-- Cart Icon with badge -->
         <NuxtLink to="/cart" class="relative text-luxury-green hover:text-gold transition-colors duration-300 dark:text-gray-200 dark:hover:text-gold">
           <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
           </svg>
-          <span 
-            v-if="cartStore.itemCount > 0" 
+          <span
+            v-if="cartStore.itemCount > 0"
             class="absolute -top-2 -right-2 bg-gold text-luxury-green rounded-full w-5 h-5 flex items-center justify-center text-xs font-bold dark:bg-luxury-green dark:text-white"
           >
             {{ cartStore.itemCount }}
           </span>
         </NuxtLink>
-
-        <!-- User Menu -->
-        <div class="flex items-center space-x-2">
-          <NuxtLink to="/login" class="text-luxury-green hover:text-gold transition-colors duration-300 dark:text-gray-200 dark:hover:text-gold">
-            Login
-          </NuxtLink>
-          <NuxtLink to="/register" class="hidden md:block bg-luxury-green text-white px-4 py-2 rounded-full hover:bg-gold hover:text-luxury-green transition-colors duration-300 dark:bg-gold dark:text-luxury-green dark:hover:bg-luxury-green dark:hover:text-white">
-            Sign Up
-          </NuxtLink>
-        </div>
 
         <!-- Color Mode Toggle -->
         <ClientOnly>
@@ -115,26 +105,19 @@
         >
           Contact
         </NuxtLink>
-        <NuxtLink 
-          to="/policies" 
+        <NuxtLink
+          to="/policies"
           class="block py-2 text-luxury-green hover:text-gold transition-colors duration-300 dark:text-gray-200 dark:hover:text-gold"
           @click="mobileMenuOpen = false"
         >
           Policies
         </NuxtLink>
-        <NuxtLink 
-          to="/login" 
+        <NuxtLink
+          to="/cart"
           class="block py-2 text-luxury-green hover:text-gold transition-colors duration-300 dark:text-gray-200 dark:hover:text-gold"
           @click="mobileMenuOpen = false"
         >
-          Login
-        </NuxtLink>
-        <NuxtLink 
-          to="/register" 
-          class="block py-2 text-center bg-luxury-green text-white rounded-full hover:bg-gold hover:text-luxury-green transition-colors duration-300 dark:bg-gold dark:text-luxury-green dark:hover:bg-luxury-green dark:hover:text-white"
-          @click="mobileMenuOpen = false"
-        >
-          Sign Up
+          Cart
         </NuxtLink>
       </div>
     </div>
