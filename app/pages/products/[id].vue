@@ -231,7 +231,7 @@
           
           <div class="bg-luxury-green/10 dark:bg-gray-800 p-6 rounded-lg">
             <h4 class="font-bold text-luxury-green dark:text-gold mb-2">Longevity</h4>
-            <p class="text-gray-700 dark:text-gray-300">{{ product.longevity }}</p>
+            <p class="text-gray-700 dark:text-gray-300">{{ product?.longevity || 'Not specified' }}</p>
           </div>
         </div>
 
@@ -240,9 +240,9 @@
           <h3 class="text-xl font-serif-display font-bold text-luxury-green dark:text-white">Ingredients</h3>
           <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-sm">
             <ul class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
-              <li 
-                v-for="ingredient in product.ingredients" 
-                :key="ingredient" 
+              <li
+                v-for="ingredient in product?.ingredients || []"
+                :key="ingredient"
                 class="px-4 py-2 bg-neutral-light dark:bg-gray-700 rounded-full text-sm"
               >
                 {{ capitalize(ingredient) }}
@@ -257,21 +257,21 @@
           <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div>
               <h4 class="font-bold text-luxury-green dark:text-gold mb-2">Fragrance Family</h4>
-              <p class="text-gray-700 dark:text-gray-300">{{ product.fragranceFamily }}</p>
+              <p class="text-gray-700 dark:text-gray-300">{{ product?.fragranceFamily || 'Not specified' }}</p>
             </div>
             <div>
               <h4 class="font-bold text-luxury-green dark:text-gold mb-2">Gender</h4>
               <p class="text-gray-700 dark:text-gray-300">
-                {{ product.gender === 'unisex' ? 'Unisex' : capitalize(product.gender) }}
+                {{ product?.gender === 'unisex' ? 'Unisex' : capitalize(product?.gender) || 'Not specified' }}
               </p>
             </div>
             <div>
               <h4 class="font-bold text-luxury-green dark:text-gold mb-2">Season</h4>
-              <p class="text-gray-700 dark:text-gray-300">{{ product.season }}</p>
+              <p class="text-gray-700 dark:text-gray-300">{{ product?.season || 'Not specified' }}</p>
             </div>
             <div>
               <h4 class="font-bold text-luxury-green dark:text-gold mb-2">Concentration</h4>
-              <p class="text-gray-700 dark:text-gray-300">{{ product.concentration }}</p>
+              <p class="text-gray-700 dark:text-gray-300">{{ product?.concentration || 'Not specified' }}</p>
             </div>
           </div>
         </div>
