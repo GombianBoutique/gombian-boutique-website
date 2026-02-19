@@ -27,9 +27,6 @@
         <NuxtLink to="/contact" class="text-luxury-green hover:text-gold transition-colors duration-300 dark:text-gray-200 dark:hover:text-gold">
           Contact
         </NuxtLink>
-        <NuxtLink to="/policies" class="text-luxury-green hover:text-gold transition-colors duration-300 dark:text-gray-200 dark:hover:text-gold">
-          Policies
-        </NuxtLink>
       </nav>
 
       <!-- Right side actions -->

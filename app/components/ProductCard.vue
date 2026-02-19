@@ -163,15 +163,19 @@ const addToCart = (event) => {
   event.preventDefault()
   event.stopPropagation()
   const cartStore = useCartStore()
+  const toast = useToast()
+  
   cartStore.addItem({
     productId: props.product.id,
     productName: props.product.name,
     productImage: props.product.images[0],
     unitPrice: props.product.price,
     quantity: 1,
-    inventoryCount: props.product.inventoryCount,
+    inventoryCount: props.product.inventoryCount || 10,
     totalPrice: props.product.price
   })
+  
+  toast.success(`${props.product.name} added to cart!`, 'Added to Cart')
 }
 </script>
 

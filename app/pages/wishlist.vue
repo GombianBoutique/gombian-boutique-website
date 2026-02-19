@@ -103,33 +103,41 @@
 </template>
 
 <script setup>
-import { formatCurrency } from '~/utils/formatting'
-import { useWishlist } from '~/composables/useWishlist'
-import { useCartStore } from '~/stores/cart'
+import { formatCurrency } from '~/utils'
 
 definePageMeta({
   layout: 'default'
 })
 
-const { wishlist, removeFromWishlist, clearWishlist } = useWishlist()
+const wishlist = useWishlist()
 const cartStore = useCartStore()
+const toast = useToast()
+
+const removeFromWishlist = (productId) => {
+  wishlist.removeItem(productId)
+  toast.success('Item removed from wishlist', 'Removed')
+}
+
+const clearWishlist = () => {
+  wishlist.clearWishlist()
+  toast.info('Wishlist cleared', 'Cleared')
+}
 
 const addToCart = (product) => {
   cartStore.addItem({
     productId: product.id,
     productName: product.name,
-    quantity: 1,
-    unitPrice: product.price,
     productImage: product.images[0],
-    inStock: product.inStock,
-    inventoryCount: product.inventoryCount
+    unitPrice: product.price,
+    quantity: 1,
+    inventoryCount: product.inventoryCount || 10,
+    totalPrice: product.price
   })
-  
+
   // Remove from wishlist after adding to cart
-  removeFromWishlist(product.id)
-  
-  const toast = useToast()
-  toast.success(`${product.name} added to cart!`)
+  wishlist.removeItem(product.id)
+
+  toast.success(`${product.name} added to cart!`, 'Added to Cart')
 }
 
 // Set page title

@@ -363,13 +363,12 @@ const addToCart = () => {
     productImage: selectedImage.value,
     unitPrice: product.value.price,
     quantity: quantity.value,
-    inventoryCount: product.value.inventoryCount,
+    inventoryCount: product.value.inventoryCount || 10,
     totalPrice: product.value.price * quantity.value
   })
 
   // Show success message
-  const toast = useToast()
-  toast.success(`${product.value.name} added to cart!`)
+  toast.success(`${product.value.name} added to cart!`, 'Added to Cart')
 }
 
 const toggleWishlist = () => {
