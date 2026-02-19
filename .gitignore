@@ -89,3 +89,12 @@ coverage/
 !.yarn/releases
 !.yarn/sdks
 !.yarn/versions
+
+# Blueprint directories (local development only)
+her-luxe-vault/
+blueprint_extract_v1/
+extracted_blueprint/
+
+# Document files (not for version control)
+Website Questionaire Answers.docx
+*.docx
