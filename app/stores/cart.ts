@@ -75,10 +75,16 @@ export const useCartStore = defineStore('cart', () => {
   };
 
   const updateItemQuantity = (productId: string, quantity: number) => {
-    const item = state.value.items.find(item => item.productId === productId);
-    if (item) {
-      item.quantity = Math.max(1, Math.min(quantity, item.inventoryCount));
-      item.totalPrice = item.unitPrice * item.quantity;
+    const index = state.value.items.findIndex(item => item.productId === productId);
+    if (index !== -1) {
+      const item = state.value.items[index];
+      const newQuantity = Math.max(1, Math.min(quantity, item.inventoryCount));
+      // Replace the item to trigger reactivity
+      state.value.items[index] = {
+        ...item,
+        quantity: newQuantity,
+        totalPrice: item.unitPrice * newQuantity
+      };
       saveCartToLocalStorage();
     }
   };
@@ -114,9 +120,9 @@ export const useCartStore = defineStore('cart', () => {
   }
 
   return {
-    // State
-    items: state.value.items,
-    currency: state.value.currency,
+    // State - return the reactive state object, not unwrapped values
+    items: computed(() => state.value.items),
+    currency: computed(() => state.value.currency),
 
     // Getters
     itemCount,

@@ -4,7 +4,7 @@
     <h1 class="text-3xl font-serif-display font-bold text-luxury-green dark:text-white mb-8">Your Shopping Cart</h1>
 
     <!-- Empty Cart Message -->
-    <div v-if="cartStore.items.length === 0" class="text-center py-16">
+    <div v-if="(cartStore.items.value || cartStore.items).length === 0" class="text-center py-16">
       <svg class="mx-auto h-16 w-16 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
       </svg>
@@ -22,7 +22,7 @@
     <!-- Cart Items -->
     <div v-else class="bg-white dark:bg-gray-800 rounded-xl shadow-md overflow-hidden">
       <div class="p-4 bg-luxury-green/10 dark:bg-gray-700 flex justify-between items-center">
-        <h2 class="text-lg font-bold text-luxury-green dark:text-white">{{ cartStore.itemCount }} items in cart</h2>
+        <h2 class="text-lg font-bold text-luxury-green dark:text-white">{{ (cartStore.items.value || cartStore.items).length }} items in cart</h2>
         <button
           @click="clearCart"
           class="text-sm text-red-600 dark:text-red-400 hover:underline"
@@ -32,8 +32,8 @@
       </div>
 
       <ul class="divide-y divide-gray-200 dark:divide-gray-700">
-        <li 
-          v-for="item in cartStore.items" 
+        <li
+          v-for="item in (cartStore.items.value || cartStore.items)"
           :key="item.productId"
           class="p-6 flex flex-col md:flex-row items-center"
         >
@@ -54,7 +54,7 @@
             </h3>
             <p class="text-gray-600 dark:text-gray-400 mt-1">SKU: {{ item.productId }}</p>
             <div class="mt-2 text-xl font-bold text-luxury-green dark:text-gold">
-              {{ formatCurrency(item.unitPrice, cartStore.currency) }}
+              {{ formatCurrency(item.unitPrice, cartStore.currency.value || cartStore.currency) }}
             </div>
           </div>
 
@@ -85,7 +85,7 @@
           </div>
 
           <div class="mt-6 md:mt-0 text-xl font-bold text-luxury-green dark:text-gold">
-            {{ formatCurrency(item.totalPrice, cartStore.currency) }}
+            {{ formatCurrency(item.totalPrice, cartStore.currency.value || cartStore.currency) }}
           </div>
         </li>
       </ul>
@@ -98,19 +98,19 @@
             <div class="space-y-2">
               <div class="flex justify-between">
                 <span class="text-gray-600 dark:text-gray-300">Subtotal</span>
-                <span class="text-gray-900 dark:text-white">{{ formatCurrency(cartStore.subtotal, cartStore.currency) }}</span>
+                <span class="text-gray-900 dark:text-white">{{ formatCurrency(cartStore.subtotal.value || cartStore.subtotal, cartStore.currency.value || cartStore.currency) }}</span>
               </div>
               <div class="flex justify-between">
                 <span class="text-gray-600 dark:text-gray-300">Shipping</span>
-                <span class="text-gray-900 dark:text-white">{{ formatCurrency(cartStore.shippingCost, cartStore.currency) }}</span>
+                <span class="text-gray-900 dark:text-white">{{ formatCurrency(cartStore.shippingCost.value || cartStore.shippingCost, cartStore.currency.value || cartStore.currency) }}</span>
               </div>
               <div class="flex justify-between">
                 <span class="text-gray-600 dark:text-gray-300">Tax</span>
-                <span class="text-gray-900 dark:text-white">{{ formatCurrency(cartStore.taxAmount, cartStore.currency) }}</span>
+                <span class="text-gray-900 dark:text-white">{{ formatCurrency(cartStore.taxAmount.value || cartStore.taxAmount, cartStore.currency.value || cartStore.currency) }}</span>
               </div>
               <div class="border-t border-gray-200 dark:border-gray-600 pt-2 mt-2 flex justify-between font-bold">
                 <span class="text-luxury-green dark:text-white">Total</span>
-                <span class="text-luxury-green dark:text-gold">{{ formatCurrency(cartStore.totalPriceWithTaxAndShipping, cartStore.currency) }}</span>
+                <span class="text-luxury-green dark:text-gold">{{ formatCurrency(cartStore.totalPriceWithTaxAndShipping.value || cartStore.totalPriceWithTaxAndShipping, cartStore.currency.value || cartStore.currency) }}</span>
               </div>
             </div>
           </div>
@@ -147,7 +147,8 @@ const toast = useToast()
 
 // Methods
 const increaseQuantity = (productId) => {
-  const item = cartStore.items.find(i => i.productId === productId)
+  const items = cartStore.items.value || cartStore.items
+  const item = items.find(i => i.productId === productId)
   if (item && item.quantity < item.inventoryCount) {
     cartStore.updateItemQuantity(productId, item.quantity + 1)
     toast.success('Quantity updated', 'Updated')
@@ -155,7 +156,8 @@ const increaseQuantity = (productId) => {
 }
 
 const decreaseQuantity = (productId) => {
-  const item = cartStore.items.find(i => i.productId === productId)
+  const items = cartStore.items.value || cartStore.items
+  const item = items.find(i => i.productId === productId)
   if (item && item.quantity > 1) {
     cartStore.updateItemQuantity(productId, item.quantity - 1)
     toast.success('Quantity updated', 'Updated')
@@ -163,7 +165,8 @@ const decreaseQuantity = (productId) => {
 }
 
 const removeFromCart = (productId) => {
-  const item = cartStore.items.find(i => i.productId === productId)
+  const items = cartStore.items.value || cartStore.items
+  const item = items.find(i => i.productId === productId)
   const itemName = item ? item.productName : 'Item'
   cartStore.removeItem(productId)
   toast.success(`${itemName} removed from cart`, 'Removed')
