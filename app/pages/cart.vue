@@ -21,8 +21,14 @@
 
     <!-- Cart Items -->
     <div v-else class="bg-white dark:bg-gray-800 rounded-xl shadow-md overflow-hidden">
-      <div class="p-4 bg-luxury-green/10 dark:bg-gray-700">
+      <div class="p-4 bg-luxury-green/10 dark:bg-gray-700 flex justify-between items-center">
         <h2 class="text-lg font-bold text-luxury-green dark:text-white">{{ cartStore.itemCount }} items in cart</h2>
+        <button
+          @click="clearCart"
+          class="text-sm text-red-600 dark:text-red-400 hover:underline"
+        >
+          Clear All
+        </button>
       </div>
 
       <ul class="divide-y divide-gray-200 dark:divide-gray-700">
@@ -130,19 +136,21 @@
 </template>
 
 <script setup>
-import { formatCurrency } from '~/utils/formatting'
+import { formatCurrency } from '~/utils'
 
 definePageMeta({
   layout: 'default'
 })
 
 const cartStore = useCartStore()
+const toast = useToast()
 
 // Methods
 const increaseQuantity = (productId) => {
   const item = cartStore.items.find(i => i.productId === productId)
   if (item && item.quantity < item.inventoryCount) {
     cartStore.updateItemQuantity(productId, item.quantity + 1)
+    toast.success('Quantity updated', 'Updated')
   }
 }
 
@@ -150,13 +158,20 @@ const decreaseQuantity = (productId) => {
   const item = cartStore.items.find(i => i.productId === productId)
   if (item && item.quantity > 1) {
     cartStore.updateItemQuantity(productId, item.quantity - 1)
+    toast.success('Quantity updated', 'Updated')
   }
 }
 
 const removeFromCart = (productId) => {
+  const item = cartStore.items.find(i => i.productId === productId)
+  const itemName = item ? item.productName : 'Item'
   cartStore.removeItem(productId)
-  const toast = useToast()
-  toast.info('Item removed from cart')
+  toast.success(`${itemName} removed from cart`, 'Removed')
+}
+
+const clearCart = () => {
+  cartStore.clearCart()
+  toast.info('Cart cleared', 'Cleared')
 }
 
 // Set page title
