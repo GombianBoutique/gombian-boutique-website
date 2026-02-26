@@ -10,13 +10,28 @@
           Featured Perfumes
         </h2>
 
-        <div class="product-grid">
+        <!-- Loading State -->
+        <div v-if="loading" class="flex justify-center items-center py-16">
+          <div class="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-luxury-green"></div>
+          <span class="ml-4 text-lg text-luxury-green dark:text-white">Loading featured perfumes...</span>
+        </div>
+
+        <!-- Product Grid -->
+        <div v-else-if="featuredProducts.length > 0" class="product-grid">
           <ProductCard
             v-for="product in featuredProducts"
             :key="product.id"
             :product="product"
             class="fade-in-up"
           />
+        </div>
+
+        <!-- Empty State -->
+        <div v-else class="text-center py-8">
+          <p class="text-gray-600 dark:text-gray-400 mb-4">Unable to load featured perfumes at this time.</p>
+          <NuxtLink to="/products" class="luxury-button">
+            Browse All Perfumes
+          </NuxtLink>
         </div>
 
         <div class="text-center mt-12">
@@ -59,7 +74,12 @@
 </template>
 
 <script setup>
-const { products } = useProducts()
+const { products, loading, fetchProducts } = useProducts()
+
+// Ensure products are loaded
+if (!products.value || products.value.length === 0) {
+  await fetchProducts()
+}
 
 // Get the first 4 products as featured products
 const featuredProducts = computed(() => {

@@ -111,11 +111,12 @@
     </div>
     
     <div class="md:col-span-2 flex items-center">
-      <input 
+      <input
         id="isDefault"
         v-model="localAddress.isDefault"
         type="checkbox"
-        class="h-4 w-4 text-luxury-green focus:ring-gold border-gray-300 rounded"
+        :disabled="disabled"
+        class="h-4 w-4 text-luxury-green focus:ring-gold border-gray-300 rounded disabled:opacity-50 disabled:cursor-not-allowed"
         @change="updateAddress"
       >
       <label for="isDefault" class="ml-2 text-sm text-gray-700 dark:text-gray-300">
@@ -130,6 +131,10 @@ const props = defineProps({
   address: {
     type: Object,
     required: true
+  },
+  disabled: {
+    type: Boolean,
+    default: false
   }
 })
 

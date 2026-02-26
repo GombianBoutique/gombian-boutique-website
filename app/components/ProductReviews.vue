@@ -3,9 +3,9 @@
   <div class="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6">
     <div class="flex justify-between items-center mb-6">
       <h3 class="text-xl font-bold text-luxury-green dark:text-white">Customer Reviews</h3>
-      <button 
+      <button
         @click="showWriteReview = true"
-        class="px-4 py-2 bg-luxury-green text-white rounded-lg hover:bg-gold hover:text-luxury-green transition-colors"
+        class="px-4 py-2 bg-luxury-green text-white rounded-lg hover:bg-gold hover:text-luxury-green transition-colors dark:hover:bg-white dark:hover:text-luxury-green"
       >
         Write Review
       </button>
@@ -105,17 +105,17 @@
               >
                 Cancel
               </button>
-              <button 
+              <button
                 type="submit"
-                :disabled="!canSubmitReview"
+                :disabled="!canSubmitReview || submittingReview"
                 :class="[
                   'px-4 py-2 rounded-lg',
-                  canSubmitReview 
-                    ? 'bg-luxury-green text-white hover:bg-gold hover:text-luxury-green' 
+                  canSubmitReview && !submittingReview
+                    ? 'bg-luxury-green text-white hover:bg-gold hover:text-luxury-green'
                     : 'bg-gray-200 text-gray-500 cursor-not-allowed'
                 ]"
               >
-                Submit Review
+                {{ submittingReview ? 'Submitting...' : 'Submit Review' }}
               </button>
             </div>
           </form>
@@ -251,6 +251,7 @@ const reviews = ref([
 ])
 
 const showWriteReview = ref(false)
+const submittingReview = ref(false)
 const newReview = ref({
   rating: 5,
   title: '',
@@ -293,33 +294,42 @@ const toggleHelpful = (reviewId) => {
 }
 
 const submitReview = () => {
-  // In a real app, this would submit the review to an API
-  const reviewToAdd = {
-    id: `review-${reviews.value.length + 1}`,
-    customerId: 'current-customer', // Would come from auth
-    customerName: 'Current Customer', // Would come from auth
-    rating: newReview.value.rating,
-    title: newReview.value.title,
-    comment: newReview.value.comment,
-    createdAt: new Date(),
-    verifiedPurchase: true, // Assuming verified purchase
-    helpfulCount: 0
+  // Prevent double submission
+  if (submittingReview.value || !canSubmitReview.value) return
+
+  submittingReview.value = true
+
+  try {
+    // In a real app, this would submit the review to an API
+    const reviewToAdd = {
+      id: `review-${reviews.value.length + 1}`,
+      customerId: 'current-customer', // Would come from auth
+      customerName: 'Current Customer', // Would come from auth
+      rating: newReview.value.rating,
+      title: newReview.value.title,
+      comment: newReview.value.comment,
+      createdAt: new Date(),
+      verifiedPurchase: true, // Assuming verified purchase
+      helpfulCount: 0
+    }
+
+    reviews.value.unshift(reviewToAdd)
+
+    // Reset form
+    newReview.value = {
+      rating: 5,
+      title: '',
+      comment: ''
+    }
+
+    showWriteReview.value = false
+
+    // Show success message
+    const toast = useToast()
+    toast.success('Thank you for your review!')
+  } finally {
+    submittingReview.value = false
   }
-  
-  reviews.value.unshift(reviewToAdd)
-  
-  // Reset form
-  newReview.value = {
-    rating: 5,
-    title: '',
-    comment: ''
-  }
-  
-  showWriteReview.value = false
-  
-  // Show success message
-  const toast = useToast()
-  toast.success('Thank you for your review!')
 }
 
 const loadMoreReviews = () => {

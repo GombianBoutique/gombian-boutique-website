@@ -1,19 +1,18 @@
 <template>
-  <div class="min-h-screen flex items-center justify-center bg-neutral-light dark:bg-gray-900 py-12 px-4 transition-colors duration-300">
-    <div class="w-full max-w-md">
-      <div class="text-center mb-10">
-        <NuxtLink to="/" class="inline-block">
-          <img
-            src="/images/logos/logo.png"
-            alt="Gombian Boutique Logo"
-            class="w-20 h-auto mx-auto mb-4"
-          >
-        </NuxtLink>
-        <h1 class="text-3xl font-serif-display font-bold text-luxury-green dark:text-gold">Reset Password</h1>
-        <p class="text-neutral-dark mt-2 dark:text-gray-300">Enter your email to receive a reset link</p>
-      </div>
+  <div class="w-full max-w-md">
+    <div class="text-center mb-10">
+      <NuxtLink to="/" class="inline-block">
+        <img
+          src="/images/logos/logo.png"
+          alt="Gombian Boutique Logo"
+          class="w-20 h-auto mx-auto mb-4"
+        >
+      </NuxtLink>
+      <h1 class="text-3xl font-serif-display font-bold text-luxury-green dark:text-gold">Reset Password</h1>
+      <p class="text-neutral-dark mt-2 dark:text-gray-300">Enter your email to receive a reset link</p>
+    </div>
 
-      <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-8 transition-colors duration-300">
+    <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-8 transition-colors duration-300">
         <form @submit.prevent="handleResetPassword">
           <div class="mb-6">
             <label for="email" class="block text-sm font-medium text-neutral-dark mb-2 dark:text-gray-200">Email address</label>
@@ -29,9 +28,17 @@
 
           <button
             type="submit"
-            class="w-full bg-luxury-green hover:bg-gold text-white font-medium py-3 px-4 rounded-lg transition-colors duration-300 dark:hover:bg-gold dark:hover:text-luxury-green dark:bg-gold dark:text-luxury-green"
+            :disabled="loading"
+            class="w-full bg-luxury-green hover:bg-gold text-white font-medium py-3 px-4 rounded-lg transition-colors duration-300 dark:hover:bg-gold dark:hover:text-luxury-green dark:bg-gold dark:text-luxury-green disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            Send Reset Link
+            <span v-if="loading" class="flex items-center justify-center gap-2">
+              <svg class="animate-spin h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+              </svg>
+              Sending...
+            </span>
+            <span v-else>Send Reset Link</span>
           </button>
         </form>
 
@@ -51,21 +58,41 @@
         </NuxtLink>
       </div>
     </div>
-  </div>
 </template>
 
 <script setup>
-const email = ref('')
+definePageMeta({
+  layout: 'auth'
+})
 
-const handleResetPassword = () => {
-  // In a real application, you would implement actual password reset logic here
-  // For now, we'll just simulate a successful reset request
-  
-  // Show a success message
-  alert(`Password reset link sent to ${email.value}. Please check your inbox.`)
-  
-  // In a real app, you would typically redirect to the login page after sending the reset email
-  navigateTo('/login')
+const email = ref('')
+const loading = ref(false)
+const toast = useToast()
+
+const handleResetPassword = async () => {
+  // Prevent double submission
+  if (loading.value) return
+
+  loading.value = true
+
+  try {
+    // Call API to send password reset email
+    await $fetch('/api/auth/reset-password', {
+      method: 'POST',
+      body: { email: email.value }
+    })
+
+    toast.success(`Password reset link sent to ${email.value}. Please check your inbox.`, 'Reset Link Sent')
+
+    // Redirect to login page
+    await navigateTo('/login')
+  } catch (error) {
+    // Even if email doesn't exist, show success message for security
+    toast.success('If an account exists with this email, a reset link has been sent.', 'Reset Link Sent')
+    await navigateTo('/login')
+  } finally {
+    loading.value = false
+  }
 }
 
 useHead({

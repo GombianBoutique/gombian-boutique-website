@@ -2,6 +2,23 @@
   <div class="container mx-auto px-4 py-8">
     <h1 class="text-3xl font-serif-display font-bold text-luxury-green mb-8 text-center dark:text-gold">Policies</h1>
     
+    <div class="text-center mb-12">
+      <p class="text-gray-700 dark:text-gray-300 max-w-2xl mx-auto">
+        Below you'll find all our policies. For detailed information, please visit the dedicated pages:
+      </p>
+      <div class="flex flex-wrap justify-center gap-4 mt-6">
+        <NuxtLink to="/terms" class="px-6 py-3 bg-luxury-green text-white rounded-full hover:bg-gold hover:text-luxury-green transition-colors">
+          Terms & Conditions
+        </NuxtLink>
+        <NuxtLink to="/privacy" class="px-6 py-3 bg-luxury-green text-white rounded-full hover:bg-gold hover:text-luxury-green transition-colors">
+          Privacy Policy
+        </NuxtLink>
+        <NuxtLink to="/cookies" class="px-6 py-3 bg-luxury-green text-white rounded-full hover:bg-gold hover:text-luxury-green transition-colors">
+          Cookie Policy
+        </NuxtLink>
+      </div>
+    </div>
+
     <div class="max-w-4xl mx-auto space-y-12">
       <!-- Shipping Policy -->
       <section class="bg-white p-6 rounded-lg shadow-md">

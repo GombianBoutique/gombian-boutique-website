@@ -1,123 +1,148 @@
 // server/data/products.ts
+// Mock product data - matches the structure in /app/data/products.json
+// This allows for easy switching between mock and real API data
+
 export interface Product {
   id: string;
   name: string;
   description: string;
   price: number;
-  category: string;
+  currency: string;
+  formattedPrice: string;
+  volume: string;
   gender: string;
   fragranceFamily: string;
-  size: string;
+  season: string;
+  longevity: string;
+  concentration: string;
+  scentNotes: {
+    top: string[];
+    middle: string[];
+    base: string[];
+  };
+  ingredients: string[];
+  images: string[];
+  category: string;
   inStock: boolean;
   inventoryCount: number;
-  images: string[];
-  scentNotes: string[];
-  ingredients: string[];
   rating: number;
   reviewCount: number;
+  createdAt: string;
+  updatedAt: string;
 }
 
+// Mock products data - same structure as /app/data/products.json
 export const products: Product[] = [
   {
-    id: '1',
-    name: 'Ocean Breeze',
-    description: 'A refreshing scent reminiscent of ocean waves and sea salt.',
-    price: 89.99,
-    category: 'perfume',
+    id: '30ml-perfume',
+    name: '30ml Perfume',
+    description: 'Our signature 30ml perfume bottle, perfect for travel or as a gift. Experience our nature-inspired scents that transport and transform any space.',
+    price: 100,
+    currency: 'ZAR',
+    formattedPrice: 'R 100',
+    volume: '30ml',
     gender: 'unisex',
-    fragranceFamily: 'fresh',
-    size: '100ml',
+    fragranceFamily: 'various',
+    season: 'year-round',
+    longevity: '6-8 hours',
+    concentration: 'EDT',
+    scentNotes: {
+      top: ['bergamot', 'citrus'],
+      middle: ['jasmine', 'rose'],
+      base: ['vanilla', 'musk']
+    },
+    ingredients: ['alcohol denat.', 'water', 'fragrance', 'limonene', 'linalool', 'citronellol'],
+    images: ['/images/products/30ml Perfumes.jpeg', '/images/products/Caps.jpeg'],
+    category: 'best-seller',
     inStock: true,
-    inventoryCount: 15,
-    images: ['/images/products/ocean-breeze.jpg'],
-    scentNotes: ['bergamot', 'sea salt', 'white musk'],
-    ingredients: ['alcohol denat.', 'fragrance', 'water'],
-    rating: 4.7,
-    reviewCount: 42
-  },
-  {
-    id: '2',
-    name: 'Royal Musk',
-    description: 'Rich and warm with a luxurious touch of royal elegance.',
-    price: 129.99,
-    category: 'perfume',
-    gender: 'men',
-    fragranceFamily: 'woody',
-    size: '100ml',
-    inStock: true,
-    inventoryCount: 8,
-    images: ['/images/products/royal-musk.jpg'],
-    scentNotes: ['musk', 'amber', 'cedar'],
-    ingredients: ['alcohol denat.', 'fragrance', 'water'],
-    rating: 4.9,
-    reviewCount: 31
-  },
-  {
-    id: '3',
-    name: 'Spring Garden',
-    description: 'A floral bouquet capturing the essence of a blooming spring garden.',
-    price: 79.99,
-    category: 'perfume',
-    gender: 'women',
-    fragranceFamily: 'floral',
-    size: '80ml',
-    inStock: true,
-    inventoryCount: 22,
-    images: ['/images/products/spring-garden.jpg'],
-    scentNotes: ['jasmine', 'rose', 'lily of the valley'],
-    ingredients: ['alcohol denat.', 'fragrance', 'water'],
+    inventoryCount: 50,
     rating: 4.5,
-    reviewCount: 56
+    reviewCount: 28,
+    createdAt: '2026-01-10T00:00:00.000Z',
+    updatedAt: '2026-01-10T00:00:00.000Z'
   },
   {
-    id: '4',
-    name: 'Midnight Noir',
-    description: 'Mysterious and seductive, perfect for evening wear.',
-    price: 119.99,
-    category: 'perfume',
+    id: '60ml-perfume',
+    name: '60ml Perfume',
+    description: 'Our premium 60ml perfume bottle, offering extended wear and luxury. Experience our nature-inspired scents that connect you with fashion, relaxation, escape, and a touch of luxury.',
+    price: 150,
+    currency: 'ZAR',
+    formattedPrice: 'R 150',
+    volume: '60ml',
     gender: 'unisex',
-    fragranceFamily: 'oriental',
-    size: '100ml',
-    inStock: false,
-    inventoryCount: 0,
-    images: ['/images/products/midnight-noir.jpg'],
-    scentNotes: ['vanilla', 'tonka bean', 'oud'],
-    ingredients: ['alcohol denat.', 'fragrance', 'water'],
-    rating: 4.8,
-    reviewCount: 38
-  },
-  {
-    id: '5',
-    name: 'Citrus Zest',
-    description: 'A vibrant and energizing blend of citrus fruits.',
-    price: 69.99,
-    category: 'perfume',
-    gender: 'unisex',
-    fragranceFamily: 'citrus',
-    size: '75ml',
+    fragranceFamily: 'various',
+    season: 'year-round',
+    longevity: '8-10 hours',
+    concentration: 'EDP',
+    scentNotes: {
+      top: ['bergamot', 'citrus'],
+      middle: ['jasmine', 'rose'],
+      base: ['vanilla', 'musk']
+    },
+    ingredients: ['alcohol denat.', 'water', 'fragrance', 'limonene', 'linalool', 'citronellol'],
+    images: ['/images/products/Ladies 60ml Perfume.jpg', '/images/products/Mens 60ml Perfume.jpg'],
+    category: 'premium',
     inStock: true,
-    inventoryCount: 30,
-    images: ['/images/products/citrus-zest.jpg'],
-    scentNotes: ['lemon', 'orange', 'bergamot'],
-    ingredients: ['alcohol denat.', 'fragrance', 'water'],
+    inventoryCount: 35,
+    rating: 4.7,
+    reviewCount: 42,
+    createdAt: '2026-01-10T00:00:00.000Z',
+    updatedAt: '2026-01-10T00:00:00.000Z'
+  },
+  {
+    id: 'body-lotion',
+    name: 'Body Lotion',
+    description: 'Our luxurious body lotion enriched with natural ingredients. Choose from 100ml or 200ml sizes to complement your fragrance routine.',
+    price: 50,
+    currency: 'ZAR',
+    formattedPrice: 'R 50',
+    volume: '100ml',
+    gender: 'unisex',
+    fragranceFamily: 'various',
+    season: 'year-round',
+    longevity: '4-6 hours',
+    concentration: 'Body Lotion',
+    scentNotes: {
+      top: ['bergamot', 'citrus'],
+      middle: ['jasmine', 'rose'],
+      base: ['vanilla', 'musk']
+    },
+    ingredients: ['water', 'glycerin', 'fragrance', 'aloe vera', 'vitamin E'],
+    images: ['/images/products/Ladies Ultimate Combo.jpeg', '/images/products/Ladies Essential Combo.jpeg'],
+    category: 'complementary',
+    inStock: true,
+    inventoryCount: 60,
     rating: 4.3,
-    reviewCount: 27
+    reviewCount: 19,
+    createdAt: '2026-01-10T00:00:00.000Z',
+    updatedAt: '2026-01-10T00:00:00.000Z'
   },
   {
-    id: '6',
-    name: 'Velvet Rose',
-    description: 'A romantic and sophisticated rose-centered fragrance.',
-    price: 99.99,
-    category: 'perfume',
-    gender: 'women',
-    fragranceFamily: 'floral',
-    size: '90ml',
+    id: 'his-hers-combo',
+    name: 'His & Hers 30ml Perfume Combo',
+    description: 'Perfect gift set featuring both masculine and feminine interpretations of our signature scents in 30ml bottles.',
+    price: 200,
+    currency: 'ZAR',
+    formattedPrice: 'R 200',
+    volume: '30ml each',
+    gender: 'couple',
+    fragranceFamily: 'various',
+    season: 'year-round',
+    longevity: '6-8 hours',
+    concentration: 'EDT',
+    scentNotes: {
+      top: ['bergamot', 'citrus'],
+      middle: ['jasmine', 'rose'],
+      base: ['vanilla', 'musk']
+    },
+    ingredients: ['alcohol denat.', 'water', 'fragrance', 'limonene', 'linalool', 'citronellol'],
+    images: ['/images/products/His & Hers Ultimate Combo.jpeg', '/images/products/Roll on.jpg'],
+    category: 'gift-set',
     inStock: true,
-    inventoryCount: 12,
-    images: ['/images/products/velvet-rose.jpg'],
-    scentNotes: ['rose', 'patchouli', 'vanilla'],
-    ingredients: ['alcohol denat.', 'fragrance', 'water'],
-    rating: 4.6,
-    reviewCount: 45
+    inventoryCount: 25,
+    rating: 4.8,
+    reviewCount: 35,
+    createdAt: '2026-01-10T00:00:00.000Z',
+    updatedAt: '2026-01-10T00:00:00.000Z'
   }
 ];

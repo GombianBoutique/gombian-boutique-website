@@ -80,48 +80,76 @@
       <div>
         <h2 class="text-2xl font-serif-display font-bold text-luxury-green mb-6">Send Us a Message</h2>
         
-        <form class="space-y-6">
+        <form @submit.prevent="handleSubmit" class="space-y-6">
           <div>
             <label for="name" class="block text-luxury-green font-medium mb-2">Name</label>
-            <input 
-              type="text" 
-              id="name" 
-              class="w-full px-4 py-2 border border-neutral-dark rounded focus:outline-none focus:ring-2 focus:ring-luxury-green"
+            <input
+              type="text"
+              id="name"
+              v-model="form.name"
+              :disabled="isLoading"
+              class="w-full px-4 py-2 border border-neutral-dark rounded focus:outline-none focus:ring-2 focus:ring-luxury-green disabled:bg-gray-100"
               placeholder="Your name"
+              required
             >
           </div>
-          
+
           <div>
             <label for="email" class="block text-luxury-green font-medium mb-2">Email</label>
-            <input 
-              type="email" 
-              id="email" 
-              class="w-full px-4 py-2 border border-neutral-dark rounded focus:outline-none focus:ring-2 focus:ring-luxury-green"
+            <input
+              type="email"
+              id="email"
+              v-model="form.email"
+              :disabled="isLoading"
+              class="w-full px-4 py-2 border border-neutral-dark rounded focus:outline-none focus:ring-2 focus:ring-luxury-green disabled:bg-gray-100"
               placeholder="Your email"
+              required
             >
           </div>
-          
+
           <div>
             <label for="subject" class="block text-luxury-green font-medium mb-2">Subject</label>
-            <input 
-              type="text" 
-              id="subject" 
-              class="w-full px-4 py-2 border border-neutral-dark rounded focus:outline-none focus:ring-2 focus:ring-luxury-green"
+            <input
+              type="text"
+              id="subject"
+              v-model="form.subject"
+              :disabled="isLoading"
+              class="w-full px-4 py-2 border border-neutral-dark rounded focus:outline-none focus:ring-2 focus:ring-luxury-green disabled:bg-gray-100"
               placeholder="Subject"
+              required
             >
           </div>
-          
+
           <div>
             <label for="message" class="block text-luxury-green font-medium mb-2">Message</label>
-            <textarea 
-              id="message" 
+            <textarea
+              id="message"
+              v-model="form.message"
+              :disabled="isLoading"
               rows="5"
-              class="w-full px-4 py-2 border border-neutral-dark rounded focus:outline-none focus:ring-2 focus:ring-luxury-green"
+              class="w-full px-4 py-2 border border-neutral-dark rounded focus:outline-none focus:ring-2 focus:ring-luxury-green disabled:bg-gray-100"
               placeholder="Your message"
+              required
             ></textarea>
           </div>
-          
-          <button type="submit" class="luxury-button w-full">Send Message</button>
+
+          <!-- reCAPTCHA Badge Container -->
+          <div v-if="recaptchaSiteKey" class="grecaptcha-badge" data-style="badge"></div>
+
+          <button 
+            type="submit" 
+            :disabled="isLoading"
+            class="luxury-button w-full disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            <span v-if="!isLoading">Send Message</span>
+            <span v-else class="flex items-center justify-center gap-2">
+              <svg class="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+              </svg>
+              Sending...
+            </span>
+          </button>
         </form>
       </div>
     </div>
@@ -129,6 +157,82 @@
 </template>
 
 <script setup>
+const config = useRuntimeConfig()
+const recaptchaSiteKey = config.public.recaptchaSiteKey
+
+const form = reactive({
+  name: '',
+  email: '',
+  subject: '',
+  message: '',
+  recaptchaToken: ''
+})
+
+const isLoading = ref(false)
+const toast = useToast()
+
+// Load reCAPTCHA script
+onMounted(() => {
+  if (recaptchaSiteKey) {
+    const script = document.createElement('script')
+    script.src = `https://www.google.com/recaptcha/api.js?render=${recaptchaSiteKey}`
+    script.async = true
+    script.defer = true
+    document.head.appendChild(script)
+  }
+})
+
+const handleSubmit = async () => {
+  // Prevent double submission
+  if (isLoading.value) return
+
+  try {
+    isLoading.value = true
+
+    // Execute reCAPTCHA
+    if (recaptchaSiteKey && window.grecaptcha) {
+      await new Promise((resolve, reject) => {
+        window.grecaptcha.ready(() => {
+          window.grecaptcha.execute(recaptchaSiteKey, {
+            action: 'contact'
+          }).then((token) => {
+            form.recaptchaToken = token
+            resolve(true)
+          }).catch((err) => {
+            console.error('reCAPTCHA error:', err)
+            reject(err)
+          })
+        })
+      })
+    }
+
+    // Submit form
+    const { data, error } = await useFetch('/api/contact', {
+      method: 'POST',
+      body: form
+    })
+
+    if (error.value) {
+      throw new Error(error.value.statusMessage || 'Failed to send message')
+    }
+
+    // Reset form
+    form.name = ''
+    form.email = ''
+    form.subject = ''
+    form.message = ''
+    form.recaptchaToken = ''
+
+    toast.success('Message sent successfully! We will respond within 24 hours.', 'Success')
+  } catch (error) {
+    console.error('Form submission error:', error)
+    const errorMessage = error.message || 'Failed to send message. Please try again.'
+    toast.error(errorMessage, 'Error')
+  } finally {
+    isLoading.value = false
+  }
+}
+
 useHead({
   title: 'Contact Us - Gombian Boutique',
   meta: [

@@ -2,22 +2,22 @@
 <template>
   <div class="relative overflow-hidden rounded-xl">
     <!-- Slides Container -->
-    <div 
-      class="flex transition-transform duration-500 ease-in-out" 
+    <div
+      class="flex transition-transform duration-500 ease-in-out"
       :style="{ transform: `translateX(-${currentIndex * 100}%)` }"
     >
-      <div 
-        v-for="(slide, index) in slides" 
-        :key="index" 
+      <div
+        v-for="(slide, index) in slides"
+        :key="index"
         class="w-full flex-shrink-0"
       >
-        <div 
+        <div
           class="relative h-[500px] md:h-[600px] bg-cover bg-center flex items-center"
-          :style="{ backgroundImage: `linear-gradient(to right, rgba(45, 80, 22, 0.7), rgba(45, 80, 22, 0.4)), url(${slide.backgroundImage})` }"
+          :style="{ backgroundImage: `linear-gradient(to right, rgba(45, 80, 22, 0.7), rgba(45, 80, 22, 0.4)), url('${getImageUrl(slide.backgroundImage)}')` }"
         >
           <div class="container mx-auto px-4 md:px-8">
             <div class="max-w-2xl">
-              <span class="inline-block px-4 py-1 bg-gold text-luxury-green rounded-full text-sm font-bold mb-4">
+              <span class="inline-block px-4 py-1 bg-gold text-luxury-green dark:bg-white dark:text-luxury-green rounded-full text-sm font-bold mb-4">
                 {{ slide.badgeText }}
               </span>
               <h1 class="text-4xl md:text-6xl font-serif-display font-bold text-white leading-tight mb-4">
@@ -27,15 +27,15 @@
                 {{ slide.description }}
               </p>
               <div class="flex flex-wrap gap-4">
-                <NuxtLink 
-                  :to="slide.primaryAction.link" 
+                <NuxtLink
+                  :to="slide.primaryAction.link"
                   class="luxury-button px-8 py-4 text-lg"
                 >
                   {{ slide.primaryAction.text }}
                 </NuxtLink>
-                <NuxtLink 
-                  v-if="slide.secondaryAction" 
-                  :to="slide.secondaryAction.link" 
+                <NuxtLink
+                  v-if="slide.secondaryAction"
+                  :to="slide.secondaryAction.link"
                   class="px-8 py-4 bg-white text-luxury-green rounded-full font-medium hover:bg-gold hover:text-luxury-green transition-colors"
                 >
                   {{ slide.secondaryAction.text }}
@@ -48,7 +48,7 @@
     </div>
 
     <!-- Navigation Arrows -->
-    <button 
+    <button
       @click="prevSlide"
       class="absolute left-4 top-1/2 transform -translate-y-1/2 bg-white/30 hover:bg-white/50 text-white p-3 rounded-full backdrop-blur-sm transition-colors"
       aria-label="Previous slide"
@@ -57,7 +57,7 @@
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
       </svg>
     </button>
-    <button 
+    <button
       @click="nextSlide"
       class="absolute right-4 top-1/2 transform -translate-y-1/2 bg-white/30 hover:bg-white/50 text-white p-3 rounded-full backdrop-blur-sm transition-colors"
       aria-label="Next slide"
@@ -75,7 +75,7 @@
         @click="goToSlide(index)"
         :class="[
           'w-3 h-3 rounded-full transition-colors',
-          currentIndex === index ? 'bg-gold' : 'bg-white/50'
+          currentIndex === index ? 'bg-gold dark:bg-white' : 'bg-white/50 dark:bg-gray-600'
         ]"
         :aria-label="`Go to slide ${index + 1}`"
       />
@@ -89,6 +89,13 @@
 </template>
 
 <script setup>
+// Helper function to get image URL - handles spaces in filenames
+const getImageUrl = (path) => {
+  // For static images in public folder, use the path directly
+  // but encode spaces and special characters
+  return encodeURI(path)
+}
+
 // Sample slides data - in a real app this would come from an API
 const slides = [
   {

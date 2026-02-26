@@ -46,20 +46,20 @@
           </h1>
           <div class="flex items-center mb-6">
             <div class="flex text-yellow-400 mr-2">
-              <svg v-for="star in 5" :key="star" 
-                   :class="[star <= Math.round(product.rating) ? 'text-yellow-400' : 'text-gray-300', 'w-5 h-5']" 
-                   xmlns="http://www.w3.org/2000/svg" 
-                   viewBox="0 0 20 20" 
+              <svg v-for="star in 5" :key="star"
+                   :class="[star <= Math.round(product.rating ?? 0) ? 'text-yellow-400' : 'text-gray-300', 'w-5 h-5']"
+                   xmlns="http://www.w3.org/2000/svg"
+                   viewBox="0 0 20 20"
                    fill="currentColor">
                 <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
               </svg>
             </div>
             <span class="text-gray-600 dark:text-gray-400">
-              {{ product.rating }} ({{ product.reviewCount }} reviews)
+              {{ product.rating ?? 0 }} ({{ product.reviewCount ?? 0 }} reviews)
             </span>
           </div>
           <div class="text-3xl font-bold text-luxury-green dark:text-gold mb-6">
-            {{ formatCurrency(product.price, product.currency) }}
+            {{ formatCurrency(product.price, product.currency || 'ZAR') }}
           </div>
         </div>
 
@@ -104,20 +104,25 @@
           <div class="flex items-center mb-6">
             <span class="text-gray-700 dark:text-gray-300 mr-4">Quantity:</span>
             <div class="flex items-center border border-gray-300 dark:border-gray-600 rounded-md">
-              <button 
+              <button
                 @click="decreaseQuantity"
-                class="px-4 py-2 text-lg text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700"
+                :disabled="!product || quantity <= 1"
+                class="px-4 py-2 text-lg text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 -
               </button>
-              <span class="px-4 py-2 text-gray-700 dark:text-gray-300">{{ quantity }}</span>
-              <button 
+              <span class="px-4 py-2 text-gray-700 dark:text-gray-300 min-w-[3rem] text-center">{{ quantity }}</span>
+              <button
                 @click="increaseQuantity"
-                class="px-4 py-2 text-lg text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700"
+                :disabled="!product || !product.inStock || quantity >= (product.inventoryCount || 10)"
+                class="px-4 py-2 text-lg text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 +
               </button>
             </div>
+            <span v-if="product" class="ml-4 text-sm text-gray-500 dark:text-gray-400">
+              (Max: {{ product.inventoryCount || 10 }} available)
+            </span>
           </div>
 
           <div class="flex flex-wrap gap-4">
@@ -307,16 +312,23 @@ const product = computed(() => {
 const selectedImage = ref('')
 const selectedVolume = ref('')
 const quantity = ref(1)
-const isWishlisted = ref(false)
 const activeTab = ref('scent-notes')
 
-// Initialize state
-onMounted(() => {
-  if (product.value) {
-    selectedImage.value = product.value.images[0]
-    selectedVolume.value = product.value.volume
-  }
+// Initialize wishlist state
+const wishlist = useWishlist()
+const toast = useToast()
+const isWishlisted = computed(() => {
+  if (!product.value) return false
+  return wishlist.isInWishlist(product.value.id)
 })
+
+// Watch for product changes and initialize state
+watch(() => product.value, (newProduct) => {
+  if (newProduct) {
+    selectedImage.value = newProduct.images[0] || ''
+    selectedVolume.value = newProduct.volume || ''
+  }
+}, { immediate: true })
 
 // Computed properties
 const tabs = [
@@ -339,16 +351,19 @@ const relatedProducts = computed(() => {
 
 // Methods
 const selectImage = (image) => {
-  selectedImage = image
+  selectedImage.value = image
 }
 
 const increaseQuantity = () => {
-  if (quantity.value < product.value.inventoryCount) {
+  if (!product.value || !product.value.inStock) return
+  const maxQuantity = product.value.inventoryCount || 10
+  if (quantity.value < maxQuantity) {
     quantity.value++
   }
 }
 
 const decreaseQuantity = () => {
+  if (!product.value) return
   if (quantity.value > 1) {
     quantity.value--
   }
@@ -372,8 +387,22 @@ const addToCart = () => {
 }
 
 const toggleWishlist = () => {
-  isWishlisted.value = !isWishlisted.value
-  // In a real app, you would add/remove from wishlist
+  if (!product.value) return
+
+  const wasInWishlist = wishlist.isInWishlist(product.value.id)
+  
+  wishlist.toggleItem({
+    productId: product.value.id,
+    productName: product.value.name,
+    productImage: selectedImage.value || product.value.images[0],
+    price: product.value.price
+  })
+
+  if (!wasInWishlist) {
+    toast.success(`${product.value.name} added to wishlist!`, 'Added to Wishlist')
+  } else {
+    toast.info(`${product.value.name} removed from wishlist`, 'Removed')
+  }
 }
 
 const shareProduct = () => {
@@ -386,8 +415,7 @@ const shareProduct = () => {
   } else {
     // Fallback: Copy to clipboard
     navigator.clipboard.writeText(window.location.href)
-    const toast = useToast()
-    toast.info('Link copied to clipboard!')
+    toast.info('Link copied to clipboard!', 'Shared')
   }
 }
 

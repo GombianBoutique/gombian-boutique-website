@@ -21,28 +21,35 @@ type Product = {
   images: string[];
   category: string;
   inStock: boolean;
+  inventoryCount?: number;
+  rating?: number;
+  reviewCount?: number;
   createdAt: string;
   updatedAt: string;
 }
 
-type ProductsData = {
+type ProductsResponse = {
   products: Product[];
+  pagination?: {
+    currentPage: number;
+    totalPages: number;
+    totalProducts: number;
+    hasNext: boolean;
+    hasPrev: boolean;
+  };
 }
 
 export const useProducts = () => {
-  const productsData = ref<ProductsData | null>(null);
+  const productsData = ref<ProductsResponse | null>(null);
   const loading = ref<boolean>(true);
   const error = ref<string | null>(null);
 
   const fetchProducts = async (): Promise<void> => {
     try {
       loading.value = true;
-      // In a real application, this would fetch from an API
-      // For now, we'll import the static data
-      const data: { default: any } | any = await import('~/data/products.json');
-      // Handle the case where the JSON has a 'products' key containing the array
-      const productsArray = data.default ? (data.default.products || data.default) : (data.products || data);
-      productsData.value = { products: productsArray };
+      // Fetch from API endpoint - mock data from server/data/products.ts
+      const data: ProductsResponse = await $fetch('/api/products');
+      productsData.value = data;
       error.value = null;
     } catch (err) {
       console.error('Error fetching products:', err);

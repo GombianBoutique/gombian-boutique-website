@@ -195,15 +195,15 @@
               class="p-4 text-center"
             >
               <div class="flex flex-col gap-2">
-                <NuxtLink 
+                <NuxtLink
                   :to="`/products/${product.id}`"
-                  class="px-4 py-2 bg-luxury-green text-white rounded-full text-sm hover:bg-gold hover:text-luxury-green transition-colors"
+                  class="px-4 py-2 bg-luxury-green text-white rounded-full text-sm hover:bg-gold hover:text-luxury-green dark:hover:bg-luxury-green dark:hover:text-white transition-colors"
                 >
                   View Details
                 </NuxtLink>
-                <button 
+                <button
                   @click="addToCart(product)"
-                  class="px-4 py-2 border border-luxury-green text-luxury-green rounded-full text-sm hover:bg-luxury-green hover:text-white transition-colors"
+                  class="px-4 py-2 border border-luxury-green text-luxury-green rounded-full text-sm hover:bg-luxury-green hover:text-white dark:hover:bg-luxury-green dark:hover:text-white transition-colors"
                 >
                   Add to Cart
                 </button>

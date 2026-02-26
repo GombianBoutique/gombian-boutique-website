@@ -1,19 +1,18 @@
 <template>
-  <div class="min-h-screen flex items-center justify-center bg-neutral-light dark:bg-gray-900 py-12 px-4 transition-colors duration-300">
-    <div class="w-full max-w-md">
-      <div class="text-center mb-10">
-        <NuxtLink to="/" class="inline-block">
-          <img
-            src="/images/logos/logo.png"
-            alt="Gombian Boutique Logo"
-            class="w-20 h-auto mx-auto mb-4"
-          >
-        </NuxtLink>
-        <h1 class="text-3xl font-serif-display font-bold text-luxury-green dark:text-gold">Create Account</h1>
-        <p class="text-neutral-dark mt-2 dark:text-gray-300">Sign up to join our exclusive community</p>
-      </div>
+  <div class="w-full max-w-md">
+    <div class="text-center mb-10">
+      <NuxtLink to="/" class="inline-block">
+        <img
+          src="/images/logos/logo.png"
+          alt="Gombian Boutique Logo"
+          class="w-20 h-auto mx-auto mb-4"
+        >
+      </NuxtLink>
+      <h1 class="text-3xl font-serif-display font-bold text-luxury-green dark:text-gold">Create Account</h1>
+      <p class="text-neutral-dark mt-2 dark:text-gray-300">Sign up to join our exclusive community</p>
+    </div>
 
-      <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-8 transition-colors duration-300">
+    <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-8 transition-colors duration-300">
         <form @submit.prevent="handleRegister">
           <div class="mb-6">
             <label for="fullName" class="block text-sm font-medium text-neutral-dark mb-2 dark:text-gray-200">Full Name</label>
@@ -80,9 +79,17 @@
 
           <button
             type="submit"
-            class="w-full bg-luxury-green hover:bg-gold text-white font-medium py-3 px-4 rounded-lg transition-colors duration-300 dark:hover:bg-gold dark:hover:text-luxury-green dark:bg-gold dark:text-luxury-green"
+            :disabled="loading"
+            class="w-full bg-luxury-green hover:bg-gold text-white font-medium py-3 px-4 rounded-lg transition-colors duration-300 dark:hover:bg-gold dark:hover:text-luxury-green dark:bg-gold dark:text-luxury-green disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            Create Account
+            <span v-if="loading" class="flex items-center justify-center gap-2">
+              <svg class="animate-spin h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+              </svg>
+              Creating account...
+            </span>
+            <span v-else>Create Account</span>
           </button>
         </form>
 
@@ -102,30 +109,60 @@
         </NuxtLink>
       </div>
     </div>
-  </div>
 </template>
 
 <script setup>
+import { useAuth } from '~/composables/useAuth'
+
+definePageMeta({
+  layout: 'auth'
+})
+
 const fullName = ref('')
 const email = ref('')
 const password = ref('')
 const confirmPassword = ref('')
 const acceptTerms = ref(false)
 
-const handleRegister = () => {
-  // In a real application, you would implement actual registration logic here
-  // For now, we'll just simulate a successful registration
-  
+const { register, error, loading } = useAuth()
+const toast = useToast()
+
+const handleRegister = async () => {
+  // Prevent double submission
+  if (loading.value) return
+
+  // Validate passwords match
   if (password.value !== confirmPassword.value) {
-    alert('Passwords do not match!')
+    toast.error('Passwords do not match!', 'Registration Error')
     return
   }
-  
-  // Show a success message
-  alert('Registration successful! Welcome to Gombian Boutique.')
-  
-  // In a real app, you would typically redirect to the login page or the user's dashboard
-  navigateTo('/login')
+
+  // Validate terms accepted
+  if (!acceptTerms.value) {
+    toast.error('You must accept the Terms of Service and Privacy Policy', 'Registration Error')
+    return
+  }
+
+  // Split full name
+  const nameParts = fullName.value.trim().split(' ')
+  const firstName = nameParts[0] || ''
+  const lastName = nameParts.slice(1).join(' ') || ''
+
+  try {
+    await register({
+      email: email.value,
+      password: password.value,
+      firstName,
+      lastName
+    })
+
+    toast.success('Account created successfully! Welcome to Gombian Boutique.', 'Registration Successful')
+
+    // Redirect to account dashboard
+    await navigateTo('/account')
+  } catch (err) {
+    toast.error(error.value || 'Registration failed. Please try again.', 'Registration Error')
+  }
 }
 
 useHead({

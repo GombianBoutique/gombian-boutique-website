@@ -37,8 +37,23 @@ export default defineNuxtConfig({
   ],
   runtimeConfig: {
     sendgridApiKey: process.env.SENDGRID_API_KEY || '',
+    recaptchaSecretKey: process.env.NUXT_RECAPTCHA_SECRET_KEY || '',
+    contactEmail: process.env.NUXT_CONTACT_EMAIL || 'gombianholdings@gmail.com',
+    mailService: process.env.NUXT_MAIL_SERVICE || 'gmail',
+    mailHost: process.env.NUXT_MAIL_HOST || 'smtp.gmail.com',
+    mailPort: parseInt(process.env.NUXT_MAIL_PORT || '587'),
+    mailUser: process.env.NUXT_MAIL_USER || '',
+    mailPassword: process.env.NUXT_MAIL_PASSWORD || '',
+    // Mailchimp configuration
+    mailchimpApiKey: process.env.MAILCHIMP_API_KEY || '',
+    mailchimpListId: process.env.MAILCHIMP_LIST_ID || '',
+    mailchimpServerPrefix: process.env.MAILCHIMP_SERVER_PREFIX || 'us1',
+    appUrl: process.env.APP_URL || 'http://localhost:3000',
     public: {
-      stripePublicKey: process.env.STRIPE_PUBLIC_KEY || ''
+      stripePublicKey: process.env.STRIPE_PUBLIC_KEY || '',
+      recaptchaSiteKey: process.env.NUXT_RECAPTCHA_SITE_KEY || '',
+      canPersist: process.env.NUXT_CAN_PERSIST !== 'false',
+      multiplePaymentMethods: process.env.NUXT_MULTIPLE_PAYMENT_METHODS !== 'false'
     }
   },
   colorMode: {

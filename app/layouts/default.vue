@@ -5,9 +5,14 @@
       <slot />
     </main>
     <Footer />
+    
+    <!-- Cookie Consent Components -->
+    <CookieConsentBanner />
+    <CookiePreferencesModal />
   </div>
 </template>
 
 <script setup>
 // Default layout component
+// Cookie consent is automatically initialized via the composable
 </script>

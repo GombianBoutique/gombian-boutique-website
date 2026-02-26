@@ -96,83 +96,10 @@ export const useProductsStore = defineStore('products', () => {
     setError(null);
 
     try {
-      // Simulate API call
-      // In a real application, you would fetch from an API endpoint
-      await new Promise(resolve => setTimeout(resolve, 500));
-
-      // Mock data - in a real app, this would come from an API
-      const mockProducts: Product[] = [
-        {
-          id: '1',
-          name: 'Ocean Breeze',
-          description: 'A refreshing scent reminiscent of ocean waves and sea salt.',
-          price: 89.99,
-          category: 'perfume',
-          gender: 'unisex',
-          fragranceFamily: 'fresh',
-          size: '100ml',
-          inStock: true,
-          inventoryCount: 15,
-          images: ['/images/products/ocean-breeze.jpg'],
-          scentNotes: ['bergamot', 'sea salt', 'white musk'],
-          ingredients: ['alcohol denat.', 'fragrance', 'water'],
-          rating: 4.7,
-          reviewCount: 42
-        },
-        {
-          id: '2',
-          name: 'Royal Musk',
-          description: 'Rich and warm with a luxurious touch of royal elegance.',
-          price: 129.99,
-          category: 'perfume',
-          gender: 'men',
-          fragranceFamily: 'woody',
-          size: '100ml',
-          inStock: true,
-          inventoryCount: 8,
-          images: ['/images/products/royal-musk.jpg'],
-          scentNotes: ['musk', 'amber', 'cedar'],
-          ingredients: ['alcohol denat.', 'fragrance', 'water'],
-          rating: 4.9,
-          reviewCount: 31
-        },
-        {
-          id: '3',
-          name: 'Spring Garden',
-          description: 'A floral bouquet capturing the essence of a blooming spring garden.',
-          price: 79.99,
-          category: 'perfume',
-          gender: 'women',
-          fragranceFamily: 'floral',
-          size: '80ml',
-          inStock: true,
-          inventoryCount: 22,
-          images: ['/images/products/spring-garden.jpg'],
-          scentNotes: ['jasmine', 'rose', 'lily of the valley'],
-          ingredients: ['alcohol denat.', 'fragrance', 'water'],
-          rating: 4.5,
-          reviewCount: 56
-        },
-        {
-          id: '4',
-          name: 'Midnight Noir',
-          description: 'Mysterious and seductive, perfect for evening wear.',
-          price: 119.99,
-          category: 'perfume',
-          gender: 'unisex',
-          fragranceFamily: 'oriental',
-          size: '100ml',
-          inStock: false,
-          inventoryCount: 0,
-          images: ['/images/products/midnight-noir.jpg'],
-          scentNotes: ['vanilla', 'tonka bean', 'oud'],
-          ingredients: ['alcohol denat.', 'fragrance', 'water'],
-          rating: 4.8,
-          reviewCount: 38
-        }
-      ];
-
-      state.value.products = mockProducts;
+      // Fetch from API endpoint - can be switched to real backend later
+      const data = await $fetch('/api/products')
+      
+      state.value.products = data.products;
     } catch (error: any) {
       setError(error.message || 'Failed to fetch products');
       console.error('Error fetching products:', error);
@@ -183,7 +110,7 @@ export const useProductsStore = defineStore('products', () => {
 
   const searchProducts = (query: string) => {
     const lowerQuery = query.toLowerCase();
-    return state.value.products.filter(product => 
+    return state.value.products.filter(product =>
       product.name.toLowerCase().includes(lowerQuery) ||
       product.description.toLowerCase().includes(lowerQuery) ||
       product.category.toLowerCase().includes(lowerQuery) ||
@@ -191,16 +118,11 @@ export const useProductsStore = defineStore('products', () => {
     );
   };
 
-  // Initialize products if empty
-  if (state.value.products.length === 0) {
-    fetchProducts();
-  }
-
   return {
     // State
-    products: state.value.products,
-    loading: state.value.loading,
-    error: state.value.error,
+    products: computed(() => state.value.products),
+    loading: computed(() => state.value.loading),
+    error: computed(() => state.value.error),
 
     // Getters
     getAllProducts,

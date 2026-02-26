@@ -16,9 +16,9 @@
       </div>
       
       <!-- Favorite Button -->
-      <button 
+      <button
         @click="toggleFavorite"
-        class="absolute top-4 right-4 p-2 rounded-full bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm hover:bg-gold hover:text-luxury-green transition-colors"
+        class="absolute top-4 right-4 p-2 rounded-full bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm hover:bg-gold hover:text-luxury-green dark:hover:bg-luxury-green dark:hover:text-white transition-colors"
         :aria-label="isFavorite ? 'Remove from favorites' : 'Add to favorites'"
       >
         <svg 
@@ -35,7 +35,7 @@
       <div class="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-2 opacity-0 group-hover:opacity-100 transition-opacity">
         <button
           @click="quickView"
-          class="p-2 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-full hover:bg-gold hover:text-luxury-green transition-colors"
+          class="p-2 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-full hover:bg-gold hover:text-luxury-green dark:hover:bg-luxury-green dark:hover:text-white transition-colors"
           aria-label="Quick view"
         >
           <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -45,7 +45,7 @@
         </button>
         <button
           @click="addToCart"
-          class="p-2 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-full hover:bg-gold hover:text-luxury-green transition-colors"
+          class="p-2 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-full hover:bg-gold hover:text-luxury-green dark:hover:bg-luxury-green dark:hover:text-white transition-colors"
           aria-label="Add to cart"
         >
           <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -54,7 +54,7 @@
         </button>
         <button
           @click="addToComparison"
-          class="p-2 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-full hover:bg-gold hover:text-luxury-green transition-colors"
+          class="p-2 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-full hover:bg-gold hover:text-luxury-green dark:hover:bg-luxury-green dark:hover:text-white transition-colors"
           :aria-label="isInComparison ? 'Remove from comparison' : 'Add to comparison'"
         >
           <svg
@@ -87,19 +87,19 @@
         <div class="flex items-center">
           <!-- Rating -->
           <div class="flex text-yellow-400 mr-2">
-            <svg v-for="star in 5" :key="star" 
-                 :class="[star <= Math.round(product.rating) ? 'text-yellow-400' : 'text-gray-300', 'w-4 h-4']" 
-                 xmlns="http://www.w3.org/2000/svg" 
-                 viewBox="0 0 20 20" 
+            <svg v-for="star in 5" :key="star"
+                 :class="[star <= Math.round(product.rating ?? 0) ? 'text-yellow-400' : 'text-gray-300', 'w-4 h-4']"
+                 xmlns="http://www.w3.org/2000/svg"
+                 viewBox="0 0 20 20"
                  fill="currentColor">
               <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
             </svg>
           </div>
-          <span class="text-xs text-gray-500 dark:text-gray-400">({{ product.reviewCount }})</span>
+          <span class="text-xs text-gray-500 dark:text-gray-400">({{ product.reviewCount ?? 0 }})</span>
         </div>
-        
+
         <div class="text-lg font-bold text-luxury-green dark:text-gold">
-          {{ formatCurrency(product.price, product.currency) }}
+          {{ formatCurrency(product.price, product.currency || 'ZAR') }}
         </div>
       </div>
     </div>
@@ -145,10 +145,18 @@ const toggleFavorite = (event) => {
 const addToComparison = (event) => {
   event.preventDefault()
   event.stopPropagation()
+  const toast = useToast()
+  
   if (isInComparison.value) {
     removeFromComparison(props.product.id)
+    toast.success(`${props.product.name} removed from comparison`, 'Comparison')
   } else {
-    addToComparisonList(props.product)
+    const added = addToComparisonList(props.product)
+    if (added) {
+      toast.success(`${props.product.name} added to comparison`, 'Comparison')
+    } else {
+      toast.error('Product is already in comparison', 'Comparison')
+    }
   }
 }
 

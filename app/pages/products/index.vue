@@ -1,8 +1,14 @@
 <!-- pages/products/index.vue -->
 <template>
   <div class="container mx-auto px-4 py-8">
+    <!-- Loading State -->
+    <div v-if="productsStore.loading" class="flex justify-center items-center py-32">
+      <div class="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-luxury-green"></div>
+      <span class="ml-4 text-lg text-luxury-green dark:text-white">Loading our collection...</span>
+    </div>
+
     <!-- Page Header -->
-    <div class="mb-12 text-center">
+    <div v-else class="mb-12 text-center">
       <h1 class="text-4xl font-serif-display font-bold text-luxury-green dark:text-white mb-4">
         Our Collection
       </h1>
@@ -162,20 +168,21 @@
     </div>
 
     <!-- Product Grid -->
-    <ProductGrid 
-      :products="filteredProducts" 
+    <ProductGrid
+      v-if="filteredProducts.length > 0"
+      :products="filteredProducts"
       :items-per-page="12"
       :show-pagination="true"
       title="Our Collection"
     />
 
     <!-- Empty State -->
-    <div v-if="filteredProducts.length === 0" class="text-center py-16">
+    <div v-if="!loading && filteredProducts.length === 0" class="text-center py-16">
       <h3 class="text-xl font-bold text-luxury-green dark:text-white mb-2">No products found</h3>
       <p class="text-gray-600 dark:text-gray-400 mb-6">
         Try adjusting your filters to find what you're looking for
       </p>
-      <button 
+      <button
         @click="resetFilters"
         class="luxury-button"
       >
@@ -186,15 +193,15 @@
 </template>
 
 <script setup>
-const { products } = useProductsStore()
+const productsStore = useProductsStore()
 
-// Initialize products if not already loaded
-if (!products.value || products.value.length === 0) {
-  await useProductsStore().fetchProducts()
+// Ensure products are loaded
+if (!productsStore.products || productsStore.products.length === 0) {
+  await productsStore.fetchProducts()
 }
 
 // Get all products from the store
-const allProducts = computed(() => products.value || [])
+const allProducts = computed(() => productsStore.products || [])
 
 // Filter state
 const filters = reactive({
