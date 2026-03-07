@@ -1,13 +1,18 @@
+# Netlify Configuration for Nuxt 4 Static Site
+
 [build]
   command = "pnpm run generate"
   publish = "dist"
-  functions = "netlify/functions"
 
 [build.environment]
   NODE_VERSION = "20"
   PNPM_VERSION = "10"
+  NPM_FLAGS = "--prefix=/dev/null"
 
-# Deploy context configuration
+# Disable Netlify's automatic Nuxt detection
+[build.processing]
+  skip_processing = true
+
 [context.production.environment]
   NUXT_CAN_PERSIST = "false"
   NUXT_MULTIPLE_PAYMENT_METHODS = "true"
@@ -15,20 +20,3 @@
 [context.deploy-preview.environment]
   NUXT_CAN_PERSIST = "false"
   NUXT_MULTIPLE_PAYMENT_METHODS = "true"
-
-# Redirects for SPA fallback (if needed)
-[[redirects]]
-  from = "/*"
-  to = "/index.html"
-  status = 200
-
-# Cache static assets
-[[headers]]
-  for = "/images/*"
-  [headers.values]
-    cache-control = "public, max-age=31536000, immutable"
-
-[[headers]]
-  for = "/_nuxt/*"
-  [headers.values]
-    cache-control = "public, max-age=31536000, immutable"

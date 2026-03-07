@@ -7,6 +7,7 @@ export default defineNuxtConfig({
   ssr: true,
 
   nitro: {
+    preset: 'static',
     prerender: {
       crawlLinks: true,
       failOnError: false,
@@ -23,7 +24,6 @@ export default defineNuxtConfig({
         '/register',
         '/policies',
         '/privacy',
-        '/search',
         '/shipping',
         '/support',
         '/sustainability',
