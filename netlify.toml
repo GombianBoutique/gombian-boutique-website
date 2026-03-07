@@ -1,0 +1,34 @@
+[build]
+  command = "pnpm run generate"
+  publish = ".output/public"
+  functions = "netlify/functions"
+
+[build.environment]
+  NODE_VERSION = "20"
+  PNPM_VERSION = "10"
+
+# Deploy context configuration
+[context.production.environment]
+  NUXT_CAN_PERSIST = "false"
+  NUXT_MULTIPLE_PAYMENT_METHODS = "true"
+
+[context.deploy-preview.environment]
+  NUXT_CAN_PERSIST = "false"
+  NUXT_MULTIPLE_PAYMENT_METHODS = "true"
+
+# Redirects for SPA fallback (if needed)
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+
+# Cache static assets
+[[headers]]
+  for = "/images/*"
+  [headers.values]
+    cache-control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/_nuxt/*"
+  [headers.values]
+    cache-control = "public, max-age=31536000, immutable"

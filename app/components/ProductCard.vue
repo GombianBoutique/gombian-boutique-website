@@ -1,40 +1,40 @@
 <!-- components/ProductCard.vue -->
 <template>
-  <div class="luxury-card group overflow-hidden bg-white dark:bg-gray-800 rounded-xl shadow-md hover:shadow-xl transition-all duration-300 h-full flex flex-col">
+  <NuxtLink :to="`/products/${product.id}`" class="block group overflow-hidden bg-white dark:bg-gray-800 rounded-xl shadow-md hover:shadow-xl transition-all duration-300 h-full flex flex-col">
     <div class="relative">
       <!-- Product Image -->
-      <NuxtImg 
-        :src="product.images[0]" 
-        :alt="product.name" 
+      <NuxtImg
+        :src="product.images[0]"
+        :alt="product.name"
         class="w-full h-64 object-cover transition-transform duration-500 group-hover:scale-105"
         :modifiers="{ fit: 'cover', width: 400, height: 400 }"
       />
-      
+
       <!-- Sale Badge -->
       <div v-if="product.onSale" class="absolute top-4 left-4 bg-red-500 text-white px-3 py-1 rounded-full text-sm font-bold">
         SALE
       </div>
-      
+
       <!-- Favorite Button -->
       <button
-        @click="toggleFavorite"
+        @click.prevent="toggleFavorite"
         class="absolute top-4 right-4 p-2 rounded-full bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm hover:bg-gold hover:text-luxury-green dark:hover:bg-luxury-green dark:hover:text-white transition-colors"
         :aria-label="isFavorite ? 'Remove from favorites' : 'Add to favorites'"
       >
-        <svg 
-          :class="[isFavorite ? 'text-gold fill-current' : 'text-gray-500', 'w-5 h-5']" 
-          xmlns="http://www.w3.org/2000/svg" 
-          viewBox="0 0 20 20" 
+        <svg
+          :class="[isFavorite ? 'text-gold fill-current' : 'text-gray-500', 'w-5 h-5']"
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 20 20"
           fill="currentColor"
         >
           <path fill-rule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clip-rule="evenodd" />
         </svg>
       </button>
-      
+
       <!-- Quick Actions -->
       <div class="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-2 opacity-0 group-hover:opacity-100 transition-opacity">
         <button
-          @click="quickView"
+          @click.prevent="quickView"
           class="p-2 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-full hover:bg-gold hover:text-luxury-green dark:hover:bg-luxury-green dark:hover:text-white transition-colors"
           aria-label="Quick view"
         >
@@ -44,7 +44,7 @@
           </svg>
         </button>
         <button
-          @click="addToCart"
+          @click.prevent="addToCart"
           class="p-2 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-full hover:bg-gold hover:text-luxury-green dark:hover:bg-luxury-green dark:hover:text-white transition-colors"
           aria-label="Add to cart"
         >
@@ -53,7 +53,7 @@
           </svg>
         </button>
         <button
-          @click="addToComparison"
+          @click.prevent="addToComparison"
           class="p-2 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-full hover:bg-gold hover:text-luxury-green dark:hover:bg-luxury-green dark:hover:text-white transition-colors"
           :aria-label="isInComparison ? 'Remove from comparison' : 'Add to comparison'"
         >
@@ -68,21 +68,21 @@
         </button>
       </div>
     </div>
-    
+
     <!-- Product Info -->
     <div class="p-4 flex-grow flex flex-col">
       <div class="mb-2">
         <span class="text-xs font-semibold text-gold uppercase">{{ product.category }}</span>
       </div>
-      
+
       <h3 class="text-lg font-serif-display font-bold text-luxury-green dark:text-white mb-1 line-clamp-1">
         {{ product.name }}
       </h3>
-      
+
       <p class="text-sm text-gray-600 dark:text-gray-300 mb-3 line-clamp-2 flex-grow">
         {{ product.description }}
       </p>
-      
+
       <div class="flex justify-between items-center mt-auto">
         <div class="flex items-center">
           <!-- Rating -->
@@ -103,7 +103,7 @@
         </div>
       </div>
     </div>
-  </div>
+  </NuxtLink>
 </template>
 
 <script setup>

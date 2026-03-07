@@ -10,6 +10,7 @@ export interface Product {
   currency: string;
   formattedPrice: string;
   volume: string;
+  availableVolumes?: string[];
   gender: string;
   fragranceFamily: string;
   season: string;
@@ -41,6 +42,7 @@ export const products: Product[] = [
     currency: 'ZAR',
     formattedPrice: 'R 100',
     volume: '30ml',
+    availableVolumes: ['30ml'],
     gender: 'unisex',
     fragranceFamily: 'various',
     season: 'year-round',
@@ -69,6 +71,7 @@ export const products: Product[] = [
     currency: 'ZAR',
     formattedPrice: 'R 150',
     volume: '60ml',
+    availableVolumes: ['60ml'],
     gender: 'unisex',
     fragranceFamily: 'various',
     season: 'year-round',
@@ -97,6 +100,7 @@ export const products: Product[] = [
     currency: 'ZAR',
     formattedPrice: 'R 50',
     volume: '100ml',
+    availableVolumes: ['100ml', '200ml'],
     gender: 'unisex',
     fragranceFamily: 'various',
     season: 'year-round',
@@ -125,6 +129,7 @@ export const products: Product[] = [
     currency: 'ZAR',
     formattedPrice: 'R 200',
     volume: '30ml each',
+    availableVolumes: ['30ml each'],
     gender: 'couple',
     fragranceFamily: 'various',
     season: 'year-round',

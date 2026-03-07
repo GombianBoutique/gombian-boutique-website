@@ -2,10 +2,51 @@ import { defineNuxtConfig } from 'nuxt/config'
 
 export default defineNuxtConfig({
   compatibilityDate: '2026-01-14',
+
+  // Static site generation for Netlify
+  ssr: true,
+
+  nitro: {
+    prerender: {
+      crawlLinks: true,
+      failOnError: false,
+      routes: [
+        '/',
+        '/products',
+        '/about',
+        '/cart',
+        '/checkout',
+        '/contact',
+        '/cookies',
+        '/faq',
+        '/login',
+        '/register',
+        '/policies',
+        '/privacy',
+        '/search',
+        '/shipping',
+        '/support',
+        '/sustainability',
+        '/terms',
+        '/testimonials',
+        '/track-order',
+        '/wishlist',
+        '/compare',
+        '/confirmation',
+        '/account',
+        '/account/orders',
+        '/account/profile',
+        '/account/preferences',
+        '/sitemap.xml'
+      ]
+    }
+  },
+
   typescript: {
     strict: true,
     shim: false
   },
+
   modules: [
     '@nuxtjs/tailwindcss',
     '@nuxtjs/color-mode',
@@ -15,6 +56,7 @@ export default defineNuxtConfig({
     '@pinia/nuxt',
     '@nuxtjs/i18n'
   ],
+
   i18n: {
     defaultLocale: 'en',
     strategy: 'prefix_except_default',
@@ -31,10 +73,12 @@ export default defineNuxtConfig({
       }
     ]
   },
+
   plugins: [
     '~/plugins/accessibility.client.js',
     '~/plugins/errorHandler.js'
   ],
+
   runtimeConfig: {
     sendgridApiKey: process.env.SENDGRID_API_KEY || '',
     recaptchaSecretKey: process.env.NUXT_RECAPTCHA_SECRET_KEY || '',
@@ -44,7 +88,6 @@ export default defineNuxtConfig({
     mailPort: parseInt(process.env.NUXT_MAIL_PORT || '587'),
     mailUser: process.env.NUXT_MAIL_USER || '',
     mailPassword: process.env.NUXT_MAIL_PASSWORD || '',
-    // Mailchimp configuration
     mailchimpApiKey: process.env.MAILCHIMP_API_KEY || '',
     mailchimpListId: process.env.MAILCHIMP_LIST_ID || '',
     mailchimpServerPrefix: process.env.MAILCHIMP_SERVER_PREFIX || 'us1',
@@ -56,6 +99,7 @@ export default defineNuxtConfig({
       multiplePaymentMethods: process.env.NUXT_MULTIPLE_PAYMENT_METHODS !== 'false'
     }
   },
+
   colorMode: {
     classSuffix: '',
     preference: 'system',
@@ -63,6 +107,7 @@ export default defineNuxtConfig({
     globalName: '__NUXT_COLOR_MODE__',
     storageKey: 'nuxt-color-mode'
   },
+
   app: {
     head: {
       title: 'Gombian Boutique - Luxury Perfume Collection',
@@ -72,14 +117,11 @@ export default defineNuxtConfig({
         { hid: 'description', name: 'description', content: 'Gombian Boutique - where the art of fragrance meets the luxury of villa-inspired fragrances. Experience our exclusive line of nature-inspired scents that transport and transform any space, crafted with high-quality, natural ingredients for a true luxury experience.' },
         { name: 'keywords', content: 'perfume, luxury, fragrance, boutique, exclusive, elegant, sophisticated, artisanal' },
         { name: 'author', content: 'Gombian Boutique' },
-        // Open Graph / Facebook
         { property: 'og:type', content: 'website' },
         { property: 'og:url', content: 'https://gombianboutique.com/' },
         { property: 'og:title', content: 'Gombian Boutique - Luxury Perfume Collection' },
         { property: 'og:description', content: 'Gombian Boutique - where the art of fragrance meets the luxury of villa-inspired fragrances. Experience our exclusive line of nature-inspired scents that transport and transform any space, crafted with high-quality, natural ingredients for a true luxury experience.' },
         { property: 'og:image', content: 'https://gombianboutique.com/images/products/Ladies 60ml Perfume.jpg' },
-
-        // Twitter
         { property: 'twitter:card', content: 'summary_large_image' },
         { property: 'twitter:url', content: 'https://gombianboutique.com/' },
         { property: 'twitter:title', content: 'Gombian Boutique - Luxury Perfume Collection' },
@@ -93,11 +135,6 @@ export default defineNuxtConfig({
         { rel: 'preconnect', href: 'https://fonts.gstatic.com', crossorigin: 'anonymous' },
         { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@300;400;500;600;700&display=swap' }
       ]
-    }
-  },
-  nitro: {
-    prerender: {
-      routes: ['/sitemap.xml']
     }
   }
 })
