@@ -4,7 +4,12 @@ export default defineNuxtConfig({
   compatibilityDate: '2026-01-14',
 
   // Static site generation for Netlify
-  ssr: true,
+  ssr: false,
+
+  // Fallback for unknown dynamic routes (e.g., /products/new-slug)
+  generate: {
+    fallback: true
+  },
 
   nitro: {
     preset: 'static',
