@@ -1,7 +1,7 @@
 // server/api/products.get.ts
 import { products } from '../data/products'
 
-export default defineEventHandler((event) => {
+export default defineEventHandler(async (event) => {
   // Extract query parameters
   const query = getQuery(event)
 

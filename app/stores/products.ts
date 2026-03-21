@@ -96,10 +96,16 @@ export const useProductsStore = defineStore('products', () => {
     setError(null);
 
     try {
-      // Fetch from API endpoint - can be switched to real backend later
-      const data = await $fetch('/api/products')
-      
-      state.value.products = data.products;
+      // Fetch from API endpoint - returns { products: Product[], pagination: {...} }
+      // For SSG, this will fall back to static JSON if server API is not available
+      const response = await $fetch('/api/products').catch(async () => {
+        // Fallback to static JSON file for SSG
+        return await $fetch('/data/products.json')
+          .then(data => ({ products: data }));
+      })
+
+      // Extract products array from response
+      state.value.products = response.products || response || [];
     } catch (error: any) {
       setError(error.message || 'Failed to fetch products');
       console.error('Error fetching products:', error);
