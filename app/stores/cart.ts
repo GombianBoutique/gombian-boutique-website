@@ -148,15 +148,22 @@ export const useCartStore = defineStore('cart', () => {
   // Watch for auth state changes and sync cart
   const setupAuthWatcher = () => {
     if (typeof window === 'undefined') return;
-    
+
     // Check for auth token changes
-    setInterval(() => {
+    const authCheckInterval = setInterval(() => {
       const token = getToken();
       if (token && isInitialized.value) {
         // Sync cart to API when user is logged in
         syncCartToApi(token);
       }
     }, 5000); // Check every 5 seconds
+
+    // Clear interval on page unload to prevent memory leaks
+    if (typeof window !== 'undefined') {
+      window.addEventListener('beforeunload', () => {
+        clearInterval(authCheckInterval);
+      });
+    }
   };
 
   // Actions

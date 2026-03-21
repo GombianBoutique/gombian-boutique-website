@@ -84,7 +84,12 @@ const cleanupExpiredEntries = () => {
 }
 
 // Clean up expired entries every 5 minutes
-setInterval(cleanupExpiredEntries, 5 * 60 * 1000)
+// Only run in server environment, not during prerendering
+if (import.meta.server && process.env.NITRO_PRERENDER !== 'true') {
+  const cleanupInterval = setInterval(cleanupExpiredEntries, 5 * 60 * 1000)
+  // Allow process to exit cleanly
+  cleanupInterval.unref()
+}
 
 /**
  * Check rate limit and throw error if exceeded

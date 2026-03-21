@@ -1,4 +1,5 @@
 <!-- components/HeroSlider.vue -->
+<!-- @client-only -->
 <template>
   <div class="relative overflow-hidden rounded-xl">
     <!-- Slides Container -->

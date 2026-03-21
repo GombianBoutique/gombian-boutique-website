@@ -16,6 +16,7 @@ export default defineNuxtConfig({
     prerender: {
       crawlLinks: false,
       failOnError: false,
+      autoExit: true,
       routes: [
         '/',
         '/products',

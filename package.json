@@ -7,7 +7,6 @@
     "build": "nuxt build",
     "dev": "nuxt dev",
     "generate": "nuxt generate",
-    "generate:ci": "nuxt generate && node -e \"setTimeout(() => process.exit(0), 1000)\"",
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare",
     "test": "vitest",
