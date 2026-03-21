@@ -1,7 +1,7 @@
 # Netlify Configuration for Nuxt 4 Static Site
 
 [build]
-  command = "pnpm run generate"
+  command = "pnpm run generate:ci"
   publish = ".output/public"
 
 [build.environment]
