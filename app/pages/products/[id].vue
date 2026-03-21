@@ -4,8 +4,25 @@
     <!-- Breadcrumbs -->
     <Breadcrumbs :crumbs="breadcrumbItems" />
 
+    <!-- Loading State -->
+    <div v-if="loading" class="flex justify-center items-center py-32">
+      <div class="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-luxury-green"></div>
+      <span class="ml-4 text-lg text-luxury-green dark:text-white">Loading product details...</span>
+    </div>
+
+    <!-- Not Found State -->
+    <div v-else-if="!product && !loading" class="text-center py-16">
+      <h2 class="text-2xl font-bold text-luxury-green dark:text-white mb-4">Product Not Found</h2>
+      <p class="text-gray-600 dark:text-gray-400 mb-6">
+        Sorry, we couldn't find the product you're looking for.
+      </p>
+      <NuxtLink to="/products" class="luxury-button">
+        Browse All Products
+      </NuxtLink>
+    </div>
+
     <!-- Product Detail Section -->
-    <div v-if="product" class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+    <div v-else-if="product" class="grid grid-cols-1 lg:grid-cols-2 gap-12">
       <!-- Product Images Carousel -->
       <div>
         <div class="bg-white dark:bg-gray-800 rounded-xl p-4 mb-4">
@@ -299,8 +316,13 @@ definePageMeta({
 })
 
 const route = useRoute()
-const { products } = useProducts()
+const { products, loading, fetchProducts } = useProducts()
 const cartStore = useCartStore()
+
+// Ensure products are loaded
+if (!products.value || products.value.length === 0) {
+  await fetchProducts()
+}
 
 // Product data - get from composable
 const product = computed(() => {

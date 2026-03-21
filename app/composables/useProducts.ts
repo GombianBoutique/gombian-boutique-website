@@ -47,8 +47,12 @@ export const useProducts = () => {
   const fetchProducts = async (): Promise<void> => {
     try {
       loading.value = true;
-      // Fetch from API endpoint - mock data from server/data/products.ts
-      const data: ProductsResponse = await $fetch('/api/products');
+      // Fetch from API endpoint - with fallback to static JSON for SSG
+      const data: ProductsResponse = await $fetch('/api/products').catch(async () => {
+        // Fallback to static JSON file for SSG
+        return await $fetch('/data/products.json')
+          .then(products => ({ products, pagination: null }));
+      });
       productsData.value = data;
       error.value = null;
     } catch (err) {
