@@ -5,20 +5,32 @@
 /**
  * Format currency values
  * @param amount - The numeric amount to format
- * @param currency - The currency code (e.g., 'USD', 'EUR')
- * @returns Formatted currency string
+ * @param currency - The currency code (e.g., 'ZAR', 'USD', 'EUR')
+ * @returns Formatted currency string (uses 'R' symbol for ZAR, 'US$' for USD, '€' for EUR, etc.)
  */
-export function formatCurrency(amount: number, currency: string = 'USD'): string {
-  // Default to USD if no currency is provided
-  const currencyCode = currency || 'USD';
-  
-  // Format the amount as currency based on the currency code
-  return new Intl.NumberFormat('en-US', {
-    style: 'currency',
-    currency: currencyCode,
-    minimumFractionDigits: 2,
+export function formatCurrency(amount: number, currency: string = 'ZAR'): string {
+  const currencyCode = currency || 'ZAR';
+
+  // Use custom symbols for common currencies to keep display compact
+  const currencySymbols: Record<string, string> = {
+    'ZAR': 'R',
+    'USD': '$',
+    'EUR': '€',
+    'GBP': '£',
+    'NGN': '₦',
+    'KES': 'KSh',
+    'GHS': 'GH₵',
+    'MAD': 'MAD',
+    'EGP': 'E£',
+  };
+
+  const symbol = currencySymbols[currencyCode] || currencyCode;
+  const formattedAmount = new Intl.NumberFormat('en-US', {
+    minimumFractionDigits: 0,
     maximumFractionDigits: 2
   }).format(amount);
+
+  return `${symbol} ${formattedAmount}`;
 }
 
 /**

@@ -133,12 +133,12 @@ const slides = [
     title: 'Signature Scents',
     description: 'Our most beloved fragrances loved by customers worldwide. Crafted with premium ingredients.',
     primaryAction: {
-      text: 'Shop Best Sellers',
-      link: '/products?category=best-seller'
+      text: 'Shop Perfumes',
+      link: '/collections/perfume'
     },
     secondaryAction: {
       text: 'See Reviews',
-      link: '/products?category=best-seller'
+      link: '/collections/perfume'
     }
   }
 ]

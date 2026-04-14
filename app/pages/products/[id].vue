@@ -218,8 +218,13 @@
         <!-- Scent Notes Tab -->
         <div v-show="activeTab === 'scent-notes'" class="space-y-6">
           <h3 class="text-xl font-serif-display font-bold text-luxury-green dark:text-white">Scent Profile</h3>
-          
-          <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+
+          <!-- Show message for accessories or products without scent notes -->
+          <div v-if="!product?.scentNotes?.top?.length && !product?.scentNotes?.middle?.length && !product?.scentNotes?.base?.length" class="bg-luxury-green/10 dark:bg-gray-800 p-6 rounded-lg">
+            <p class="text-gray-700 dark:text-gray-300 text-center">This product does not have scent notes as it is an accessory.</p>
+          </div>
+
+          <div v-else class="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-sm">
               <h4 class="font-bold text-luxury-green dark:text-gold mb-4">Top Notes</h4>
               <ul class="space-y-2">
@@ -250,10 +255,10 @@
               </ul>
             </div>
           </div>
-          
-          <div class="bg-luxury-green/10 dark:bg-gray-800 p-6 rounded-lg">
+
+          <div v-if="product?.longevity && product.longevity !== 'N/A'" class="bg-luxury-green/10 dark:bg-gray-800 p-6 rounded-lg">
             <h4 class="font-bold text-luxury-green dark:text-gold mb-2">Longevity</h4>
-            <p class="text-gray-700 dark:text-gray-300">{{ product?.longevity || 'Not specified' }}</p>
+            <p class="text-gray-700 dark:text-gray-300">{{ product.longevity }}</p>
           </div>
         </div>
 
@@ -353,11 +358,23 @@ watch(() => product.value, (newProduct) => {
 }, { immediate: true })
 
 // Computed properties
-const tabs = [
-  { name: 'scent-notes', label: 'Scent Notes' },
-  { name: 'ingredients', label: 'Ingredients' },
-  { name: 'details', label: 'Details' }
-]
+const tabs = computed(() => {
+  const allTabs = [
+    { name: 'scent-notes', label: 'Scent Notes' },
+    { name: 'ingredients', label: 'Ingredients' },
+    { name: 'details', label: 'Details' }
+  ]
+
+  // Hide scent notes tab for accessories or products without scent notes
+  if (product.value?.category === 'accessory' || 
+      (!product.value?.scentNotes?.top?.length && 
+       !product.value?.scentNotes?.middle?.length && 
+       !product.value?.scentNotes?.base?.length)) {
+    return allTabs.filter(tab => tab.name !== 'scent-notes')
+  }
+
+  return allTabs
+})
 
 const relatedProducts = computed(() => {
   if (!product.value) return []

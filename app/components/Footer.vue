@@ -10,8 +10,7 @@
             <img src="/images/logos/logo.png" alt="Gombian Boutique Logo" class="h-16 w-auto mr-4">
           </div>
           <p class="mb-4 text-white dark:text-gray-300">
-            Where the art of fragrance meets the luxury of villa-inspired perfumes.
-            Experience our exclusive line of nature-inspired scents that transport and transform any space.
+            Specializing in luxury fragrances since 2024.
           </p>
           <div class="flex space-x-4">
             <a href="#" aria-label="Facebook" class="text-white hover:text-gold transition-colors duration-300 dark:text-gray-200 dark:hover:text-gold">
@@ -40,20 +39,17 @@
             <li><NuxtLink to="/products" class="hover:text-gold transition-colors duration-300 text-white dark:text-gray-300 dark:hover:text-gold">Perfume Collection</NuxtLink></li>
             <li><NuxtLink to="/about" class="hover:text-gold transition-colors duration-300 text-white dark:text-gray-300 dark:hover:text-gold">About Us</NuxtLink></li>
             <li><NuxtLink to="/contact" class="hover:text-gold transition-colors duration-300 text-white dark:text-gray-300 dark:hover:text-gold">Contact</NuxtLink></li>
-            <li><NuxtLink to="/track-order" class="hover:text-gold transition-colors duration-300 text-white dark:text-gray-300 dark:hover:text-gold">Track Order</NuxtLink></li>
             <li><NuxtLink to="/policies" class="hover:text-gold transition-colors duration-300 text-white dark:text-gray-300 dark:hover:text-gold">Policies</NuxtLink></li>
           </ul>
         </div>
 
         <!-- Customer Service & Contact Info -->
         <div>
-          <h3 class="text-xl font-serif-display mb-4 text-white dark:text-gray-200">Contact Info</h3>
-          <address class="not-italic text-white dark:text-gray-300">
-            <p class="mb-2">35B Mulder's Mile</p>
-            <p class="mb-2">Eldoraigne, Centurion, 0157</p>
-            <p class="mb-2">Email: gombianholdings@gmail.com</p>
-            <p>Phone: 084 342 9374 | WhatsApp: 067 157 4157</p>
-          </address>
+          <h3 class="text-xl font-serif-display mb-4 text-white dark:text-gray-200">Contact Us</h3>
+          <div class="text-white dark:text-gray-300 space-y-2">
+            <p>Email: <a href="mailto:info@gombianboutique.co.za" class="hover:text-gold transition-colors">info@gombianboutique.co.za</a></p>
+            <p>Phone: <a href="tel:0671574157" class="hover:text-gold transition-colors">067 157 4157</a></p>
+          </div>
         </div>
 
         <!-- Newsletter Section -->

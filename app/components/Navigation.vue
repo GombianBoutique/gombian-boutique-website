@@ -23,10 +23,11 @@
 
             <!-- Dropdown menu -->
             <div class="absolute left-0 mt-2 w-48 bg-white dark:bg-gray-800 shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50 rounded-md">
-              <NuxtLink to="/collections/best-seller" class="block px-4 py-2 text-luxury-green hover:bg-gray-100 dark:hover:bg-gray-700 dark:text-gray-200 dark:hover:text-gold transition-colors duration-300">Best Sellers</NuxtLink>
-              <NuxtLink to="/collections/premium" class="block px-4 py-2 text-luxury-green hover:bg-gray-100 dark:hover:bg-gray-700 dark:text-gray-200 dark:hover:text-gold transition-colors duration-300">Premium</NuxtLink>
-              <NuxtLink to="/collections/complementary" class="block px-4 py-2 text-luxury-green hover:bg-gray-100 dark:hover:bg-gray-700 dark:text-gray-200 dark:hover:text-gold transition-colors duration-300">Complementary</NuxtLink>
+              <NuxtLink to="/collections/perfume" class="block px-4 py-2 text-luxury-green hover:bg-gray-100 dark:hover:bg-gray-700 dark:text-gray-200 dark:hover:text-gold transition-colors duration-300">Perfumes</NuxtLink>
+              <NuxtLink to="/collections/body-care" class="block px-4 py-2 text-luxury-green hover:bg-gray-100 dark:hover:bg-gray-700 dark:text-gray-200 dark:hover:text-gold transition-colors duration-300">Body Care</NuxtLink>
+              <NuxtLink to="/collections/combo" class="block px-4 py-2 text-luxury-green hover:bg-gray-100 dark:hover:bg-gray-700 dark:text-gray-200 dark:hover:text-gold transition-colors duration-300">Combos</NuxtLink>
               <NuxtLink to="/collections/gift-set" class="block px-4 py-2 text-luxury-green hover:bg-gray-100 dark:hover:bg-gray-700 dark:text-gray-200 dark:hover:text-gold transition-colors duration-300">Gift Sets</NuxtLink>
+              <NuxtLink to="/collections/accessory" class="block px-4 py-2 text-luxury-green hover:bg-gray-100 dark:hover:bg-gray-700 dark:text-gray-200 dark:hover:text-gold transition-colors duration-300">Accessories</NuxtLink>
             </div>
           </div>
 
@@ -44,8 +45,7 @@
           </NuxtLink>
           <NuxtLink to="/about" class="text-luxury-green hover:text-gold transition-colors duration-300 dark:text-gray-200 dark:hover:text-gold">About</NuxtLink>
           <NuxtLink to="/contact" class="text-luxury-green hover:text-gold transition-colors duration-300 dark:text-gray-200 dark:hover:text-gold">Contact</NuxtLink>
-          <NuxtLink to="/track-order" class="text-luxury-green hover:text-gold transition-colors duration-300 dark:text-gray-200 dark:hover:text-gold">Track Order</NuxtLink>
-          
+
           <!-- Wishlist Icon -->
           <NuxtLink to="/wishlist" class="relative text-luxury-green hover:text-gold transition-colors duration-300 dark:text-gray-200 dark:hover:text-gold">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -58,7 +58,7 @@
               {{ wishlistCount }}
             </span>
           </NuxtLink>
-          
+
           <!-- Cart Icon -->
           <NuxtLink to="/cart" class="relative text-luxury-green hover:text-gold transition-colors duration-300 dark:text-gray-200 dark:hover:text-gold">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -71,7 +71,7 @@
               {{ cartStore.itemCount.value || cartStore.itemCount }}
             </span>
           </NuxtLink>
-          
+
           <ColorModeToggle class="ml-2" />
         </nav>
 
@@ -104,10 +104,11 @@
               </svg>
             </div>
             <div :class="{ 'max-h-0 overflow-hidden': !mobileCollectionOpen, 'max-h-60': mobileCollectionOpen }" class="transition-all duration-300 pl-4">
-              <NuxtLink to="/collections/best-seller" class="block py-2 text-luxury-green hover:text-gold transition-colors duration-300 dark:text-gray-300 dark:hover:text-gold">Best Sellers</NuxtLink>
-              <NuxtLink to="/collections/premium" class="block py-2 text-luxury-green hover:text-gold transition-colors duration-300 dark:text-gray-300 dark:hover:text-gold">Premium</NuxtLink>
-              <NuxtLink to="/collections/complementary" class="block py-2 text-luxury-green hover:text-gold transition-colors duration-300 dark:text-gray-300 dark:hover:text-gold">Complementary</NuxtLink>
+              <NuxtLink to="/collections/perfume" class="block py-2 text-luxury-green hover:text-gold transition-colors duration-300 dark:text-gray-300 dark:hover:text-gold">Perfumes</NuxtLink>
+              <NuxtLink to="/collections/body-care" class="block py-2 text-luxury-green hover:text-gold transition-colors duration-300 dark:text-gray-300 dark:hover:text-gold">Body Care</NuxtLink>
+              <NuxtLink to="/collections/combo" class="block py-2 text-luxury-green hover:text-gold transition-colors duration-300 dark:text-gray-300 dark:hover:text-gold">Combos</NuxtLink>
               <NuxtLink to="/collections/gift-set" class="block py-2 text-luxury-green hover:text-gold transition-colors duration-300 dark:text-gray-300 dark:hover:text-gold">Gift Sets</NuxtLink>
+              <NuxtLink to="/collections/accessory" class="block py-2 text-luxury-green hover:text-gold transition-colors duration-300 dark:text-gray-300 dark:hover:text-gold">Accessories</NuxtLink>
             </div>
           </div>
 
@@ -121,8 +122,7 @@
           </NuxtLink>
           <NuxtLink to="/about" class="text-luxury-green hover:text-gold transition-colors duration-300 py-2 dark:text-gray-200 dark:hover:text-gold">About</NuxtLink>
           <NuxtLink to="/contact" class="text-luxury-green hover:text-gold transition-colors duration-300 py-2 dark:text-gray-200 dark:hover:text-gold">Contact</NuxtLink>
-          <NuxtLink to="/track-order" class="text-luxury-green hover:text-gold transition-colors duration-300 py-2 dark:text-gray-200 dark:hover:text-gold">Track Order</NuxtLink>
-          
+
           <!-- Wishlist -->
           <NuxtLink to="/wishlist" class="flex items-center text-luxury-green hover:text-gold transition-colors duration-300 py-2 dark:text-gray-200 dark:hover:text-gold relative">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">

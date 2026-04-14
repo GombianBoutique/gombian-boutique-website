@@ -4,7 +4,7 @@ export interface Product {
   name: string;
   description: string;
   price: number; // Price in cents
-  currency: string; // Currency code (e.g., 'USD', 'EUR', 'ZAR')
+  currency: string; // Currency code (e.g., 'ZAR', 'USD', 'EUR')
   formattedPrice: string; // Human-readable price (e.g., 'R 150')
   volume: string; // Product volume (e.g., '30ml', '60ml', '100ml')
   gender: 'male' | 'female' | 'unisex' | 'couple';
@@ -19,7 +19,7 @@ export interface Product {
   };
   ingredients: string[]; // List of ingredients
   images: string[]; // Array of image URLs
-  category: 'best-seller' | 'premium' | 'complementary' | 'gift-set' | 'limited-edition';
+  category: 'best-seller' | 'premium' | 'complementary' | 'gift-set' | 'limited-edition' | 'perfume' | 'body-care' | 'combo' | 'accessory';
   inStock: boolean;
   inventoryCount: number; // Number of items in stock
   createdAt: Date;

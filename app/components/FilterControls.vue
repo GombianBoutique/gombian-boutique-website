@@ -201,11 +201,11 @@ const selectedFilters = ref({
 // Define filter options
 const categories = [
   { value: '', label: 'All Categories' },
-  { value: 'best-seller', label: 'Best Seller' },
-  { value: 'premium', label: 'Premium' },
-  { value: 'complementary', label: 'Complementary' },
-  { value: 'gift-set', label: 'Gift Set' },
-  { value: 'limited-edition', label: 'Limited Edition' }
+  { value: 'perfume', label: 'Perfumes' },
+  { value: 'body-care', label: 'Body Care' },
+  { value: 'combo', label: 'Combos' },
+  { value: 'gift-set', label: 'Gift Sets' },
+  { value: 'accessory', label: 'Accessories' }
 ]
 
 const genders = [

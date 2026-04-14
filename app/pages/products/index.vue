@@ -23,16 +23,16 @@
         <!-- Category Filter -->
         <div>
           <label class="block text-sm font-medium text-luxury-green dark:text-gold mb-2">Category</label>
-          <select 
+          <select
             v-model="filters.category"
             class="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
           >
             <option value="">All Categories</option>
-            <option value="best-seller">Best Sellers</option>
-            <option value="premium">Premium</option>
-            <option value="complementary">Complementary</option>
+            <option value="perfume">Perfumes</option>
+            <option value="body-care">Body Care</option>
+            <option value="combo">Combos</option>
             <option value="gift-set">Gift Sets</option>
-            <option value="limited-edition">Limited Edition</option>
+            <option value="accessory">Accessories</option>
           </select>
         </div>
 
@@ -71,15 +71,16 @@
         <!-- Price Range Filter -->
         <div>
           <label class="block text-sm font-medium text-luxury-green dark:text-gold mb-2">Price Range</label>
-          <select 
+          <select
             v-model="filters.priceRange"
             class="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
           >
             <option value="">Any Price</option>
             <option value="0-100">Under R100</option>
             <option value="100-200">R100 - R200</option>
-            <option value="200-500">R200 - R500</option>
-            <option value="500+">Over R500</option>
+            <option value="200-300">R200 - R300</option>
+            <option value="300-500">R300 - R500</option>
+            <option value="500-">R500+</option>
           </select>
         </div>
       </div>
@@ -189,6 +190,40 @@
         Reset Filters
       </button>
     </div>
+
+    <!-- Full Product Catalogue Section -->
+    <div class="mt-16 pt-12 border-t border-gray-200 dark:border-gray-700">
+      <div class="text-center mb-8">
+        <h2 class="text-3xl font-serif-display font-bold text-luxury-green dark:text-white mb-4">
+          View Our Complete Catalogue
+        </h2>
+        <p class="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
+          Explore our full range of luxury fragrances and body care products
+        </p>
+      </div>
+      <div class="flex justify-center">
+        <NuxtLink
+          to="/images/products/catalogue.jpeg"
+          target="_blank"
+          class="inline-block"
+        >
+          <img
+            src="/images/products/catalogue.jpeg"
+            alt="Gombian Boutique Complete Product Catalogue"
+            class="max-w-full h-auto rounded-xl shadow-lg hover:shadow-2xl transition-shadow duration-300"
+          >
+        </NuxtLink>
+      </div>
+      <div class="text-center mt-8">
+        <a
+          href="/images/products/catalogue.jpeg"
+          download
+          class="luxury-button inline-block"
+        >
+          Download Full Catalogue
+        </a>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -238,11 +273,14 @@ const filteredProducts = computed(() => {
   
   // Apply price range filter
   if (filters.priceRange) {
-    const [min, max] = filters.priceRange.split('-').map(val => val.replace('+', ''));
-    if (max) {
-      result = result.filter(product => product.price >= parseInt(min) && product.price <= parseInt(max))
+    const range = filters.priceRange.split('-');
+    const min = parseInt(range[0]);
+    const max = range.length > 1 && range[1] ? parseInt(range[1]) : null;
+    
+    if (max !== null) {
+      result = result.filter(product => product.price >= min && product.price <= max)
     } else {
-      result = result.filter(product => product.price >= parseInt(min))
+      result = result.filter(product => product.price >= min)
     }
   }
   

@@ -63,7 +63,7 @@
               :key="`${product.id}-price`"
               class="p-4 text-center text-luxury-green dark:text-gold font-bold"
             >
-              {{ formatCurrency(product.price, product.currency) }}
+              {{ formatCurrency(product.price, product.currency || 'ZAR') }}
             </td>
           </tr>
           

@@ -71,7 +71,7 @@
         <div class="mt-8 bg-neutral-light p-6 rounded-lg">
           <h3 class="text-xl font-serif-display font-bold text-luxury-green mb-4">Business Information</h3>
           <p class="mb-2"><strong>Gombian Boutique Perfume Store</strong></p>
-          <p class="mb-2">Specializing in luxury fragrances since 2026</p>
+          <p class="mb-2">Specializing in luxury fragrances since 2024</p>
           <p class="mb-2">Regulated by international perfume industry standards</p>
           <p class="mb-2">Member of the International Fragrance Association (IFRA)</p>
         </div>

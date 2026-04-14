@@ -62,11 +62,11 @@ const filteredProducts = computed(() => {
 // Get the human-readable category name
 const categoryName = computed(() => {
   const categoryNames = {
-    'best-seller': 'Best Seller',
-    'premium': 'Premium',
-    'complementary': 'Complementary',
+    'perfume': 'Perfume',
+    'body-care': 'Body Care',
+    'combo': 'Combo',
     'gift-set': 'Gift Set',
-    'limited-edition': 'Limited Edition'
+    'accessory': 'Accessory'
   }
 
   return categoryNames[category.value] || category.value

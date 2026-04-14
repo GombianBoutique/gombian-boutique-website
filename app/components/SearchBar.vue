@@ -56,7 +56,7 @@
           </div>
           <div class="flex-grow min-w-0">
             <div class="font-medium text-gray-900 dark:text-white truncate">{{ suggestion.name }}</div>
-            <div class="text-sm text-gray-500 dark:text-gray-400 truncate">{{ formatCurrency(suggestion.price, suggestion.currency) }}</div>
+            <div class="text-sm text-gray-500 dark:text-gray-400 truncate">{{ formatCurrency(suggestion.price, suggestion.currency || 'ZAR') }}</div>
             <div class="text-xs text-gray-500 dark:text-gray-400">{{ suggestion.category }}</div>
           </div>
         </li>
