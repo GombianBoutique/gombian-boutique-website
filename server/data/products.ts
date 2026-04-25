@@ -373,7 +373,7 @@ export const products: Product[] = [
       base: ['vanilla', 'musk']
     },
     ingredients: ['alcohol denat.', 'water', 'fragrance', 'glycerin', 'aloe vera', 'vitamin E'],
-    images: ['/images/products/gift_sets_01.jpg'],
+    images: ['/images/products/gift_sets_01.jpg', '/images/products/gift_sets_00.jpg'],
     category: 'gift-set',
     inStock: true,
     inventoryCount: 15,
@@ -402,7 +402,7 @@ export const products: Product[] = [
       base: ['musk', 'amber']
     },
     ingredients: ['alcohol denat.', 'water', 'fragrance', 'glycerin', 'aloe vera', 'vitamin E'],
-    images: ['/images/products/gift_sets_01.jpg'],
+    images: ['/images/products/gift_sets_01.jpg','/images/products/gift_sets_00.jpg'],
     category: 'gift-set',
     inStock: true,
     inventoryCount: 15,
@@ -431,7 +431,7 @@ export const products: Product[] = [
       base: ['vanilla', 'musk', 'amber']
     },
     ingredients: ['alcohol denat.', 'water', 'fragrance', 'glycerin', 'aloe vera', 'vitamin E'],
-    images: ['/images/products/gift_sets_01.jpg'],
+    images: ['/images/products/gift_sets_01.jpg','/images/products/gift_sets_00.jpg'],
     category: 'gift-set',
     inStock: true,
     inventoryCount: 12,
