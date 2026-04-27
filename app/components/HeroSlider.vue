@@ -15,6 +15,7 @@
         <div
           class="relative h-[500px] md:h-[600px] bg-cover bg-center flex items-center"
           :style="{ backgroundImage: `linear-gradient(to right, rgba(45, 80, 22, 0.7), rgba(45, 80, 22, 0.4)), url('${getImageUrl(slide.backgroundImage)}')` }"
+          :inert="currentIndex !== index ? true : undefined"
         >
           <div class="container mx-auto px-4 md:px-8">
             <div class="max-w-2xl">

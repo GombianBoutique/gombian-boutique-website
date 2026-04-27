@@ -56,7 +56,14 @@ export default defineNuxtConfig({
     '@nuxtjs/tailwindcss',
     '@nuxtjs/color-mode',
     '@nuxtjs/robots',
-    '@nuxt/image',
+    [
+      '@nuxt/image',
+      {
+        format: ['webp', 'avif'],
+        quality: 80,
+        dir: 'public/images'
+      }
+    ],
     '~/modules/stripe.client.js',
     '@pinia/nuxt',
     '@nuxtjs/i18n'
@@ -138,7 +145,7 @@ export default defineNuxtConfig({
         { rel: 'apple-touch-icon', sizes: '180x180', href: '/images/logos/logo.png' },
         { rel: 'preconnect', href: 'https://fonts.googleapis.com' },
         { rel: 'preconnect', href: 'https://fonts.gstatic.com', crossorigin: 'anonymous' },
-        { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@300;400;500;600;700&display=swap' }
+        { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@300;400;500;600;700&display=swap&display=optional' }
       ]
     }
   }

@@ -8,6 +8,9 @@
         :alt="product.name"
         class="w-full h-64 object-cover transition-transform duration-500 group-hover:scale-105"
         :modifiers="{ fit: 'cover', width: 400, height: 400 }"
+        format="webp"
+        quality="80"
+        loading="lazy"
       />
 
       <!-- Sale Badge -->
