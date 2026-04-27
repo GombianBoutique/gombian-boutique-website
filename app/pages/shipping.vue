@@ -148,7 +148,7 @@
           </p>
           <div class="p-4 bg-luxury-green/10 dark:bg-luxury-green/20 rounded-lg">
             <p class="text-gray-700 dark:text-gray-300">
-              <strong>Email:</strong> <a href="mailto:gombianholdings@gmail.com" class="text-luxury-green hover:text-gold dark:text-gold dark:hover:text-luxury-green underline">gombianholdings@gmail.com</a><br>
+              <strong>Email:</strong> <a href="mailto:info@gombianboutique.co.za" class="text-luxury-green hover:text-gold dark:text-gold dark:hover:text-luxury-green underline">info@gombianboutique.co.za</a><br>
               <strong>Phone:</strong> +27 12 345 6789 (Mon-Fri, 9AM-5PM SAST)
             </p>
           </div>

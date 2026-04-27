@@ -37,7 +37,7 @@ export interface Order {
   orderNumber: string
   email: string
   paymentMethod: string
-  paymentStatus: 'pending' | 'completed' | 'failed' | 'refunded'
+  paymentStatus: 'pending' | 'verifying' | 'completed' | 'failed' | 'refunded'
   shippingAddress: OrderAddress
   billingAddress: OrderAddress
   items: OrderItem[]
@@ -97,12 +97,13 @@ export function updateOrder(id: string, updates: Partial<Order>): boolean {
   const index = orders.findIndex(o => o.id === id)
   if (index === -1) return false
 
+  const order = orders[index]
   orders[index] = {
-    ...orders[index],
+    ...order,
     ...updates,
     updatedAt: new Date().toISOString()
-  }
-  
+  } as Order
+
   console.log(`[Order Store] Updated order ${orders[index].orderNumber}`)
   return true
 }

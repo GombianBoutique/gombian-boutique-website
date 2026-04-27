@@ -17,7 +17,7 @@ const verifyToken = (token: string): { userId: string } | null => {
     if (!token || !token.startsWith('Bearer ')) return null
     const tokenValue = token.substring(7)
     const parts = tokenValue.split('.')
-    if (parts.length !== 3) return null
+    if (parts.length !== 3 || !parts[1]) return null
     const payload = JSON.parse(Buffer.from(parts[1], 'base64').toString())
     const now = Math.floor(Date.now() / 1000)
     if (payload.exp < now) return null
@@ -94,7 +94,8 @@ export default defineEventHandler(async (event) => {
       wishlists[userId] = []
     }
 
-    const existingIndex = wishlists[userId].findIndex(item => item.productId === productId)
+    const userWishlist = wishlists[userId]!
+    const existingIndex = userWishlist.findIndex(item => item.productId === productId)
 
     if (existingIndex !== -1) {
       logger.debug('WISHLIST_ADD', 'Product already in wishlist', { userId, productId }, event)
@@ -112,21 +113,21 @@ export default defineEventHandler(async (event) => {
       addedAt: new Date().toISOString()
     }
 
-    wishlists[userId].push(newItem)
+    userWishlist.push(newItem)
 
     const duration = Date.now() - startTime
     logger.response(event, 'POST', '/api/wishlist', 200, duration)
-    logger.info('WISHLIST_ADD', `Added item to wishlist for user ${userId}`, { 
-      productId, 
-      itemCount: wishlists[userId].length 
+    logger.info('WISHLIST_ADD', `Added item to wishlist for user ${userId}`, {
+      productId,
+      itemCount: userWishlist.length
     }, event)
 
     return {
       success: true,
-      data: wishlists[userId],
+      data: userWishlist,
       message: 'Item added to wishlist',
       meta: {
-        itemCount: wishlists[userId].length,
+        itemCount: userWishlist.length,
         timestamp: new Date().toISOString()
       }
     }

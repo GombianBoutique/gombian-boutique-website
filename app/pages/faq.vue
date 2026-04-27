@@ -382,12 +382,12 @@ const faqs = {
     {
       id: 'g1',
       question: 'Where is Gombian Boutique located?',
-      answer: 'Gombian Boutique is based in Cape Town, South Africa. We ship worldwide from our fulfillment center.'
+      answer: 'Gombian Boutique is based in Johannesburg, South Africa. We ship worldwide from our fulfillment center.'
     },
     {
       id: 'g2',
       question: 'How can I contact customer service?',
-      answer: 'You can reach our customer service team via email at gombianholdings@gmail.com or through our contact page. We typically respond within 24 hours.'
+      answer: 'You can reach our customer service team via email at info@gombianboutique.co.za or through our contact page. We typically respond within 24 hours.'
     },
     {
       id: 'g3',

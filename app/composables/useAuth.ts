@@ -60,7 +60,7 @@ export const useAuth = () => {
         }
       })
 
-      user.value = response.data
+      user.value = response.data as unknown as Customer | null
       isAuthenticated.value = true
     } catch (err) {
       // Token is invalid or expired, remove it
@@ -138,21 +138,21 @@ export const useAuth = () => {
 
       // Merge carts by combining items
       const mergedItems = [...(userCart?.items || [])]
-      
+
       for (const guestItem of guestCart.items || []) {
         const existingIndex = mergedItems.findIndex(
           item => item.productId === guestItem.productId
         )
-        
+
         if (existingIndex !== -1) {
           // Item exists in both carts - keep the higher quantity
-          mergedItems[existingIndex].quantity = Math.max(
-            mergedItems[existingIndex].quantity,
-            guestItem.quantity
+          const existingItem = mergedItems[existingIndex]!
+          existingItem.quantity = Math.max(
+            existingItem.quantity ?? 0,
+            guestItem.quantity ?? 0
           )
-          mergedItems[existingIndex].totalPrice = 
-            mergedItems[existingIndex].unitPrice * mergedItems[existingIndex].quantity
-          console.log(`[Auth] Merged duplicate item ${guestItem.productId}, quantity: ${mergedItems[existingIndex].quantity}`)
+          existingItem.totalPrice = (existingItem.unitPrice ?? 0) * existingItem.quantity
+          console.log(`[Auth] Merged duplicate item ${guestItem.productId}, quantity: ${existingItem.quantity}`)
         } else {
           // New item - add to merged cart
           mergedItems.push({
@@ -206,7 +206,7 @@ export const useAuth = () => {
 
       if (response.data?.token) {
         setToken(response.data.token)
-        user.value = response.data
+        user.value = response.data as unknown as Customer | null
         isAuthenticated.value = true
       }
     } catch (err: any) {
@@ -252,7 +252,7 @@ export const useAuth = () => {
         }
       })
 
-      user.value = response.data
+      user.value = response.data as unknown as Customer | null
     } catch (err) {
       console.error('Failed to refresh profile:', err)
       throw err

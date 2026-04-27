@@ -5,7 +5,7 @@ import { createTransport } from 'nodemailer';
 import sanitizeHtml from 'sanitize-html';
 import { verifyRecaptcha } from '../utils/recaptcha';
 import { createOrder as storeOrder } from '../utils/order-store';
-import { v4 as uuidv4 } from 'uuid';
+import { useRuntimeConfig } from '#imports';
 
 export interface OrderItem {
   productId: string;
@@ -25,13 +25,14 @@ export interface OrderAddress {
   state: string;
   postalCode: string;
   country: string;
+  phone?: string;
 }
 
 export interface OrderData {
   orderNumber?: string; // Optional - generated on server if not provided
   email: string;
   paymentMethod: string;
-  paymentStatus: string;
+  paymentStatus: 'pending' | 'verifying' | 'completed' | 'failed' | 'refunded';
   shippingAddress: OrderAddress;
   billingAddress: OrderAddress;
   items: OrderItem[];
@@ -86,14 +87,14 @@ export default defineEventHandler(async (event) => {
     const orderNumber = `GB-${Date.now()}-${Math.floor(100000 + Math.random() * 900000)}`;
 
     // Generate order ID for internal tracking
-    const orderId = uuidv4()
+    const orderId = crypto.randomUUID();
 
     // Sanitize inputs
     const sanitized = {
       orderNumber,
       email: sanitizeHtml(body.email),
       paymentMethod: sanitizeHtml(body.paymentMethod),
-      paymentStatus: sanitizeHtml(body.paymentStatus),
+      paymentStatus: body.paymentStatus,
       shippingAddress: {
         firstName: sanitizeHtml(body.shippingAddress.firstName),
         lastName: sanitizeHtml(body.shippingAddress.lastName),
@@ -102,7 +103,8 @@ export default defineEventHandler(async (event) => {
         city: sanitizeHtml(body.shippingAddress.city),
         state: sanitizeHtml(body.shippingAddress.state),
         postalCode: sanitizeHtml(body.shippingAddress.postalCode),
-        country: sanitizeHtml(body.shippingAddress.country)
+        country: sanitizeHtml(body.shippingAddress.country),
+        phone: body.shippingAddress.phone ? sanitizeHtml(body.shippingAddress.phone) : ''
       },
       billingAddress: {
         firstName: sanitizeHtml(body.billingAddress.firstName),
@@ -117,6 +119,7 @@ export default defineEventHandler(async (event) => {
       items: body.items.map(item => ({
         productId: sanitizeHtml(item.productId),
         productName: sanitizeHtml(item.productName),
+        productImage: item.productImage,
         quantity: item.quantity,
         unitPrice: item.unitPrice,
         totalPrice: item.totalPrice
@@ -234,10 +237,10 @@ ${body.paymentStatus === 'completed' ? 'Your order is being prepared for shipmen
 
     // Create Nodemailer transporter
     const transporter = createTransport({
-      service: config.mailService,
-      host: config.mailHost,
-      port: config.mailPort,
-      secure: config.mailPort === 465,
+      service: config.mailService || 'gmail',
+      host: config.mailHost || 'smtp.gmail.com',
+      port: config.mailPort || 587,
+      secure: (config.mailPort || 587) === 465,
       auth: {
         user: config.mailUser,
         pass: config.mailPassword
@@ -300,7 +303,7 @@ ${paymentInstructionsText}
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-Questions? Contact us at gombianholdings@gmail.com
+Questions? Contact us at info@gombianboutique.co.za
 
 Thank you for shopping with Gombian Boutique!
       `,
@@ -412,7 +415,7 @@ Thank you for shopping with Gombian Boutique!
                 <p style="margin: 0 0 10px 0; font-size: 15px; color: #6b7280;">Need help with your order?</p>
                 <p style="margin: 0; font-size: 16px; color: #1f2937;">
                   <strong style="color: #2d5016;">📧</strong> 
-                  <a href="mailto:gombianholdings@gmail.com" style="color: #2d5016; text-decoration: none; font-weight: 600; border-bottom: 2px solid #86efac;">gombianholdings@gmail.com</a>
+                  <a href="mailto:info@gombianboutique.co.za" style="color: #2d5016; text-decoration: none; font-weight: 600; border-bottom: 2px solid #86efac;">info@gombianboutique.co.za</a>
                 </p>
               </div>
             </td>
@@ -443,7 +446,7 @@ Thank you for shopping with Gombian Boutique!
     // Send notification email to admin (HTML + Text)
     await transporter.sendMail({
       from: `"Gombian Boutique Orders" <${config.mailUser}>`,
-      to: config.contactEmail,
+      to: config.contactEmail || 'info@gombianboutique.co.za',
       subject: `🛍️ New Order Received - ${orderNumber}`,
       text: `
 ╔═══════════════════════════════════════════════════════════╗
@@ -728,8 +731,11 @@ Please process this order promptly.
       try {
         const tokenValue = authHeader.startsWith('Bearer ') ? authHeader.substring(7) : authHeader
         const parts = tokenValue.split('.')
-        if (parts.length === 3) {
-          const payload = JSON.parse(Buffer.from(parts[1], 'base64').toString())
+        if (parts.length === 3 && parts[1]) {
+          // Use universal base64 decoding (works in serverless environments)
+          const base64 = parts[1].replace(/-/g, '+').replace(/_/g, '/')
+          const jsonPayload = Buffer.from(base64, 'base64').toString('utf-8')
+          const payload = JSON.parse(jsonPayload)
           userId = payload.sub
           console.log(`[Order API] Order ${orderNumber} linked to user ${userId}`)
         }

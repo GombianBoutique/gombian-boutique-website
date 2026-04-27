@@ -83,7 +83,7 @@ export const useProductsStore = defineStore('products', () => {
   const updateProduct = (id: string, updates: Partial<Product>) => {
     const index = state.value.products.findIndex(p => p.id === id);
     if (index !== -1) {
-      state.value.products[index] = { ...state.value.products[index], ...updates };
+      state.value.products[index] = { ...state.value.products[index], ...updates } as Product;
     }
   };
 
@@ -105,7 +105,8 @@ export const useProductsStore = defineStore('products', () => {
       })
 
       // Extract products array from response
-      state.value.products = response.products || response || [];
+      const productsArray = (response as any)?.products || (Array.isArray(response) ? response : []);
+      state.value.products = productsArray;
     } catch (error: any) {
       setError(error.message || 'Failed to fetch products');
       console.error('Error fetching products:', error);

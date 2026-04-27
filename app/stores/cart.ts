@@ -33,7 +33,7 @@ export const useCartStore = defineStore('cart', () => {
     for (const cookie of cookies) {
       const [name, value] = cookie.trim().split('=');
       if (name === 'auth_token') {
-        return value;
+        return value || null;
       }
     }
     return null;
@@ -208,16 +208,16 @@ export const useCartStore = defineStore('cart', () => {
   const updateItemQuantity = (productId: string, quantity: number) => {
     const index = state.value.items.findIndex(item => item.productId === productId);
     if (index !== -1) {
-      const item = state.value.items[index];
-      const newQuantity = Math.max(1, Math.min(quantity, item.inventoryCount));
+      const item = state.value.items[index]!;
+      const newQuantity = Math.max(1, Math.min(quantity, item.inventoryCount ?? 999));
       // Replace the item to trigger reactivity
       state.value.items[index] = {
         ...item,
         quantity: newQuantity,
-        totalPrice: item.unitPrice * newQuantity
-      };
+        totalPrice: (item.unitPrice ?? 0) * newQuantity
+      } as CartItem;
       saveCartToLocalStorage();
-      
+
       // Sync to API if logged in
       const token = getToken();
       if (token) {

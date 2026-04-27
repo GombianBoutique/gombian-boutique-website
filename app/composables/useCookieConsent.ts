@@ -108,7 +108,7 @@ export const useCookieConsent = () => {
     // Performance cookies (Google Analytics)
     if (!prefs.performance) {
       // Disable Google Analytics
-      window['ga-disable-G-XXXXXXXXXX'] = true
+      (window as any)['ga-disable-G-XXXXXXXXXX'] = true
     }
 
     // Marketing cookies

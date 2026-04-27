@@ -32,7 +32,7 @@ export const useAddresses = () => {
     for (const cookie of cookies) {
       const [name, value] = cookie.trim().split('=')
       if (name === 'auth_token') {
-        return value
+        return value || null
       }
     }
     return null
@@ -126,12 +126,12 @@ export const useAddresses = () => {
 
       // Update local state
       const index = addresses.value.findIndex(a => a.id === addressId)
-      if (index !== -1) {
-        addresses.value[index] = { ...addresses.value[index], ...updates }
+      if (index !== -1 && response && typeof response === 'object') {
+        addresses.value[index] = { ...addresses.value[index], ...updates } as Address
       }
 
       console.log('Address updated successfully')
-      return response.data
+      return response
     } catch (err: any) {
       console.error('Failed to update address:', err)
       error.value = err.message || 'Failed to update address'

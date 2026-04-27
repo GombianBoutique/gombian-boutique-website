@@ -209,7 +209,7 @@
           <div class="mt-4 p-4 bg-luxury-green/10 dark:bg-luxury-green/20 rounded-lg">
             <p class="text-gray-700 dark:text-gray-300">
               <strong>Email:</strong> legal@gombianboutique.com<br>
-              <strong>Address:</strong> Cape Town, South Africa
+              <strong>Address:</strong> Johannesburg, South Africa
             </p>
           </div>
         </section>

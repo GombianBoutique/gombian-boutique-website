@@ -23,8 +23,8 @@ const generateToken = (userId: string): string => {
     exp: Math.floor(Date.now() / 1000) + (60 * 60 * 24 * 7) // 7 days
   }
 
-  const encodedHeader = Buffer.from(JSON.stringify(header)).toString('base64')
-  const encodedPayload = Buffer.from(JSON.stringify(payload)).toString('base64')
+  const encodedHeader = Buffer.from(JSON.stringify(header)).toString('base64url')
+  const encodedPayload = Buffer.from(JSON.stringify(payload)).toString('base64url')
 
   return `${encodedHeader}.${encodedPayload}.${uuidv4().replace(/-/g, '')}`
 }
@@ -148,7 +148,7 @@ export default defineEventHandler(async (event) => {
     
     // Log failed registration
     if (error.statusCode !== 400 && error.statusCode !== 409) {
-      logger.auth('register', false, undefined, { email: body?.email, reason: error.message }, event)
+      logger.auth('register', false, undefined, { email: (error as any).email, reason: error.message }, event)
     }
     
     if (error.statusCode === 429) throw error

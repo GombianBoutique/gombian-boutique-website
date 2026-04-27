@@ -25,8 +25,8 @@
           <p class="text-gray-600 dark:text-gray-400 mb-4">
             Get personalized assistance via email
           </p>
-          <a href="mailto:gombianholdings@gmail.com" class="text-luxury-green hover:text-gold dark:text-gold dark:hover:text-luxury-green font-medium">
-            gombianholdings@gmail.com
+          <a href="mailto:info@gombianboutique.co.za" class="text-luxury-green hover:text-gold dark:text-gold dark:hover:text-luxury-green font-medium">
+            info@gombianboutique.co.za
           </a>
         </div>
 

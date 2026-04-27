@@ -4,6 +4,7 @@ import { v4 as uuidv4 } from 'uuid'
 import { initializeUserStore, findUserByEmail } from '../../utils/user-store'
 import { checkRateLimit, RateLimitPresets } from '../../utils/rate-limiter'
 import { logger } from '../../utils/logger'
+import type { User } from '../../utils/user-store'
 
 // Initialize user store on first load
 initializeUserStore()
@@ -26,8 +27,8 @@ const generateToken = (userId: string): string => {
     exp: Math.floor(Date.now() / 1000) + (60 * 60 * 24 * 7) // 7 days
   }
 
-  const encodedHeader = Buffer.from(JSON.stringify(header)).toString('base64')
-  const encodedPayload = Buffer.from(JSON.stringify(payload)).toString('base64')
+  const encodedHeader = Buffer.from(JSON.stringify(header)).toString('base64url')
+  const encodedPayload = Buffer.from(JSON.stringify(payload)).toString('base64url')
 
   return `${encodedHeader}.${encodedPayload}.${uuidv4().replace(/-/g, '')}`
 }
@@ -35,7 +36,10 @@ const generateToken = (userId: string): string => {
 export default defineEventHandler(async (event) => {
   const startTime = Date.now()
   logger.request(event, 'POST', '/api/auth/login')
-  
+
+  let body: any
+  let email: string | undefined
+
   try {
     // Apply strict rate limiting for login attempts
     const { remaining, resetTime } = checkRateLimit(event, RateLimitPresets.auth, 'auth:login')
@@ -43,8 +47,9 @@ export default defineEventHandler(async (event) => {
     setHeader(event, 'X-RateLimit-Remaining', remaining.toString())
     setHeader(event, 'X-RateLimit-Reset', Math.ceil(resetTime / 1000).toString())
 
-    const body = await readBody(event)
-    const { email, password } = body
+    body = await readBody(event)
+    email = body.email
+    const password = body.password
 
     // Validate required fields
     if (!email || !password) {
@@ -119,7 +124,7 @@ export default defineEventHandler(async (event) => {
     
     // Log failed login attempt (don't expose whether email exists)
     if (error.statusCode !== 400 && error.statusCode !== 401 && error.statusCode !== 403) {
-      logger.auth('login', false, undefined, { email: body?.email, reason: error.message }, event)
+      logger.auth('login', false, undefined, { email: email, reason: error.message }, event)
     }
     
     if (error.statusCode === 429) throw error
@@ -133,4 +138,4 @@ export default defineEventHandler(async (event) => {
 })
 
 // Export users array for registration endpoint
-export { users }
+// Note: users is exported from user-store, re-exported here for legacy compatibility

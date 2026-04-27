@@ -6,17 +6,11 @@ export default defineNuxtConfig({
   // Static site generation for Netlify
   ssr: false,
 
-  // Fallback for unknown dynamic routes (e.g., /products/new-slug)
-  generate: {
-    fallback: true
-  },
-
   nitro: {
     preset: 'static',
     prerender: {
-      crawlLinks: false,
+      crawlLinks: true,
       failOnError: false,
-      autoExit: true,
       routes: [
         '/',
         '/products',
@@ -46,6 +40,11 @@ export default defineNuxtConfig({
         '/sitemap.xml'
       ]
     }
+  },
+
+  // SPA fallback for dynamic routes (required for Netlify SSG)
+  generate: {
+    fallback: true
   },
 
   typescript: {
@@ -88,7 +87,7 @@ export default defineNuxtConfig({
   runtimeConfig: {
     sendgridApiKey: process.env.SENDGRID_API_KEY || '',
     recaptchaSecretKey: process.env.NUXT_RECAPTCHA_SECRET_KEY || '',
-    contactEmail: process.env.NUXT_CONTACT_EMAIL || 'gombianholdings@gmail.com',
+    contactEmail: process.env.NUXT_CONTACT_EMAIL || 'info@gombianboutique.co.za',
     mailService: process.env.NUXT_MAIL_SERVICE || 'gmail',
     mailHost: process.env.NUXT_MAIL_HOST || 'smtp.gmail.com',
     mailPort: parseInt(process.env.NUXT_MAIL_PORT || '587'),
@@ -120,7 +119,7 @@ export default defineNuxtConfig({
       meta: [
         { charset: 'utf-8' },
         { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-        { hid: 'description', name: 'description', content: 'Gombian Boutique - where the art of fragrance meets the luxury of villa-inspired fragrances. Experience our exclusive line of nature-inspired scents that transport and transform any space, crafted with high-quality, natural ingredients for a true luxury experience.' },
+        { name: 'description', content: 'Gombian Boutique - where the art of fragrance meets the luxury of villa-inspired fragrances. Experience our exclusive line of nature-inspired scents that transport and transform any space, crafted with high-quality, natural ingredients for a true luxury experience.', key: 'description' },
         { name: 'keywords', content: 'perfume, luxury, fragrance, boutique, exclusive, elegant, sophisticated, artisanal' },
         { name: 'author', content: 'Gombian Boutique' },
         { property: 'og:type', content: 'website' },

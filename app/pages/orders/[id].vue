@@ -315,54 +315,6 @@ const toast = useToast()
 const loading = ref(true)
 const order = ref(null)
 
-// Sample order data structure
-const sampleOrder = {
-  id: route.params.id,
-  orderNumber: `GB-2026-${String(route.params.id).padStart(6, '0')}`,
-  status: 'processing', // pending, processing, shipped, delivered, cancelled, refunded
-  items: [
-    {
-      productId: '60ml-perfume',
-      productName: '60ml Premium Perfume',
-      quantity: 1,
-      unitPrice: 15000,
-      totalPrice: 15000,
-      productImage: '/images/products/Ladies 60ml Perfume.jpg'
-    }
-  ],
-  totalAmount: 31625,
-  currency: 'ZAR',
-  shippingAddress: {
-    firstName: 'John',
-    lastName: 'Doe',
-    addressLine1: '123 Main Street',
-    addressLine2: '',
-    city: 'Cape Town',
-    state: 'Western Cape',
-    postalCode: '8001',
-    country: 'South Africa',
-    phone: '+27 12 345 6789'
-  },
-  billingAddress: {
-    firstName: 'John',
-    lastName: 'Doe',
-    addressLine1: '123 Main Street',
-    addressLine2: '',
-    city: 'Cape Town',
-    state: 'Western Cape',
-    postalCode: '8001',
-    country: 'South Africa'
-  },
-  paymentMethod: 'manual',
-  paymentStatus: 'pending',
-  shippingCost: 2500,
-  taxAmount: 4125,
-  createdAt: new Date('2026-01-14').toISOString(),
-  trackingNumber: '1Z999AA1234567890',
-  trackingCarrier: 'DHL',
-  estimatedDelivery: new Date('2026-01-21').toISOString()
-}
-
 // Status steps for timeline
 const statusSteps = computed(() => {
   if (!order.value) return []

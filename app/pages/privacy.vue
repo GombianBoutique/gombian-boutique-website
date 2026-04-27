@@ -196,7 +196,7 @@
           <div class="mt-4 p-4 bg-luxury-green/10 dark:bg-luxury-green/20 rounded-lg">
             <p class="text-gray-700 dark:text-gray-300">
               <strong>Email:</strong> <a href="mailto:privacy@gombianboutique.com" class="text-luxury-green hover:text-gold dark:text-gold dark:hover:text-luxury-green underline">privacy@gombianboutique.com</a><br>
-              <strong>Mail:</strong> Gombian Boutique, Cape Town, South Africa
+              <strong>Mail:</strong> Gombian Boutique, Johannesburg, South Africa
             </p>
           </div>
         </section>

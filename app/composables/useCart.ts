@@ -110,8 +110,9 @@ export const useCart = () => {
 
     if (existingItemIndex !== -1) {
       // Update quantity if item exists
-      cart.value.items[existingItemIndex].quantity += quantity;
-      cart.value.items[existingItemIndex].subtotal = cart.value.items[existingItemIndex].product.price * cart.value.items[existingItemIndex].quantity;
+      const existingItem = cart.value.items[existingItemIndex]!
+      existingItem.quantity += quantity;
+      existingItem.subtotal = existingItem.product.price * existingItem.quantity;
     } else {
       // Add new item to cart
       const newItem: CartItem = {
@@ -135,8 +136,9 @@ export const useCart = () => {
 
     const itemIndex = cart.value.items.findIndex(item => item.id === itemId);
     if (itemIndex !== -1) {
-      cart.value.items[itemIndex].quantity = quantity;
-      cart.value.items[itemIndex].subtotal = cart.value.items[itemIndex].product.price * quantity;
+      const item = cart.value.items[itemIndex]!
+      item.quantity = quantity;
+      item.subtotal = item.product.price * quantity;
       updateCartTotals();
     }
   };

@@ -12,7 +12,7 @@ const verifyToken = (token: string): { userId: string } | null => {
     const tokenValue = token.substring(7) // Remove 'Bearer ' prefix
     const parts = tokenValue.split('.')
 
-    if (parts.length !== 3) {
+    if (parts.length !== 3 || !parts[1]) {
       return null
     }
 
@@ -79,8 +79,8 @@ export default defineEventHandler(async (event) => {
       phone: user.phone,
       dateOfBirth: user.dateOfBirth,
       preferences: user.preferences,
-      hasShippingAddresses: user.shippingAddresses?.length > 0,
-      hasBillingAddresses: user.billingAddresses?.length > 0
+      hasShippingAddresses: (user.shippingAddresses?.length ?? 0) > 0,
+      hasBillingAddresses: (user.billingAddresses?.length ?? 0) > 0
     })
 
     // Return user data (excluding sensitive fields)

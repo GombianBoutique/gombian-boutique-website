@@ -1,4 +1,5 @@
 // server/utils/recaptcha.ts
+import { useRuntimeConfig, createError } from '#imports';
 
 export interface RecaptchaResponse {
   success: boolean;
@@ -11,23 +12,23 @@ export interface RecaptchaResponse {
 
 export async function verifyRecaptcha(token: string): Promise<boolean> {
   const config = useRuntimeConfig();
-  
+
   if (!config.recaptchaSecretKey) {
     console.warn('reCAPTCHA secret key not configured, skipping verification');
     return true; // Allow in development without key
   }
 
   // Verify reCAPTCHA token
-  const verification: RecaptchaResponse = await $fetch('https://www.google.com/recaptcha/api/siteverify', {
+  const verification: RecaptchaResponse = await fetch('https://www.google.com/recaptcha/api/siteverify', {
     method: 'POST',
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded'
+    },
     body: new URLSearchParams({
       secret: config.recaptchaSecretKey,
       response: token
-    }).toString(),
-    headers: {
-      'Content-Type': 'application/x-www-form-urlencoded'
-    }
-  });
+    })
+  }).then(r => r.json());
 
   if (!verification.success) {
     throw createError({

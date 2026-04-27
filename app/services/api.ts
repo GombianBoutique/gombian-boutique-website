@@ -12,19 +12,19 @@ class ApiService {
   constructor() {
     // In Nuxt, we can access the runtime config
     const config = useRuntimeConfig()
-    this.baseUrl = config.public.apiBaseUrl || '/api'
+    this.baseUrl = (config.public.apiBaseUrl as string) || '/api'
   }
 
   protected async request<T>(
-    endpoint: string, 
-    options: { method?: string; body?: any; params?: Record<string, any> } = {}
+    endpoint: string,
+    options: { method?: 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH'; body?: any; params?: Record<string, any> } = {}
   ): Promise<T> {
     const { method = 'GET', body, params } = options
-    
-    const url = params 
+
+    const url = params
       ? `${this.baseUrl}${endpoint}?${new URLSearchParams(params).toString()}`
       : `${this.baseUrl}${endpoint}`
-    
+
     try {
       const response = await $fetch(url, {
         method,
@@ -33,7 +33,7 @@ class ApiService {
           'Content-Type': 'application/json',
         },
       })
-      
+
       return response as T
     } catch (error: any) {
       console.error(`API request failed: ${method} ${url}`, error)

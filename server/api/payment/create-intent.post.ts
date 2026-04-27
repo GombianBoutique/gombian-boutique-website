@@ -1,13 +1,14 @@
 // server/api/payment/create-intent.post.ts
 import { defineEventHandler, readBody, createError } from 'h3'
+import { useRuntimeConfig } from '#imports'
 import Stripe from 'stripe'
 
 export default defineEventHandler(async (event) => {
   const config = useRuntimeConfig()
-  
+
   try {
     const body = await readBody(event)
-    const { amount, currency, customerId } = body
+    const { amount, currency, customerId } = body as { amount?: number; currency?: string; customerId?: string }
 
     // Validate required fields
     if (!amount || !currency) {
@@ -18,8 +19,9 @@ export default defineEventHandler(async (event) => {
     }
 
     // Initialize Stripe
-    const stripe = new Stripe(config.stripeSecretKey, {
-      apiVersion: '2024-12-18.acacia'
+    const stripeSecretKey = typeof config.stripeSecretKey === 'string' ? config.stripeSecretKey : 'sk_test_placeholder'
+    const stripe = new Stripe(stripeSecretKey, {
+      apiVersion: '2026-01-28.clover'
     })
 
     // Create payment intent
@@ -43,7 +45,7 @@ export default defineEventHandler(async (event) => {
     }
   } catch (error: any) {
     console.error('Payment intent creation error:', error)
-    
+
     throw createError({
       statusCode: error.statusCode || 500,
       statusMessage: error.message || 'Failed to create payment intent'

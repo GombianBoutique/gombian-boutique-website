@@ -48,11 +48,14 @@ export const useProducts = () => {
     try {
       loading.value = true;
       // Fetch from API endpoint - with fallback to static JSON for SSG
-      const data: ProductsResponse = await $fetch('/api/products').catch(async () => {
+      let data: ProductsResponse;
+      try {
+        data = await $fetch('/api/products') as unknown as ProductsResponse;
+      } catch {
         // Fallback to static JSON file for SSG
-        return await $fetch('/data/products.json')
-          .then(products => ({ products, pagination: null }));
-      });
+        const products = await $fetch('/data/products.json') as unknown as Product[];
+        data = { products, pagination: undefined };
+      }
       productsData.value = data;
       error.value = null;
     } catch (err) {
@@ -65,7 +68,7 @@ export const useProducts = () => {
 
   const getProductById = (id: string): Product | null => {
     if (!productsData.value || !productsData.value.products) return null;
-    return productsData.value.products.find(product => product.id === id);
+    return productsData.value.products.find(product => product.id === id) || null;
   };
 
   const getProductsByCategory = (category: string): Product[] => {

@@ -1,14 +1,15 @@
 // server/api/payment/webhook.post.ts
 import { defineEventHandler, readRawBody, createError, getHeader } from 'h3'
+import { useRuntimeConfig } from '#imports'
 import Stripe from 'stripe'
 
 export default defineEventHandler(async (event) => {
   const config = useRuntimeConfig()
-  
+
   try {
     const body = await readRawBody(event)
     const signature = getHeader(event, 'stripe-signature')
-    
+
     if (!signature) {
       throw createError({
         statusCode: 400,
@@ -16,19 +17,28 @@ export default defineEventHandler(async (event) => {
       })
     }
 
+    if (!body) {
+      throw createError({
+        statusCode: 400,
+        statusMessage: 'Missing request body'
+      })
+    }
+
     // Initialize Stripe
-    const stripe = new Stripe(config.stripeSecretKey, {
-      apiVersion: '2024-12-18.acacia'
+    const stripeSecretKey = typeof config.stripeSecretKey === 'string' ? config.stripeSecretKey : 'sk_test_placeholder'
+    const stripeWebhookSecret = typeof config.stripeWebhookSecret === 'string' ? config.stripeWebhookSecret : 'whsec_placeholder'
+    const stripe = new Stripe(stripeSecretKey, {
+      apiVersion: '2026-01-28.clover'
     })
 
     // Verify webhook signature
     let stripeEvent: Stripe.Event
-    
+
     try {
       stripeEvent = stripe.webhooks.constructEvent(
-        body!,
+        body,
         signature,
-        config.stripeWebhookSecret
+        stripeWebhookSecret
       )
     } catch (err: any) {
       console.error('Webhook signature verification failed:', err.message)

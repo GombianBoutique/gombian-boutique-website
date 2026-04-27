@@ -11,11 +11,11 @@ const verifyToken = (token: string): { userId: string } | null => {
     
     const tokenValue = token.substring(7)
     const parts = tokenValue.split('.')
-    
-    if (parts.length !== 3) {
+
+    if (parts.length !== 3 || !parts[1]) {
       return null
     }
-    
+
     const payload = JSON.parse(Buffer.from(parts[1], 'base64').toString())
     
     const now = Math.floor(Date.now() / 1000)
@@ -76,6 +76,13 @@ export default defineEventHandler(async (event) => {
     }
 
     const updatedUser = findUserById(tokenData.userId)
+
+    if (!updatedUser) {
+      throw createError({
+        statusCode: 404,
+        statusMessage: 'User not found'
+      })
+    }
 
     return {
       success: true,

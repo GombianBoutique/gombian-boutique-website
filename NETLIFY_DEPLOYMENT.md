@@ -1,7 +1,7 @@
 # Netlify Deployment Checklist for Gombian Boutique
 
-**Last Updated**: 2026-03-20  
-**Status**: ✅ Ready for Deployment
+**Last Updated**: 2026-04-27  
+**Status**: ✅ Ready for Deployment (SSG with SPA fallback configured)
 
 This document provides a complete checklist for deploying the Gombian Boutique perfume store to Netlify using Static Site Generation (SSG).
 
@@ -12,9 +12,10 @@ This document provides a complete checklist for deploying the Gombian Boutique p
 ### 1. Nuxt Configuration (`nuxt.config.ts`)
 
 - [x] **SSR disabled for static generation**: `ssr: false`
-- [x] **Fallback enabled for dynamic routes**: `generate.fallback: true`
+- [x] **Fallback enabled for dynamic routes**: `generate.fallback: true` (creates 404.html for unknown routes)
 - [x] **Nitro preset set to static**: `nitro.preset: 'static'`
-- [x] **Prerender routes configured**: 34 routes including products, account pages, and policies
+- [x] **Prerender routes configured**: Static routes including products, account pages, and policies
+- [x] **Crawl links enabled**: `nitro.prerender.crawlLinks: true` (discovers and prerenders linked pages)
 - [x] **All modules installed and configured**:
   - `@nuxtjs/tailwindcss`
   - `@nuxtjs/color-mode`
@@ -28,7 +29,7 @@ This document provides a complete checklist for deploying the Gombian Boutique p
 ```toml
 [build]
   command = "pnpm run generate"
-  publish = "dist"
+  publish = ".output/public"
 
 [build.environment]
   NODE_VERSION = "20"
@@ -36,7 +37,7 @@ This document provides a complete checklist for deploying the Gombian Boutique p
 ```
 
 - [x] Build command: `pnpm run generate`
-- [x] Publish directory: `dist`
+- [x] Publish directory: `.output/public`
 - [x] Node.js version: 20
 - [x] PNPM version: 10
 - [x] Environment variables configured for production
@@ -69,7 +70,7 @@ Navigate to **Site Settings → Environment Variables** and add:
 
 #### Application Configuration
 - [ ] `APP_URL` - Your production URL (e.g., `https://gombianboutique.netlify.app`)
-- [ ] `NUXT_CONTACT_EMAIL` - Contact email address (default: `gombianholdings@gmail.com`)
+- [ ] `NUXT_CONTACT_EMAIL` - Contact email address (default: `info@gombianboutique.co.za`)
 
 #### Optional Services
 - [ ] `MAILCHIMP_API_KEY` - Mailchimp API key for newsletter
@@ -191,19 +192,14 @@ After deployment, verify the following:
 
 ### Issue: Dynamic Routes Return 404
 
-**Solution**: The `generate.fallback: true` setting creates a SPA fallback for unknown routes. If you still see 404s:
+**Solution**: The `generate.fallback: true` setting creates a SPA fallback (`404.html`) for unknown routes like `/products/some-product`. This is already configured. If you still see 404s for known products:
 
-1. Verify `nuxt.config.ts` has:
-   ```typescript
-   generate: {
-     fallback: true
-   }
-   ```
-
+1. Verify the product exists in `/data/products.json`
 2. Clear Netlify cache and redeploy:
    ```bash
    netlify deploy --prod --force
    ```
+3. Check browser console for data loading errors
 
 ### Issue: Environment Variables Not Working
 
@@ -231,19 +227,25 @@ After deployment, verify the following:
 
 ## 📊 Build Information
 
-**Last Successful Build**: 2026-03-20  
-**Routes Prerendered**: 34  
+**Last Successful Build**: 2026-04-27  
+**Routes Prerendered**: 34 (plus SPA fallback for dynamic routes)  
 **Build Output**: `.output/public`  
-**Build Time**: ~24 seconds  
+**Build Time**: ~15 seconds  
 
 ### Prerendered Routes
 ```
 /, /about, /account, /account/orders, /account/preferences, /account/profile,
 /cart, /checkout, /compare, /confirmation, /contact, /cookies, /faq,
-/login, /policies, /privacy, /products, /register, /returns, /search,
+/forgot-password, /login, /policies, /privacy, /products, /register, /returns, /search,
 /shipping, /support, /sustainability, /terms, /testimonials, /track-order,
 /wishlist, /sitemap.xml, /robots.txt, /200.html, /404.html
 ```
+
+### Dynamic Routes (SPA Fallback)
+The following dynamic routes use client-side rendering via the `404.html` fallback:
+- `/products/[id]` - Product detail pages (loaded from `/data/products.json`)
+- `/collections/[category]` - Collection pages (filtered by category)
+- `/orders/[id]` - Order detail pages (requires authentication)
 
 ---
 

@@ -20,7 +20,7 @@ const verifyToken = (token: string): { userId: string } | null => {
     if (!token || !token.startsWith('Bearer ')) return null
     const tokenValue = token.substring(7)
     const parts = tokenValue.split('.')
-    if (parts.length !== 3) return null
+    if (parts.length !== 3 || !parts[1]) return null
     const payload = JSON.parse(Buffer.from(parts[1], 'base64').toString())
     const now = Math.floor(Date.now() / 1000)
     if (payload.exp < now) return null

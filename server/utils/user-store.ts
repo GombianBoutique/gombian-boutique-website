@@ -223,6 +223,6 @@ export function updateUser(id: string, updates: Partial<User>): boolean {
   const index = users.findIndex(u => u.id === id)
   if (index === -1) return false
 
-  users[index] = { ...users[index], ...updates, updatedAt: new Date().toISOString() }
+  users[index] = { ...users[index], ...updates, updatedAt: new Date().toISOString() } as User
   return true
 }

@@ -9,7 +9,7 @@ const verifyToken = (token: string): { userId: string } | null => {
     if (!token || !token.startsWith('Bearer ')) return null
     const tokenValue = token.substring(7)
     const parts = tokenValue.split('.')
-    if (parts.length !== 3) return null
+    if (parts.length !== 3 || !parts[1]) return null
     const payload = JSON.parse(Buffer.from(parts[1], 'base64').toString())
     const now = Math.floor(Date.now() / 1000)
     if (payload.exp < now) return null
@@ -60,13 +60,14 @@ export default defineEventHandler(async (event) => {
       }
     }
 
-    const index = wishlists[userId].findIndex(item => item.productId === productId)
+    const userWishlist = wishlists[userId]!
+    const index = userWishlist.findIndex(item => item.productId === productId)
 
     if (index !== -1) {
-      wishlists[userId].splice(index, 1)
-      logger.info('WISHLIST_REMOVE', `Removed item from wishlist for user ${userId}`, { 
-        productId, 
-        itemCount: wishlists[userId].length 
+      userWishlist.splice(index, 1)
+      logger.info('WISHLIST_REMOVE', `Removed item from wishlist for user ${userId}`, {
+        productId,
+        itemCount: userWishlist.length
       }, event)
     } else {
       logger.debug('WISHLIST_REMOVE', 'Item not found in wishlist', { userId, productId }, event)
@@ -77,10 +78,10 @@ export default defineEventHandler(async (event) => {
 
     return {
       success: true,
-      data: wishlists[userId],
+      data: userWishlist,
       message: 'Item removed from wishlist',
       meta: {
-        itemCount: wishlists[userId].length,
+        itemCount: userWishlist.length,
         timestamp: new Date().toISOString()
       }
     }

@@ -15,9 +15,8 @@
             </div>
             <div>
               <h3 class="text-lg font-bold text-luxury-green">Phone</h3>
-              <p class="text-neutral-dark">084 342 9374</p>
-              <p class="text-neutral-dark">WhatsApp: 067 157 4157</p>
-              <p class="text-sm text-neutral-dark">Monday-Friday, 9am-6pm</p>
+              <p class="text-neutral-dark">067 157 4157</p>
+            <p class="text-sm text-neutral-dark">Monday-Friday, 9am-6pm</p>
             </div>
           </div>
           
@@ -29,24 +28,10 @@
             </div>
             <div>
               <h3 class="text-lg font-bold text-luxury-green">Email</h3>
-              <p class="text-neutral-dark">gombianholdings@gmail.com</p>
+              <p class="text-neutral-dark">info@gombianboutique.co.za</p>
             </div>
           </div>
-          
-          <div class="flex items-start">
-            <div class="mr-4 mt-1">
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-luxury-green" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-              </svg>
-            </div>
-            <div>
-              <h3 class="text-lg font-bold text-luxury-green">Address</h3>
-              <p class="text-neutral-dark">35B Mulder's Mile</p>
-              <p class="text-neutral-dark">Eldoraigne, Centurion, 0157</p>
-            </div>
-          </div>
-          
+                    
           <div class="flex items-start">
             <div class="mr-4 mt-1">
               <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-luxury-green" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -238,7 +223,7 @@ useHead({
   meta: [
     {
       name: 'description',
-      content: 'Contact Gombian Boutique - where the art of fragrance meets the luxury of villa-inspired fragrances. Reach out for inquiries about our nature-inspired scents and exclusive perfume collection. Phone: 084 342 9374, WhatsApp: 067 157 4157, Email: gombianholdings@gmail.com'
+      content: 'Contact Gombian Boutique - where the art of fragrance meets the luxury of villa-inspired fragrances. Reach out for inquiries about our nature-inspired scents and exclusive perfume collection. Phone: 067 157 4157, Email: info@gombianboutique.co.za'
     }
   ]
 })
