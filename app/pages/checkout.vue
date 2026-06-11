@@ -298,7 +298,7 @@
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
                 <p class="text-sm text-gray-600 dark:text-gray-400">Bank Name</p>
-                <p class="font-bold text-gray-900 dark:text-white">FNB</p>
+                <p class="font-bold text-gray-900 dark:text-white">Capitec</p>
               </div>
               <div>
                 <p class="text-sm text-gray-600 dark:text-gray-400">Account Name</p>
@@ -306,11 +306,11 @@
               </div>
               <div>
                 <p class="text-sm text-gray-600 dark:text-gray-400">Account Number</p>
-                <p class="font-bold text-gray-900 dark:text-white">123456789</p>
+                <p class="font-bold text-gray-900 dark:text-white">1053 1950 87</p>
               </div>
               <div>
-                <p class="text-sm text-gray-600 dark:text-gray-400">Branch Code</p>
-                <p class="font-bold text-gray-900 dark:text-white">250655</p>
+                <p class="text-sm text-gray-600 dark:text-gray-400">BIC/SWIFT Code</p>
+                <p class="font-bold text-gray-900 dark:text-white">CABLZAJJ</p>
               </div>
               <div>
                 <p class="text-sm text-gray-600 dark:text-gray-400">Reference</p>
@@ -318,7 +318,7 @@
               </div>
               <div>
                 <p class="text-sm text-gray-600 dark:text-gray-400">Account Type</p>
-                <p class="font-bold text-gray-900 dark:text-white">Current</p>
+                <p class="font-bold text-gray-900 dark:text-white">Current (Business)</p>
               </div>
             </div>
           </div>

@@ -158,7 +158,7 @@ export default defineEventHandler(async (event) => {
             <table style="width: 100%; border-collapse: collapse;">
               <tr>
                 <td style="padding: 12px 0; border-bottom: 1px solid #f3f4f6; font-size: 15px; color: #6b7280; width: 40%;"><strong>Bank:</strong></td>
-                <td style="padding: 12px 0; border-bottom: 1px solid #f3f4f6; font-size: 15px; color: #1f2937; font-weight: 600;">FNB</td>
+                <td style="padding: 12px 0; border-bottom: 1px solid #f3f4f6; font-size: 15px; color: #1f2937; font-weight: 600;">Capitec</td>
               </tr>
               <tr>
                 <td style="padding: 12px 0; border-bottom: 1px solid #f3f4f6; font-size: 15px; color: #6b7280;"><strong>Account Name:</strong></td>
@@ -166,11 +166,15 @@ export default defineEventHandler(async (event) => {
               </tr>
               <tr>
                 <td style="padding: 12px 0; border-bottom: 1px solid #f3f4f6; font-size: 15px; color: #6b7280;"><strong>Account Number:</strong></td>
-                <td style="padding: 12px 0; border-bottom: 1px solid #f3f4f6; font-size: 15px; color: #1f2937; font-weight: 600; font-family: 'Courier New', monospace;">123456789</td>
+                <td style="padding: 12px 0; border-bottom: 1px solid #f3f4f6; font-size: 15px; color: #1f2937; font-weight: 600; font-family: 'Courier New', monospace;">1053 1950 87</td>
               </tr>
               <tr>
-                <td style="padding: 12px 0; border-bottom: 1px solid #f3f4f6; font-size: 15px; color: #6b7280;"><strong>Branch Code:</strong></td>
-                <td style="padding: 12px 0; border-bottom: 1px solid #f3f4f6; font-size: 15px; color: #1f2937; font-weight: 600; font-family: 'Courier New', monospace;">250655</td>
+                <td style="padding: 12px 0; border-bottom: 1px solid #f3f4f6; font-size: 15px; color: #6b7280;"><strong>BIC/SWIFT Code:</strong></td>
+                <td style="padding: 12px 0; border-bottom: 1px solid #f3f4f6; font-size: 15px; color: #1f2937; font-weight: 600; font-family: 'Courier New', monospace;">CABLZAJJ</td>
+              </tr>
+              <tr>
+                <td style="padding: 12px 0; font-size: 15px; color: #6b7280;"><strong>Account Type:</strong></td>
+                <td style="padding: 12px 0; font-size: 15px; color: #1f2937; font-weight: 600; font-family: 'Courier New', monospace;">Current (Business)</td>
               </tr>
               <tr>
                 <td style="padding: 12px 0; font-size: 15px; color: #6b7280;"><strong>Reference:</strong></td>
@@ -195,14 +199,15 @@ export default defineEventHandler(async (event) => {
 Please make payment to the following account:
 
 ┌───────────────────────────────────────────────────────────┐
-│  Bank:            FNB                                     │
+│  Bank:            Capitec                                 │
 │  Account Name:    Gombian Boutique                        │
-│  Account Number:  123456789                               │
-│  Branch Code:     250655                                  │
+│  Account Number:  1053 1950 87                            │
+│  BIC/SWIFT Code:  CABLZAJJ                                │
+│  Account Type:    Current (Business)                      │
 │  Reference:       ${orderNumber}           │
 └───────────────────────────────────────────────────────────┘
 
-⚠️  IMPORTANT: Please send proof of payment to 
+⚠️  IMPORTANT: Please send proof of payment to
    orders@gombianboutique.co.za within 24 hours.
 
 Your order will be processed once payment is confirmed.
